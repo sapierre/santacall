@@ -12,18 +12,19 @@
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "db:generate": "cross-env SKIP_ENV_VALIDATION=1 pnpm dlx @better-auth/cli@latest generate --config src/server.ts --output ../db/src/schema/auth.ts --y",
+    "db:seed": "cross-env SKIP_ENV_VALIDATION=1 pnpm dlx tsx ./src/scripts/seed.ts",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@turbostarter/prettier-config",
   "dependencies": {
-    "@better-auth/expo": "1.3.8",
+    "@better-auth/expo": "1.4.0-beta.9",
     "@turbostarter/db": "workspace:*",
     "@turbostarter/email": "workspace:*",
     "@turbostarter/i18n": "workspace:*",
     "@turbostarter/shared": "workspace:*",
-    "better-auth": "1.3.8",
+    "better-auth": "1.4.0-beta.9",
     "envin": "catalog:",
     "zod": "catalog:"
   },

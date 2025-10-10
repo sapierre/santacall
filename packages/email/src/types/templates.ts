@@ -8,34 +8,35 @@ const AuthEmailTemplate = {
   CONFIRM_EMAIL: "confirm-email",
   DELETE_ACCOUNT: "delete-account",
   CHANGE_EMAIL: "change-email",
+  ORGANIZATION_INVITATION: "organization-invitation",
 } as const;
+
+type AuthEmailTemplate =
+  (typeof AuthEmailTemplate)[keyof typeof AuthEmailTemplate];
+
+type AuthEmailVariables = Record<
+  Exclude<AuthEmailTemplate, typeof EmailTemplate.ORGANIZATION_INVITATION>,
+  {
+    url: string;
+  }
+>;
 
 export const EmailTemplate = {
   ...AuthEmailTemplate,
   CONTACT_FORM: "contact-form",
 } as const;
 
-type AuthEmailTemplate =
-  (typeof AuthEmailTemplate)[keyof typeof AuthEmailTemplate];
-
-export type AuthEmailVariables = Record<
-  Exclude<AuthEmailTemplate, "magic-link">,
-  {
-    url: string;
-  }
->;
-
-export interface ContactFormEmailVariables {
-  name: string;
-  email: string;
-  message: string;
-}
-
 export type EmailTemplate = (typeof EmailTemplate)[keyof typeof EmailTemplate];
+
 export type EmailVariables = AuthEmailVariables & {
-  [EmailTemplate.MAGIC_LINK]: {
+  [EmailTemplate.ORGANIZATION_INVITATION]: {
     url: string;
-    token: string;
+    inviter: string;
+    organization: string;
   };
-  [EmailTemplate.CONTACT_FORM]: ContactFormEmailVariables;
+  [EmailTemplate.CONTACT_FORM]: {
+    name: string;
+    email: string;
+    message: string;
+  };
 };

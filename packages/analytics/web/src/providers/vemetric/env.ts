@@ -1,3 +1,4 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 import { defineEnv } from "envin";
 import * as z from "zod";
 
@@ -15,4 +16,9 @@ export const preset = {
 export const env = defineEnv({
   ...envConfig,
   ...preset,
+  env: {
+    ...process.env,
+    NEXT_PUBLIC_VEMETRIC_PROJECT_TOKEN:
+      process.env.NEXT_PUBLIC_VEMETRIC_PROJECT_TOKEN,
+  },
 });

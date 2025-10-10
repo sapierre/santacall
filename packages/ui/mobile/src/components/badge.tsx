@@ -6,20 +6,17 @@ import { cn } from "@turbostarter/ui";
 
 import { TextClassContext } from "./text";
 
-import type { SlottableViewProps } from "@rn-primitives/types";
 import type { VariantProps } from "class-variance-authority";
+import type { ViewProps } from "react-native";
 
 const badgeVariants = cva(
-  "web:inline-flex web:transition-colors web:focus:outline-none web:focus:ring-2 web:focus:ring-ring web:focus:ring-offset-2 items-center rounded-full border border-border px-2.5 py-0.5",
+  "border-border group shrink-0 flex-row items-center justify-center gap-1 overflow-hidden rounded-full border px-2 py-0.5",
   {
     variants: {
       variant: {
-        default:
-          "web:hover:opacity-80 border-transparent bg-primary active:opacity-80",
-        secondary:
-          "web:hover:opacity-80 border-transparent bg-secondary active:opacity-80",
-        destructive:
-          "web:hover:opacity-80 border-transparent bg-destructive active:opacity-80",
+        default: "bg-primary border-transparent active:opacity-80",
+        secondary: "bg-secondary border-transparent active:opacity-80",
+        destructive: "bg-destructive border-transparent active:opacity-80",
         outline: "text-foreground",
       },
     },
@@ -29,7 +26,7 @@ const badgeVariants = cva(
   },
 );
 
-const badgeTextVariants = cva("text-xs font-semibold", {
+const badgeTextVariants = cva("font-sans-medium text-sm", {
   variants: {
     variant: {
       default: "text-primary-foreground",
@@ -43,7 +40,10 @@ const badgeTextVariants = cva("text-xs font-semibold", {
   },
 });
 
-type BadgeProps = SlottableViewProps & VariantProps<typeof badgeVariants>;
+type BadgeProps = ViewProps &
+  React.RefAttributes<View> & {
+    asChild?: boolean;
+  } & VariantProps<typeof badgeVariants>;
 
 function Badge({ className, variant, asChild, ...props }: BadgeProps) {
   const Component = asChild ? Slot.View : View;

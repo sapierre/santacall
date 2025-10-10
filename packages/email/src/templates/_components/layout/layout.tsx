@@ -7,17 +7,10 @@ import {
   Tailwind,
 } from "@react-email/components";
 
-import { mapValues, hslToHex } from "@turbostarter/shared/utils";
-import { themes } from "@turbostarter/ui";
-
-import { env } from "../../../env";
-
 import { Footer } from "./footer";
 import { Header } from "./header";
 
 import type { PropsWithChildren } from "react";
-
-const colors = mapValues(themes[env.EMAIL_THEME].light, (v) => hslToHex(...v));
 
 export const Layout = ({
   children,
@@ -43,50 +36,50 @@ export const Layout = ({
           theme: {
             extend: {
               colors: {
-                border: colors.border,
-                input: colors.input,
-                ring: colors.ring,
-                background: colors.background,
-                foreground: colors.foreground,
-                primary: {
-                  DEFAULT: colors.primary,
-                  foreground: colors["primary-foreground"],
-                },
-                secondary: {
-                  DEFAULT: colors.secondary,
-                  foreground: colors["secondary-foreground"],
-                },
-                success: {
-                  DEFAULT: colors.success,
-                  foreground: colors["success-foreground"],
-                },
-                destructive: {
-                  DEFAULT: colors.destructive,
-                  foreground: colors["destructive-foreground"],
-                },
-                muted: {
-                  DEFAULT: colors.muted,
-                  foreground: colors["muted-foreground"],
-                },
-                accent: {
-                  DEFAULT: colors.accent,
-                  foreground: colors["accent-foreground"],
+                background: "#ffffff",
+                foreground: "#09090b",
+                card: {
+                  DEFAULT: "#ffffff",
+                  foreground: "#09090b",
                 },
                 popover: {
-                  DEFAULT: colors.popover,
-                  foreground: colors["popover-foreground"],
+                  DEFAULT: "#ffffff",
+                  foreground: "#09090b",
                 },
-                card: {
-                  DEFAULT: colors.card,
-                  foreground: colors["card-foreground"],
+                primary: {
+                  DEFAULT: "#f14704",
+                  foreground: "#fff7ed",
                 },
+                secondary: {
+                  DEFAULT: "#f4f4f5",
+                  foreground: "#18181b",
+                },
+                muted: {
+                  DEFAULT: "#f4f4f5",
+                  foreground: "#71717b",
+                },
+                accent: {
+                  DEFAULT: "#f4f4f5",
+                  foreground: "#18181b",
+                },
+                success: {
+                  DEFAULT: "#4ade80",
+                  foreground: "#09090b",
+                },
+                destructive: {
+                  DEFAULT: "#e7000b",
+                  foreground: "#fff7ed",
+                },
+                border: "#e4e4e7",
+                input: "#e4e4e7",
+                ring: "#f14704",
               },
             },
           },
         }}
       >
         <Section className="p-1">
-          <Container className="rounded-lg bg-card p-6 text-card-foreground">
+          <Container className="bg-card text-card-foreground rounded-lg p-6">
             {origin && <Header origin={origin} />}
             {children}
             {origin && <Footer origin={origin} />}

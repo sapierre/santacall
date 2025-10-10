@@ -30,10 +30,10 @@ export const ThemeCustomizer = memo<ThemeCustomizerProps>(
     const { t } = useTranslation("common");
 
     return (
-      <div className="mt-2 flex flex-1 flex-col items-center space-y-4 md:space-y-6">
+      <div className="flex flex-1 flex-col items-center space-y-4 md:space-y-6">
         <div className="w-full space-y-1.5">
           <Label className="text-xs">{t("theme.color.label")}</Label>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-3 gap-2">
             {Object.values(ThemeColor)
               .filter((color) => Object.values(ThemeColor).includes(color))
               .map((color) => {
@@ -41,19 +41,19 @@ export const ThemeCustomizer = memo<ThemeCustomizerProps>(
 
                 return (
                   <Button
-                    variant={"outline"}
+                    variant="outline"
                     size="sm"
                     key={color}
                     onClick={() => onChange({ ...config, color })}
                     className={cn(
-                      "grow basis-[85px] justify-start text-xs capitalize",
-                      isActive && "border-2 border-primary",
+                      "justify-start gap-2 text-xs capitalize",
+                      isActive && "border-primary dark:border-primary border-2",
                     )}
                   >
                     <span
-                      data-theme={color}
                       className={cn(
-                        "mr-1 flex size-5 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-primary",
+                        "bg-primary flex size-4 shrink-0 items-center justify-center rounded-full",
+                        `theme-${color}`,
                       )}
                     ></span>
                     {t(`theme.color.${color}`)}
@@ -64,7 +64,7 @@ export const ThemeCustomizer = memo<ThemeCustomizerProps>(
         </div>
         <div className="w-full space-y-1.5">
           <Label className="text-xs">{t("theme.mode.label")}</Label>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-3 gap-2">
             {Object.values(ThemeMode).map((mode) => {
               const isActive = config.mode === mode;
               const Icon = MODE_ICONS[mode];
@@ -76,11 +76,11 @@ export const ThemeCustomizer = memo<ThemeCustomizerProps>(
                   size="sm"
                   onClick={() => onChange({ ...config, mode })}
                   className={cn(
-                    "grow basis-[85px] justify-start text-xs capitalize",
-                    isActive && "border-2 border-primary",
+                    "justify-start gap-2 text-xs capitalize",
+                    isActive && "border-primary dark:border-primary border-2",
                   )}
                 >
-                  <Icon className="mr-1 size-5 shrink-0 -translate-x-1" />
+                  <Icon className="size-4 shrink-0" />
                   {t(`theme.mode.${mode}`)}
                 </Button>
               );

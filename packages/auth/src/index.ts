@@ -1,3 +1,3 @@
 export * from "./types";
-export * from "./utils";
-export * from "./schema";
+export * from "./lib/utils";
+export * from "./lib/schema";

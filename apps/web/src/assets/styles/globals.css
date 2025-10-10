@@ -1,35 +1,4 @@
 @import "@turbostarter/ui/globals.css";
+@import "@turbostarter/ui-web/globals.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    overscroll-behavior: none;
-  }
-
-  ::selection {
-    @apply bg-primary text-background;
-  }
-
-  ::-webkit-scrollbar {
-    @apply h-2 w-2;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-muted/30;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply rounded-lg bg-muted-foreground/20;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/40;
-  }
-}
+@source "../../../../../packages/ui";

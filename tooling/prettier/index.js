@@ -1,5 +1,3 @@
-import { fileURLToPath } from "url";
-
 /** @typedef {import("prettier").Config} PrettierConfig */
 /** @typedef {import("prettier-plugin-tailwindcss").PluginOptions} TailwindConfig */
 
@@ -11,9 +9,6 @@ const config = {
   useTabs: false,
   printWidth: 80,
   plugins: ["prettier-plugin-tailwindcss"],
-  tailwindConfig: fileURLToPath(
-    new URL("../../tooling/tailwind/config/web.ts", import.meta.url),
-  ),
   tailwindFunctions: ["cn", "cva"],
   overrides: [
     {

@@ -4,10 +4,15 @@ import {
   twoFactorClient,
   anonymousClient,
   passkeyClient,
+  adminClient,
+  organizationClient,
+  inferAdditionalFields,
+  lastLoginMethodClient,
 } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 
 import type { AuthMobileClientOptions } from "..";
+import type { auth } from "../server";
 import type { AuthClientOptions } from "../types";
 
 export const createClient = ({
@@ -21,7 +26,11 @@ export const createClient = ({
       passkeyClient(),
       anonymousClient(),
       magicLinkClient(),
+      lastLoginMethodClient(),
       twoFactorClient(),
+      adminClient(),
+      organizationClient(),
+      inferAdditionalFields<typeof auth>(),
       expoClient(mobile),
     ],
   });

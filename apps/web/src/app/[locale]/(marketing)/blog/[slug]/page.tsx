@@ -1,8 +1,6 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { getContentItemBySlug, getContentItems } from "@turbostarter/cms";
@@ -10,18 +8,18 @@ import { CollectionType } from "@turbostarter/cms";
 import { getTranslation } from "@turbostarter/i18n/server";
 import { badgeVariants } from "@turbostarter/ui-web/badge";
 
+import { BLOG_PREFIX } from "~/config/paths";
+import { getMetadata } from "~/lib/metadata";
+import { Mdx } from "~/modules/common/mdx";
+import { TurboLink } from "~/modules/common/turbo-link";
 import {
   Section,
   SectionDescription,
   SectionHeader,
   SectionTitle,
-} from "~/components/common/layout/section";
-import { Mdx } from "~/components/common/mdx";
-import { BLOG_PREFIX } from "~/config/paths";
-import { getMetadata } from "~/lib/metadata";
+} from "~/modules/marketing/layout/section";
 
 dayjs.extend(duration);
-dayjs.extend(relativeTime);
 
 export default async function Page({
   params,
@@ -44,19 +42,19 @@ export default async function Page({
       <SectionHeader className="max-w-3xl">
         <div className="mr-auto flex flex-wrap gap-1 md:gap-1.5">
           {item.tags.map((tag) => (
-            <Link
+            <TurboLink
               key={tag}
               href={`${BLOG_PREFIX}?tag=${tag}`}
               className={badgeVariants({ variant: "outline" })}
             >
               {t(`blog.tag.${tag}`)}
-            </Link>
+            </TurboLink>
           ))}
         </div>
         <SectionTitle as="h1" className="mt-2 text-left">
           {item.title}
         </SectionTitle>
-        <div className="mr-auto flex flex-wrap items-center gap-1.5 text-muted-foreground">
+        <div className="text-muted-foreground mr-auto flex flex-wrap items-center gap-1.5">
           <time
             className="text-muted-foreground"
             dateTime={item.publishedAt.toISOString()}

@@ -2,6 +2,8 @@ import { zValidator } from "@hono/zod-validator";
 import { env } from "hono/adapter";
 import { createMiddleware } from "hono/factory";
 
+import { getAllRolesAtOrAbove, hasAdminPermission } from "@turbostarter/auth";
+import { MemberRole } from "@turbostarter/auth";
 import { auth } from "@turbostarter/auth/server";
 import { makeZodI18nMap } from "@turbostarter/i18n";
 import {
@@ -30,13 +32,140 @@ export const enforceAuth = createMiddleware<{
 
   if (!user) {
     throw new HttpException(HttpStatusCode.UNAUTHORIZED, {
-      code: "auth:error.unauthorized",
+      code: "error.unauthorized",
     });
   }
 
   c.set("user", user);
   await next();
 });
+
+/**
+ * Reusable middleware that enforces that the authenticated user
+ * has global admin permissions
+ */
+export const enforceAdmin = createMiddleware<{
+  Variables: {
+    user: User;
+  };
+}>(async (c, next) => {
+  const user = c.var.user;
+
+  if (!hasAdminPermission(user)) {
+    throw new HttpException(HttpStatusCode.FORBIDDEN, {
+      code: "error.forbidden",
+    });
+  }
+
+  await next();
+});
+
+/**
+ * Reusable middleware that enforces that the authenticated user
+ * has the specified permissions in the user scope
+ */
+export const enforceUserPermission = ({
+  permissions,
+}: {
+  permissions: NonNullable<
+    Parameters<typeof auth.api.hasPermission>[0]["body"]["permissions"]
+  >;
+}) =>
+  createMiddleware<{ Variables: { user: User } }>(async (c, next) => {
+    const hasPermission = await auth.api.hasPermission({
+      body: {
+        permissions,
+      },
+      headers: c.req.raw.headers,
+    });
+
+    if (!hasPermission.success) {
+      throw new HttpException(HttpStatusCode.FORBIDDEN, {
+        code: "error.forbidden",
+      });
+    }
+
+    await next();
+  });
+
+/**
+ * Middleware to enforce that the authenticated user has the required permissions
+ * for a given organization before allowing access to the route handler.
+ */
+export const enforceOrganizationPermission = ({
+  organizationId,
+  permissions,
+}: {
+  organizationId?: string;
+  permissions: NonNullable<
+    Parameters<typeof auth.api.hasPermission>[0]["body"]["permissions"]
+  >;
+}) =>
+  createMiddleware<{
+    Variables: {
+      user: User;
+    };
+  }>(async (c, next) => {
+    const hasPermission = await auth.api.hasPermission({
+      body: {
+        organizationId,
+        permissions,
+      },
+      headers: c.req.raw.headers,
+    });
+
+    if (!hasPermission.success) {
+      throw new HttpException(HttpStatusCode.FORBIDDEN, {
+        code: "error.forbidden",
+      });
+    }
+
+    await next();
+  });
+
+/**
+ * Middleware to enforce that the authenticated user is at least a member
+ * of the given organization before allowing access to the route handler.
+ */
+export const enforceMembership = ({
+  organizationId,
+  role = MemberRole.MEMBER,
+}: {
+  organizationId: string;
+  role?: MemberRole;
+}) =>
+  createMiddleware<{
+    Variables: {
+      user: User;
+    };
+  }>(async (c, next) => {
+    const user = c.var.user;
+    try {
+      const { members } = await auth.api.listMembers({
+        query: {
+          organizationId,
+          filterField: "userId",
+          filterValue: user.id,
+          filterOperator: "eq",
+        },
+        headers: c.req.raw.headers,
+      });
+
+      const member = members.find((member) => member.userId === user.id);
+
+      if (!member || !getAllRolesAtOrAbove(role).includes(member.role)) {
+        throw new HttpException(HttpStatusCode.FORBIDDEN, {
+          code: "error.forbidden",
+        });
+      }
+    } catch {
+      throw new HttpException(HttpStatusCode.FORBIDDEN, {
+        code: "error.forbidden",
+      });
+    }
+
+    await next();
+  });
 
 /**
  * Middleware for adding an articifial delay in development.
@@ -84,7 +213,7 @@ export const validate = <
   zValidator(
     target,
     schema,
-    async (result, c: Context<{ Variables: { locale?: string } }>) => {
+    async (result, c: Context<{ Variables: { locale?: string } }, string>) => {
       if (!result.success) {
         const { t } = await getTranslation({
           locale: c.var.locale,

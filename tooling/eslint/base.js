@@ -9,9 +9,11 @@ import turboPlugin from "eslint-plugin-turbo";
 import unusedImportsPlugin from "eslint-plugin-unused-imports";
 import tseslint from "typescript-eslint";
 import i18nextPlugin from "eslint-plugin-i18next";
+import { defineConfig } from "eslint/config";
 
-export const restrictEnvAccess = tseslint.config({
+const restrictEnvAccess = defineConfig({
   files: ["**/*.js", "**/*.ts", "**/*.tsx"],
+  ignores: ["**/env*.ts"],
   rules: {
     "no-restricted-properties": [
       "error",
@@ -19,7 +21,7 @@ export const restrictEnvAccess = tseslint.config({
         object: "process",
         property: "env",
         message:
-          "Use `import { env } from '~/env'` instead to ensure validated types.",
+          "Use `import { env } from 'env.config'` instead to ensure validated types.",
       },
     ],
     "no-restricted-imports": [
@@ -28,13 +30,13 @@ export const restrictEnvAccess = tseslint.config({
         name: "process",
         importNames: ["env"],
         message:
-          "Use `import { env } from '~/env'` instead to ensure validated types.",
+          "Use `import { env } from 'env.config'` instead to ensure validated types.",
       },
     ],
   },
 });
 
-export default tseslint.config(
+export default defineConfig(
   // Ignore files not tracked by VCS and any config files
   includeIgnoreFile(
     path.resolve(
@@ -47,8 +49,8 @@ export default tseslint.config(
     files: ["**/*.js", "**/*.ts", "**/*.tsx"],
     plugins: {
       import: importPlugin,
-      turbo: turboPlugin,
       "unused-imports": unusedImportsPlugin,
+      turbo: turboPlugin,
     },
     extends: [
       eslint.configs.recommended,
@@ -74,7 +76,6 @@ export default tseslint.config(
           allowConstantLoopConditions: true,
         },
       ],
-      "@typescript-eslint/no-non-null-assertion": "error",
       "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
       "import/order": [
         "error",
@@ -125,4 +126,5 @@ export default tseslint.config(
     linterOptions: { reportUnusedDisableDirectives: true },
     languageOptions: { parserOptions: { projectService: true } },
   },
+  restrictEnvAccess,
 );

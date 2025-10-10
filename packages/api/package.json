@@ -6,7 +6,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./env": "./src/env.ts",
-    "./utils": "./src/utils/index.ts"
+    "./utils": "./src/utils/index.ts",
+    "./schema": "./src/schema/index.ts"
   },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
@@ -27,7 +28,7 @@
     "@turbostarter/storage": "workspace:*",
     "ai": "5.0.29",
     "envin": "catalog:",
-    "hono": "4.6.15",
+    "hono": "4.9.8",
     "zod": "catalog:"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-properties */
 export const NodeEnv = {
   DEVELOPMENT: "development",
   PRODUCTION: "production",

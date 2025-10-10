@@ -1,97 +1,27 @@
-import { Tabs } from "expo-router";
-import { Easing } from "react-native";
+import { Redirect, Stack } from "expo-router";
 
-import { useTranslation } from "@turbostarter/i18n";
-import { cn } from "@turbostarter/ui";
-import { Icons } from "@turbostarter/ui-mobile/icons";
-import { Text } from "@turbostarter/ui-mobile/text";
-
-import { UserHeader } from "~/components/common/layout/header";
-
-const TabBarLabel = ({
-  children,
-  focused,
-}: {
-  children: string;
-  focused: boolean;
-}) => {
-  return (
-    <Text
-      className={cn("text-xs text-muted-foreground", focused && "text-primary")}
-    >
-      {children}
-    </Text>
-  );
-};
+import { pathsConfig } from "~/config/paths";
+import { authClient } from "~/lib/auth";
+import { Spinner } from "~/modules/common/spinner";
 
 export default function DashboardLayout() {
-  const { t } = useTranslation("common");
+  const session = authClient.useSession();
+
+  if (session.isPending) {
+    return <Spinner modal={false} />;
+  }
+
+  if (!session.data) {
+    return <Redirect href={pathsConfig.index} />;
+  }
 
   return (
-    <Tabs
-      initialRouteName="index"
+    <Stack
       screenOptions={{
-        tabBarStyle: {
-          paddingTop: 6,
-        },
         animation: "fade",
-        transitionSpec: {
-          animation: "timing",
-          config: {
-            duration: 200,
-            easing: Easing.inOut(Easing.ease),
-          },
-        },
+        animationDuration: 200,
+        headerShown: false,
       }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          header: () => <UserHeader />,
-          title: t("home"),
-          tabBarIcon: ({ focused }) => (
-            <Icons.House
-              size={22}
-              className={cn("text-muted-foreground", {
-                "text-primary": focused,
-              })}
-            />
-          ),
-          tabBarLabel: TabBarLabel,
-        }}
-      />
-      <Tabs.Screen
-        name="ai"
-        options={{
-          headerShown: false,
-          title: t("ai"),
-          tabBarIcon: ({ focused }) => (
-            <Icons.WandSparkles
-              size={22}
-              className={cn("text-muted-foreground", {
-                "text-primary": focused,
-              })}
-            />
-          ),
-          tabBarLabel: TabBarLabel,
-        }}
-      />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          headerShown: false,
-          title: t("settings"),
-          tabBarIcon: ({ focused }) => (
-            <Icons.Settings
-              size={22}
-              className={cn("text-muted-foreground", {
-                "text-primary": focused,
-              })}
-            />
-          ),
-          tabBarLabel: TabBarLabel,
-        }}
-      />
-    </Tabs>
+    />
   );
 }

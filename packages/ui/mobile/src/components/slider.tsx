@@ -118,7 +118,7 @@ const SliderPaginationDot = ({
 
   return (
     <Animated.View
-      className={cn("h-3 rounded-full bg-primary opacity-50", className)}
+      className={cn("bg-primary h-3 rounded-full opacity-50", className)}
       style={animatedDot}
       {...props}
     />

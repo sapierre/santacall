@@ -1,6 +1,7 @@
 import { fileURLToPath } from "url";
 import svgr from "vite-plugin-svgr";
 import { type WxtViteConfig, defineConfig } from "wxt";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   manifest: async () => {
@@ -30,6 +31,7 @@ export default defineConfig({
         svgr({
           include: "**/*.svg",
         }),
+        tailwindcss(),
       ],
       define: {
         "process.env": Object.fromEntries(

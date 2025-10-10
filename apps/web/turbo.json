@@ -24,7 +24,6 @@
 
         "EMAIL_PROVIDER",
         "EMAIL_FROM",
-        "EMAIL_THEME",
 
         "RESEND_API_KEY",
 

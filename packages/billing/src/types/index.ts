@@ -1,5 +1,3 @@
-import * as z from "zod";
-
 import {
   billingStatusEnum,
   pricingPlanTypeEnum,
@@ -11,12 +9,25 @@ import type {
   planSchema,
   priceSchema,
 } from "../config/schema";
+import type { EnumToConstant } from "@turbostarter/shared/types";
+import type * as z from "zod";
 
-const billingStatusEnumSchema = z.enum(billingStatusEnum.enumValues);
-const pricingPlanTypeEnumSchema = z.enum(pricingPlanTypeEnum.enumValues);
+export const BillingStatus = Object.fromEntries(
+  Object.values(billingStatusEnum.enumValues).map((status) => [
+    status.toUpperCase(),
+    status,
+  ]),
+) as EnumToConstant<typeof billingStatusEnum.enumValues>;
+export type BillingStatus = (typeof BillingStatus)[keyof typeof BillingStatus];
 
-export const BillingStatus = billingStatusEnumSchema.enum;
-export const PricingPlanType = pricingPlanTypeEnumSchema.enum;
+export const PricingPlanType = Object.fromEntries(
+  Object.values(pricingPlanTypeEnum.enumValues).map((plan) => [
+    plan.toUpperCase(),
+    plan,
+  ]),
+) as EnumToConstant<typeof pricingPlanTypeEnum.enumValues>;
+export type PricingPlanType =
+  (typeof PricingPlanType)[keyof typeof PricingPlanType];
 
 export const BillingModel = {
   ONE_TIME: "one-time",
@@ -42,8 +53,6 @@ export const RecurringIntervalDuration: Record<RecurringInterval, number> = {
   [RecurringInterval.YEAR]: 365,
 };
 
-export type BillingStatus = z.infer<typeof billingStatusEnumSchema>;
-export type PricingPlanType = z.infer<typeof pricingPlanTypeEnumSchema>;
 export type BillingModel = (typeof BillingModel)[keyof typeof BillingModel];
 export type RecurringInterval =
   (typeof RecurringInterval)[keyof typeof RecurringInterval];

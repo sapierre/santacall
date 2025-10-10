@@ -5,64 +5,59 @@ import { cn } from "@turbostarter/ui";
 
 import { TextClassContext } from "./text";
 
-const Tabs = TabsPrimitive.Root;
+function Tabs({
+  className,
+  ...props
+}: TabsPrimitive.RootProps & React.RefAttributes<TabsPrimitive.RootRef>) {
+  return (
+    <TabsPrimitive.Root
+      className={cn("flex flex-col gap-4", className)}
+      {...props}
+    />
+  );
+}
 
-const TabsList = React.forwardRef<
-  TabsPrimitive.ListRef,
-  TabsPrimitive.ListProps
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.List
-    ref={ref}
-    className={cn(
-      "web:inline-flex native:h-12 native:px-1.5 h-10 items-center justify-center rounded-md bg-muted p-1",
-      className,
-    )}
-    {...props}
-  />
-));
-TabsList.displayName = TabsPrimitive.List.displayName;
+function TabsList({
+  className,
+  ...props
+}: TabsPrimitive.ListProps & React.RefAttributes<TabsPrimitive.ListRef>) {
+  return (
+    <TabsPrimitive.List
+      className={cn(
+        "bg-muted mr-auto flex h-12 flex-row items-center justify-center rounded-lg p-[3px]",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
 
-const TabsTrigger = React.forwardRef<
-  TabsPrimitive.TriggerRef,
-  TabsPrimitive.TriggerProps
->(({ className, ...props }, ref) => {
+function TabsTrigger({
+  className,
+  ...props
+}: TabsPrimitive.TriggerProps & React.RefAttributes<TabsPrimitive.TriggerRef>) {
   const { value } = TabsPrimitive.useRootContext();
   return (
     <TextClassContext.Provider
       value={cn(
-        "native:text-base web:transition-all text-sm font-medium text-muted-foreground",
-        value === props.value && "text-foreground",
+        "text-foreground dark:text-muted-foreground font-sans-medium",
+        value === props.value && "dark:text-foreground",
       )}
     >
       <TabsPrimitive.Trigger
-        ref={ref}
         className={cn(
-          "web:whitespace-nowrap web:ring-offset-background web:transition-all web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2 inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium shadow-none",
-          props.disabled && "web:pointer-events-none opacity-50",
+          "flex h-[calc(100%-1px)] flex-row items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 shadow-none shadow-black/5",
+          props.disabled && "opacity-50",
           props.value === value &&
-            "bg-background shadow-lg shadow-foreground/10",
+            "bg-background dark:border-foreground/10 dark:bg-input/30 shadow-xs",
           className,
         )}
         {...props}
       />
     </TextClassContext.Provider>
   );
-});
-TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
+}
 
-const TabsContent = React.forwardRef<
-  TabsPrimitive.ContentRef,
-  TabsPrimitive.ContentProps
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content
-    ref={ref}
-    className={cn(
-      "web:ring-offset-background web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2",
-      className,
-    )}
-    {...props}
-  />
-));
-TabsContent.displayName = TabsPrimitive.Content.displayName;
+const TabsContent = TabsPrimitive.Content;
 
 export { Tabs, TabsContent, TabsList, TabsTrigger };

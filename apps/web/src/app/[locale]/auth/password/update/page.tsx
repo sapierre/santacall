@@ -1,11 +1,8 @@
 import { getTranslation } from "@turbostarter/i18n/server";
 
-import {
-  AuthLayout,
-  AuthHeader,
-  UpdatePasswordForm,
-} from "~/components/auth/auth";
 import { getMetadata } from "~/lib/metadata";
+import { UpdatePasswordForm } from "~/modules/auth/form/password/update";
+import { AuthHeader } from "~/modules/auth/layout/header";
 
 export const generateMetadata = getMetadata({
   title: "auth:account.password.update.title",
@@ -23,13 +20,11 @@ const UpdatePassword = async ({ searchParams }: UpdatePasswordPageProps) => {
 
   return (
     <>
-      <AuthLayout>
-        <AuthHeader
-          title={t("account.password.update.header.title")}
-          description={t("account.password.update.header.description")}
-        />
-        <UpdatePasswordForm token={token} />
-      </AuthLayout>
+      <AuthHeader
+        title={t("account.password.update.header.title")}
+        description={t("account.password.update.header.description")}
+      />
+      <UpdatePasswordForm token={token} />
     </>
   );
 };

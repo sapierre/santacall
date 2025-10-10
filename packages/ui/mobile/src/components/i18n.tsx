@@ -43,12 +43,12 @@ export const LocaleCustomizer = ({ onChange }: LocaleCustomizerProps) => {
               size="sm"
               onPress={() => handleLocaleChange(locale)}
               className={cn(
-                "h-11 grow basis-[85px] flex-row justify-start gap-2 px-3",
-                locale === lang && "border-2 border-primary",
+                "h-11 grow basis-[85px] flex-row justify-start gap-3 px-3",
+                locale === lang && "border-primary border-2",
               )}
             >
               <Icon className="size-5" />
-              <Text className="text-xs capitalize">{LocaleLabel[locale]}</Text>
+              <Text className="text-sm capitalize">{LocaleLabel[locale]}</Text>
             </Button>
           );
         })}

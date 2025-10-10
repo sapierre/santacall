@@ -2,7 +2,14 @@ import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
-import { anonymous, magicLink, twoFactor } from "better-auth/plugins";
+import {
+  anonymous,
+  magicLink,
+  twoFactor,
+  organization,
+  admin,
+  lastLoginMethod,
+} from "better-auth/plugins";
 import { passkey } from "better-auth/plugins/passkey";
 
 import * as schema from "@turbostarter/db/schema";
@@ -12,7 +19,8 @@ import { sendEmail } from "@turbostarter/email/server";
 import { getLocaleFromRequest } from "@turbostarter/i18n/server";
 
 import { env } from "./env";
-import { SocialProvider } from "./types";
+import { getUrl } from "./lib/utils";
+import { AuthProvider, SocialProvider, VerificationType } from "./types";
 
 export const auth = betterAuth({
   appName: "TurboStarter",
@@ -31,7 +39,11 @@ export const auth = betterAuth({
           template: EmailTemplate.DELETE_ACCOUNT,
           locale: getLocaleFromRequest(request),
           variables: {
-            url: url,
+            url: getUrl({
+              request,
+              url,
+              type: VerificationType.DELETE_ACCOUNT,
+            }).toString(),
           },
         }),
     },
@@ -43,7 +55,11 @@ export const auth = betterAuth({
           template: EmailTemplate.CHANGE_EMAIL,
           locale: getLocaleFromRequest(request),
           variables: {
-            url,
+            url: getUrl({
+              request,
+              url,
+              type: VerificationType.CONFIRM_EMAIL,
+            }).toString(),
           },
         }),
     },
@@ -76,31 +92,73 @@ export const auth = betterAuth({
         template: EmailTemplate.CONFIRM_EMAIL,
         locale: getLocaleFromRequest(request),
         variables: {
-          url,
+          url: getUrl({
+            request,
+            url,
+            type: VerificationType.CONFIRM_EMAIL,
+          }).toString(),
         },
       }),
   },
   database: drizzleAdapter(db, {
     provider: "pg",
-    usePlural: true,
     schema,
   }),
   plugins: [
     magicLink({
-      sendMagicLink: async ({ email, url, token }, request) =>
+      sendMagicLink: async ({ email, url }, request) =>
         sendEmail({
           to: email,
           template: EmailTemplate.MAGIC_LINK,
           locale: getLocaleFromRequest(request),
           variables: {
-            url,
-            token,
+            url: getUrl({
+              request,
+              url,
+              type: VerificationType.MAGIC_LINK,
+            }).toString(),
           },
         }),
     }),
     passkey(),
     twoFactor(),
     anonymous(),
+    admin(),
+    organization({
+      sendInvitationEmail: async (
+        { invitation, inviter, organization },
+        request,
+      ) => {
+        const url = getUrl({
+          request,
+        });
+        url.searchParams.set("invitationId", invitation.id);
+        url.searchParams.set("email", invitation.email);
+
+        return sendEmail({
+          to: invitation.email,
+          template: EmailTemplate.ORGANIZATION_INVITATION,
+          locale: getLocaleFromRequest(request),
+          variables: {
+            url: url.toString(),
+            inviter: inviter.user.name,
+            organization: organization.name,
+          },
+        });
+      },
+    }),
+    lastLoginMethod({
+      customResolveMethod: (ctx) => {
+        switch (ctx.path) {
+          case "/magic-link/verify":
+            return AuthProvider.MAGIC_LINK;
+          case "/passkey/verify-authentication":
+            return AuthProvider.PASSKEY;
+          default:
+            return null;
+        }
+      },
+    }),
     expo(),
     nextCookies(),
   ],
@@ -120,3 +178,9 @@ export const auth = betterAuth({
 });
 
 export type AuthErrorCode = keyof typeof auth.$ERROR_CODES;
+export type Session = typeof auth.$Infer.Session;
+export type User = Session["user"];
+export type Invitation = typeof auth.$Infer.Invitation;
+export type Organization = typeof auth.$Infer.Organization;
+export type ActiveOrganization = typeof auth.$Infer.ActiveOrganization;
+export type Member = typeof auth.$Infer.Member;

@@ -1,6 +1,4 @@
-import baseConfig, {
-  restrictEnvAccess,
-} from "@turbostarter/eslint-config/base";
+import baseConfig from "@turbostarter/eslint-config/base";
 import nextConfig from "@turbostarter/eslint-config/next";
 import reactConfig from "@turbostarter/eslint-config/react";
 
@@ -12,5 +10,4 @@ export default [
   ...baseConfig,
   ...reactConfig,
   ...nextConfig,
-  ...restrictEnvAccess,
 ];

@@ -1,15 +1,15 @@
 import { getTranslation } from "@turbostarter/i18n/server";
 import { withI18n } from "@turbostarter/i18n/with-i18n";
 
+import { getMetadata } from "~/lib/metadata";
+import { ContactForm } from "~/modules/marketing/contact/contact-form";
 import {
   Section,
   SectionBadge,
   SectionDescription,
   SectionHeader,
   SectionTitle,
-} from "~/components/common/layout/section";
-import { ContactForm } from "~/components/marketing/contact/contact-form";
-import { getMetadata } from "~/lib/metadata";
+} from "~/modules/marketing/layout/section";
 
 export const generateMetadata = getMetadata({
   title: "marketing:contact.label",

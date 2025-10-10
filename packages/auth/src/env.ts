@@ -14,6 +14,9 @@ export const preset = {
     GITHUB_CLIENT_SECRET: z.string().optional().default(""),
     GOOGLE_CLIENT_ID: z.string().optional().default(""),
     GOOGLE_CLIENT_SECRET: z.string().optional().default(""),
+
+    SEED_EMAIL: z.email().optional().default("me@turbostarter.dev"),
+    SEED_PASSWORD: z.string().optional().default("Pa$$w0rd"),
   },
 } as const satisfies Preset;
 

@@ -1,5 +1,5 @@
-import { Main } from "~/components/common/main";
-import { Layout, render } from "~/components/layout/layout";
+import { Layout, render } from "~/modules/common/layout/layout";
+import { Main } from "~/modules/common/main";
 
 const Options = () => {
   return (

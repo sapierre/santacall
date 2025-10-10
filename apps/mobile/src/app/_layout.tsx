@@ -2,6 +2,7 @@ import { useReactNavigationDevTools } from "@dev-plugins/react-navigation";
 import {
   Geist_400Regular,
   Geist_500Medium,
+  Geist_600SemiBold,
   Geist_700Bold,
   useFonts,
 } from "@expo-google-fonts/geist";
@@ -11,10 +12,10 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
 import "~/assets/styles/globals.css";
-import { useSession } from "~/lib/auth";
-import { useTheme } from "~/lib/hooks/use-theme";
+import { authClient } from "~/lib/auth";
 import "~/lib/polyfills";
-import { Providers } from "~/providers/providers";
+import { Providers } from "~/lib/providers/providers";
+import { useTheme } from "~/modules/common/hooks/use-theme";
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -29,7 +30,31 @@ const RootNavigator = () => {
     navigationRef as Parameters<typeof useReactNavigationDevTools>[0],
   );
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        animation: "fade",
+        animationDuration: 200,
+      }}
+    />
+  );
+};
+
+const useSetupAuth = () => {
+  const session = authClient.useSession();
+  const activeOrganization = authClient.useActiveOrganization();
+  const activeMember = authClient.useActiveMember();
+
+  if (session.isPending) {
+    return false;
+  }
+
+  if (!session.data) {
+    return true;
+  }
+
+  return !activeOrganization.isPending && !activeMember.isPending;
 };
 
 const RootLayout = () => {
@@ -37,26 +62,21 @@ const RootLayout = () => {
     GeistMono_400Regular,
     Geist_400Regular,
     Geist_500Medium,
+    Geist_600SemiBold,
     Geist_700Bold,
   });
 
-  const { isPending: sessionPending } = useSession();
+  const authLoaded = useSetupAuth();
   const { loaded: themeLoaded, setupTheme } = useTheme();
 
-  const loaded = fontsLoaded && themeLoaded && !sessionPending;
+  const loaded = fontsLoaded && themeLoaded && authLoaded;
 
   useEffect(() => {
     void setupTheme();
   }, [setupTheme]);
 
-  useEffect(() => {
-    if (loaded) {
-      void SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
+  if (loaded) {
+    SplashScreen.hide();
   }
 
   return <RootNavigator />;

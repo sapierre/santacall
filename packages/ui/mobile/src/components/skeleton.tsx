@@ -13,8 +13,9 @@ const duration = 1000;
 
 function Skeleton({
   className,
+  style,
   ...props
-}: Omit<React.ComponentPropsWithoutRef<typeof Animated.View>, "style">) {
+}: React.ComponentPropsWithoutRef<typeof Animated.View>) {
   const sv = useSharedValue(1);
 
   React.useEffect(() => {
@@ -25,14 +26,14 @@ function Skeleton({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const style = useAnimatedStyle(() => ({
+  const animatedStyle = useAnimatedStyle(() => ({
     opacity: sv.value,
   }));
 
   return (
     <Animated.View
-      style={style}
-      className={cn("rounded-md bg-secondary dark:bg-muted", className)}
+      style={[animatedStyle, style]}
+      className={cn("bg-secondary dark:bg-muted rounded-md", className)}
       {...props}
     />
   );

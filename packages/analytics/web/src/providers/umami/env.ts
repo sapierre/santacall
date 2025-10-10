@@ -22,6 +22,7 @@ export const env = defineEnv({
   ...envConfig,
   ...preset,
   env: {
+    ...process.env,
     NEXT_PUBLIC_UMAMI_HOST: process.env.NEXT_PUBLIC_UMAMI_HOST,
     NEXT_PUBLIC_UMAMI_WEBSITE_ID: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
   },

@@ -2,7 +2,7 @@
 import { defineEnv } from "envin";
 import * as z from "zod";
 
-import { envConfig } from "@turbostarter/shared/constants";
+import { envConfig, NodeEnv } from "@turbostarter/shared/constants";
 
 import type { Preset } from "envin/types";
 
@@ -16,7 +16,11 @@ export const preset = {
 export const env = defineEnv({
   ...envConfig,
   ...preset,
+  shared: {
+    NODE_ENV: z.enum(NodeEnv).default(NodeEnv.DEVELOPMENT),
+  },
   env: {
+    ...process.env,
     NEXT_PUBLIC_MIXPANEL_TOKEN: process.env.NEXT_PUBLIC_MIXPANEL_TOKEN,
   },
 });

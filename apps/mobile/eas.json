@@ -13,7 +13,7 @@
       "env": {
         "EXPO_PUBLIC_DEFAULT_LOCALE": "en",
         "EXPO_PUBLIC_AUTH_PASSWORD": "true",
-        "EXPO_PUBLIC_AUTH_MAGIC_LINK": "false",
+        "EXPO_PUBLIC_AUTH_MAGIC_LINK": "true",
         "EXPO_PUBLIC_AUTH_ANONYMOUS": "true",
         "EXPO_PUBLIC_THEME_MODE": "system",
         "EXPO_PUBLIC_THEME_COLOR": "orange"

@@ -22,6 +22,11 @@
       "startsWith": "Debe comenzar con {{startsWith}}",
       "endsWith": "Debe terminar con {{endsWith}}"
     },
+    "file": {
+      "type": "Solo se aceptan archivos {{type}}.",
+      "maxCount_one": "Solo puedes subir {{count}} archivo.",
+      "maxCount_other": "Solo puedes subir hasta {{count}} archivos."
+    },
     "tooSmall": {
       "array": {
         "inclusive": "Debe contener al menos {{minimum}} elemento(s)",
@@ -58,6 +63,10 @@
       "date": {
         "inclusive": "La fecha debe ser igual o posterior a {{- minimum, datetime}}",
         "notInclusive": "La fecha debe ser posterior a {{- minimum, datetime}}"
+      },
+      "file": {
+        "inclusive": "El tamaño del archivo debe ser menor a {{maximum}}MB",
+        "notInclusive": "El tamaño del archivo debe ser menor a {{maximum}}MB"
       }
     },
     "tooBig": {
@@ -96,6 +105,10 @@
       "date": {
         "inclusive": "La fecha debe ser igual o anterior a {{- maximum, datetime}}",
         "notInclusive": "La fecha debe ser anterior a {{- maximum, datetime}}"
+      },
+      "file": {
+        "inclusive": "El tamaño del archivo debe ser menor a {{maximum}}MB",
+        "notInclusive": "El tamaño del archivo debe ser menor a {{maximum}}MB"
       }
     }
   },

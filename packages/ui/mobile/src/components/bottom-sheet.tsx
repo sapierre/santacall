@@ -1,29 +1,39 @@
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
-  BottomSheetFlatList as GBottomSheetFlatList,
   BottomSheetFooter as GBottomSheetFooter,
-  BottomSheetTextInput as GBottomSheetTextInput,
   BottomSheetView as GBottomSheetView,
   useBottomSheetModal,
+} from "@gorhom/bottom-sheet";
+import {
+  SCROLLABLE_TYPE,
+  createBottomSheetScrollableComponent,
 } from "@gorhom/bottom-sheet";
 import { useTheme } from "@react-navigation/native";
 import * as Slot from "@rn-primitives/slot";
 import * as React from "react";
-import { Keyboard, Pressable, View } from "react-native";
+import { memo } from "react";
+import { Keyboard, Platform, Pressable, View } from "react-native";
+import { styled } from "react-native-css/native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import Reanimated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { cn } from "@turbostarter/ui";
 
-import { Button } from "./button";
-import { Icons } from "./icons";
+import { Text } from "./text";
 
+import type {
+  BottomSheetScrollViewMethods,
+  BottomSheetScrollView as GBottomSheetScrollView,
+} from "@gorhom/bottom-sheet";
 import type {
   BottomSheetBackdropProps,
   BottomSheetFooterProps as GBottomSheetFooterProps,
 } from "@gorhom/bottom-sheet";
 import type { BottomSheetModalMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import type { GestureResponderEvent, ViewStyle } from "react-native";
+import type { KeyboardAwareScrollViewProps } from "react-native-keyboard-controller";
 
 interface BottomSheetContext {
   sheetRef: React.RefObject<BottomSheetModal | null>;
@@ -185,16 +195,23 @@ function BottomSheetView({
   style?: ViewStyle;
 }) {
   const insets = useSafeAreaInsets();
+  const paddingBottom =
+    insets.bottom +
+    (Platform.select({
+      ios: 4,
+      android: 16,
+    }) ?? 0) +
+    (hadHeader ? BOTTOM_SHEET_HEADER_HEIGHT : 0);
+
   return (
     <GBottomSheetView
       style={[
         {
-          paddingBottom:
-            insets.bottom + (hadHeader ? BOTTOM_SHEET_HEADER_HEIGHT : 0),
+          paddingBottom,
         },
         style,
       ]}
-      className={cn(`h-full px-4`, className)}
+      className={cn(`gap-4 px-6 pt-4`, className)}
       {...props}
     >
       {children}
@@ -202,61 +219,78 @@ function BottomSheetView({
   );
 }
 
-function BottomSheetTextInput({
-  className,
-  placeholderClassName,
-  ...props
-}: React.ComponentProps<typeof GBottomSheetTextInput>) {
-  return (
-    <GBottomSheetTextInput
-      className={cn(
-        "h-14 items-center rounded-md border border-input bg-background px-3 text-xl leading-[1.25] text-foreground placeholder:text-muted-foreground disabled:opacity-50",
-        className,
-      )}
-      placeholderClassName={cn("text-muted-foreground", placeholderClassName)}
-      {...props}
-    />
-  );
-}
+type BottomSheetScrollViewProps = Omit<
+  React.ComponentPropsWithoutRef<typeof GBottomSheetScrollView>,
+  "style"
+> & {
+  hadHeader?: boolean;
+  className?: string;
+  contentContainerClassName?: string;
+  style?: ViewStyle;
+};
 
-function BottomSheetFlatList({
+const BottomSheetKeyboardAwareScrollView = memo(
+  createBottomSheetScrollableComponent<
+    BottomSheetScrollViewMethods,
+    BottomSheetScrollViewProps
+  >(
+    SCROLLABLE_TYPE.SCROLLVIEW,
+    Reanimated.createAnimatedComponent<KeyboardAwareScrollViewProps>(
+      KeyboardAwareScrollView,
+    ),
+  ),
+);
+
+const StyledBottomSheetKeyboardAwareScrollView = styled(
+  BottomSheetKeyboardAwareScrollView,
+  {
+    className: "style",
+    contentContainerClassName: "contentContainerStyle",
+  },
+) as typeof BottomSheetKeyboardAwareScrollView;
+
+function BottomSheetScrollView({
+  children,
+  hadHeader = false,
+  style,
   className,
+  contentContainerClassName,
   ...props
-}: React.ComponentProps<typeof GBottomSheetFlatList>) {
+}: BottomSheetScrollViewProps) {
   const insets = useSafeAreaInsets();
+  const paddingBottom =
+    insets.bottom +
+    (Platform.select({
+      ios: 8,
+      android: 16,
+    }) ?? 0) +
+    (hadHeader ? BOTTOM_SHEET_HEADER_HEIGHT : 0);
+
   return (
-    <GBottomSheetFlatList
-      contentContainerStyle={[{ paddingBottom: insets.bottom }]}
-      className={cn("py-4", className)}
+    <StyledBottomSheetKeyboardAwareScrollView
+      className={cn("h-full px-6 pt-4", className)}
+      contentContainerClassName={cn("gap-4", contentContainerClassName)}
       keyboardShouldPersistTaps="handled"
+      bounces={false}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={[
+        {
+          paddingBottom,
+        },
+        style,
+      ]}
       {...props}
-    />
+    >
+      {children}
+    </StyledBottomSheetKeyboardAwareScrollView>
   );
 }
 
 function BottomSheetHeader({
   className,
-  children,
   ...props
 }: React.ComponentProps<typeof View>) {
-  const { dismiss } = useBottomSheetModal();
-  function close() {
-    if (Keyboard.isVisible()) {
-      Keyboard.dismiss();
-    }
-    dismiss();
-  }
-  return (
-    <View
-      className={cn("flex-row items-center justify-between pl-4", className)}
-      {...props}
-    >
-      {children}
-      <Button onPress={close} variant="ghost" className="pr-4">
-        <Icons.X className="text-muted-foreground" size={20} />
-      </Button>
-    </View>
-  );
+  return <View className={cn("items-start gap-0.5", className)} {...props} />;
 }
 
 /**
@@ -278,12 +312,41 @@ function BottomSheetFooter({
     <GBottomSheetFooter {...bottomSheetFooterProps}>
       <View
         style={[{ paddingBottom: insets.bottom + 6 }, style]}
-        className={cn("px-4 pt-1.5", className)}
+        className={cn("px-6 pt-1.5", className)}
         {...props}
       >
         {children}
       </View>
     </GBottomSheetFooter>
+  );
+}
+
+function BottomSheetTitle({
+  className,
+  ...props
+}: React.ComponentProps<typeof Text>) {
+  return (
+    <Text
+      role="heading"
+      aria-level={3}
+      className={cn(
+        "font-sans-semibold text-xl leading-none tracking-tight",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function BottomSheetDescription({
+  className,
+  ...props
+}: React.ComponentProps<typeof Text>) {
+  return (
+    <Text
+      className={cn("text-muted-foreground text-sm leading-none", className)}
+      {...props}
+    />
   );
 }
 
@@ -305,12 +368,13 @@ export {
   BottomSheet,
   BottomSheetCloseTrigger,
   BottomSheetContent,
-  BottomSheetFlatList,
   BottomSheetFooter,
+  BottomSheetScrollView,
   BottomSheetHeader,
   BottomSheetOpenTrigger,
-  BottomSheetTextInput,
   BottomSheetView,
+  BottomSheetTitle,
+  BottomSheetDescription,
   type BottomSheetContentRef,
   useBottomSheet,
 };

@@ -13,9 +13,11 @@
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "db:check": "drizzle-kit check",
     "db:generate": "drizzle-kit generate && eslint --fix && prettier --write . --ignore-path ../../.gitignore",
+    "db:seed": "pnpm dlx tsx ./src/scripts/seed.ts",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:setup": "pnpm db:migrate",
+    "db:setup": "turbo db:migrate && turbo db:seed",
+    "db:reset": "pnpm dlx tsx ./src/scripts/reset.ts",
     "db:studio": "drizzle-kit studio",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
@@ -24,8 +26,8 @@
   "prettier": "@turbostarter/prettier-config",
   "dependencies": {
     "@turbostarter/shared": "workspace:*",
-    "drizzle-orm": "0.38.3",
-    "drizzle-zod": "0.7.0",
+    "drizzle-orm": "0.44.5",
+    "drizzle-zod": "0.8.3",
     "envin": "catalog:",
     "postgres": "3.4.4",
     "zod": "catalog:"
@@ -34,7 +36,8 @@
     "@turbostarter/eslint-config": "workspace:*",
     "@turbostarter/prettier-config": "workspace:*",
     "@turbostarter/tsconfig": "workspace:*",
-    "drizzle-kit": "0.30.1",
+    "drizzle-kit": "0.31.5",
+    "drizzle-seed": "0.3.1",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"

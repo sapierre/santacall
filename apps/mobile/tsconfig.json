@@ -6,7 +6,6 @@
       "~/*": ["./src/*"]
     },
     "jsx": "react-jsx",
-    "types": ["nativewind/types"],
     "checkJs": false
   },
   "include": [

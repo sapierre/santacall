@@ -7,13 +7,13 @@ import type { ButtonProps as ReactEmailButtonProps } from "@react-email/componen
 import type { VariantProps } from "class-variance-authority";
 
 export const buttonVariants = cva(
-  "block whitespace-nowrap rounded-md text-center text-sm font-medium",
+  "block rounded-md text-center text-sm font-medium whitespace-nowrap",
   {
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground",
         destructive: "bg-destructive text-destructive-foreground",
-        outline: "border border-input bg-background",
+        outline: "border-input bg-background border",
         secondary: "bg-secondary text-secondary-foreground",
         link: "text-primary underline-offset-4",
       },

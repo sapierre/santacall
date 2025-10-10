@@ -4,10 +4,12 @@ import { csrf } from "hono/csrf";
 import { logger } from "hono/logger";
 
 import { localize, timing } from "./middleware";
-import { aiRouter } from "./modules/ai/ai.router";
-import { authRouter } from "./modules/auth/auth.router";
-import { billingRouter } from "./modules/billing/billing.router";
-import { storageRouter } from "./modules/storage/storage.router";
+import { adminRouter } from "./modules/admin/router";
+import { aiRouter } from "./modules/ai/router";
+import { authRouter } from "./modules/auth/router";
+import { billingRouter } from "./modules/billing/router";
+import { organizationRouter } from "./modules/organization/router";
+import { storageRouter } from "./modules/storage/router";
 import { onError } from "./utils/on-error";
 
 const appRouter = new Hono()
@@ -26,9 +28,11 @@ const appRouter = new Hono()
   )
   .use(timing)
   .use(localize)
+  .route("/admin", adminRouter)
   .route("/ai", aiRouter)
   .route("/auth", authRouter)
   .route("/billing", billingRouter)
+  .route("/organizations", organizationRouter)
   .route("/storage", storageRouter)
   .onError(onError);
 

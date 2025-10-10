@@ -8,7 +8,7 @@ import type { Preset } from "envin/types";
 export const sharedPreset = {
   id: "shared",
   server: {
-    EMAIL_FROM: z.email(),
+    EMAIL_FROM: z.string(),
   },
 } as const satisfies Preset;
 

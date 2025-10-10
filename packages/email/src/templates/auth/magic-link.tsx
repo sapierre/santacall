@@ -14,27 +14,25 @@ import type {
 
 type Props = EmailVariables[typeof EmailTemplate.MAGIC_LINK] & CommonEmailProps;
 
-export const MagicLink = async ({ url, token, locale }: Props) => {
+export const MagicLink = async ({ url, locale }: Props) => {
   const { t } = await getTranslation({ locale, ns: "auth" });
   const { origin } = new URL(url);
 
   return (
     <Layout origin={origin} locale={locale}>
       <Preview>{t("login.magicLink.email.preview")}</Preview>
-      <Heading className="tracking-tight">
+      <Heading className="leading-tight tracking-tight">
         {t("login.magicLink.email.subject")}
       </Heading>
 
       <Text>{t("login.magicLink.email.body")}</Text>
 
-      <Button href={`${url}?token=${token}`}>
-        {t("login.magicLink.email.cta")}
-      </Button>
+      <Button href={url}>{t("login.magicLink.email.cta")}</Button>
 
       <Text>{t("login.magicLink.email.or")}</Text>
 
-      <code className="inline-block rounded-md border border-solid border-border bg-muted px-5 py-3.5 font-mono text-xs">
-        {`${url}?token=${token}`}
+      <code className="border-border bg-muted inline-block rounded-md border border-solid px-5 py-3.5 font-mono text-xs">
+        {url}
       </code>
 
       <Text className="text-muted-foreground">

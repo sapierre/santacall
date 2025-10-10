@@ -15,5 +15,28 @@ const isExternal = (url: string) =>
     url.startsWith(protocol),
   );
 
-export { hslToHex, isExternal };
-export { capitalize, mapValues, transform } from "lodash";
+const mergeSearchParams = (
+  target: URL,
+  source: URL,
+  options?: { overwrite?: boolean; replace?: boolean },
+) => {
+  const overwrite = options?.overwrite ?? false;
+  const replace = options?.replace ?? false;
+
+  if (replace) {
+    target.search = source.search;
+    return;
+  }
+
+  source.searchParams.forEach((value, key) => {
+    if (overwrite || !target.searchParams.has(key)) {
+      target.searchParams.set(key, value);
+    }
+  });
+};
+
+export { hslToHex, isExternal, mergeSearchParams };
+export { default as capitalize } from "lodash/capitalize";
+export { default as mapValues } from "lodash/mapValues";
+export { default as pickBy } from "lodash/pickBy";
+export { default as slugify } from "slugify";

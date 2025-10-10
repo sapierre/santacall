@@ -1,29 +1,17 @@
 // Learn more: https://docs.expo.dev/guides/monorepos/
 const { getDefaultConfig } = require("expo/metro-config");
 const { FileStore } = require("metro-cache");
-const { withNativeWind } = require("nativewind/metro");
+const { withNativewind } = require("nativewind/metro");
 
 const path = require("path");
 
 const config = withTurborepoManagedCache(
-  withMonorepoPaths(
-    withNativeWind(getDefaultConfig(__dirname), {
-      input: "./src/assets/styles/globals.css",
-      configPath: "./tailwind.config.ts",
-    }),
-  ),
+  withMonorepoPaths(withNativewind(getDefaultConfig(__dirname))),
 );
 
 // Force resolving nested modules to the folders below
 // https://github.com/nativewind/nativewind/issues/734
 config.resolver.disableHierarchicalLookup = true;
-
-// https://github.com/pmndrs/zustand/discussions/1967
-config.resolver.unstable_conditionNames = [
-  "browser",
-  "require",
-  "react-native",
-];
 
 const { transformer, resolver } = config;
 

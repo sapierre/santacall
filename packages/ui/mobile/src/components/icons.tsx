@@ -23,14 +23,18 @@ import {
   Atom,
   Brain,
   Loader,
+  Plus,
   ChevronRight,
   Share2,
   Download,
   Bell,
   ThumbsUp,
   Lock,
+  Building,
   ChevronLeft,
   X,
+  UserRoundPlus,
+  ListFilter,
   Copy,
   Languages,
   IdCard,
@@ -39,17 +43,22 @@ import {
   ChevronsUpDown,
   Workflow,
   LogOut,
+  MailPlus,
   Trash,
   Trash2,
   ShieldCheck,
   Pencil,
   TrendingUp,
+  UsersRound,
+  MonitorSmartphone,
 } from "lucide-react-native";
-import { cssInterop } from "nativewind";
+import { styled } from "react-native-css";
 
 import { Icons as GlobalIcons } from "@turbostarter/ui/assets";
 
-export const Icons = {
+import type { LucideIcon } from "lucide-react-native";
+
+const icons = {
   ...GlobalIcons,
   ArrowRight,
   ArrowLeft,
@@ -63,6 +72,7 @@ export const Icons = {
   Key,
   ChevronDown,
   ChevronUp,
+  Building,
   Settings,
   Sun,
   SunMoon,
@@ -77,6 +87,8 @@ export const Icons = {
   Atom,
   Brain,
   Loader,
+  Plus,
+  MailPlus,
   ChevronRight,
   Share2,
   Download,
@@ -84,6 +96,7 @@ export const Icons = {
   ThumbsUp,
   Lock,
   ChevronLeft,
+  ListFilter,
   X,
   Languages,
   IdCard,
@@ -96,20 +109,21 @@ export const Icons = {
   ShieldCheck,
   Copy,
   TrendingUp,
+  UsersRound,
+  UserRoundPlus,
+  MonitorSmartphone,
 };
+
+const Icons = {} as {
+  [K in keyof typeof icons]: (typeof icons)[K];
+};
+
+(Object.keys(icons) as (keyof typeof icons)[]).forEach((key) => {
+  Icons[key] = styled(icons[key], {
+    className: "style",
+  }) as LucideIcon & React.FC<React.SVGProps<SVGElement>>;
+});
 
 export type Icon = (typeof Icons)[keyof typeof Icons];
 
-export function iconWithClassName(icon: Icon) {
-  cssInterop(icon, {
-    className: {
-      target: "style",
-      nativeStyleToProp: {
-        color: true,
-        opacity: true,
-      },
-    },
-  });
-}
-
-Object.values(Icons).forEach(iconWithClassName);
+export { Icons };

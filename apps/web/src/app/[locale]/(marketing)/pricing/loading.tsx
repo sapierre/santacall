@@ -1,4 +1,4 @@
-import { PricingSectionSkeleton } from "~/components/marketing/pricing/section";
+import { PricingSectionSkeleton } from "~/modules/billing/pricing/section";
 
 const PricingLoadingPage = () => {
   return <PricingSectionSkeleton />;

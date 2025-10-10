@@ -25,11 +25,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   newArchEnabled: true,
   ios: {
-    bundleIdentifier: "core.turbostarter.dev",
+    bundleIdentifier: "com.turbostarter.core",
     supportsTablet: false,
   },
   android: {
-    package: "core.turbostarter.dev",
+    package: "com.turbostarter.core",
     adaptiveIcon: {
       monochromeImage: "./public/images/icon/android/monochrome.png",
       foregroundImage: "./public/images/icon/android/adaptive.png",
@@ -52,6 +52,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     "expo-secure-store",
     "expo-build-properties",
     "expo-image-picker",
+    "expo-web-browser",
     /* required to enable i18n */
     "expo-localization",
     [

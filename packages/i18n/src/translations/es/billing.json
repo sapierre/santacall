@@ -18,6 +18,7 @@
     "description": "Gestiona tu facturación y suscripción."
   },
   "subscribe": "Suscribirse ahora",
+  "updatePlan": "Actualizar plan",
   "getLifetimeAccess": "Obtener acceso de por vida",
   "interval": {
     "day": "día",

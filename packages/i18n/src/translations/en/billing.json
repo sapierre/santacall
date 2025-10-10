@@ -18,6 +18,7 @@
     "description": "Manage your billing and subscription."
   },
   "subscribe": "Subscribe now",
+  "updatePlan": "Update plan",
   "getLifetimeAccess": "Get lifetime access",
   "interval": {
     "day": "day",

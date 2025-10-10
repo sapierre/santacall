@@ -1,3 +1,5 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { defineEnv } from "envin";
 import * as z from "zod";
 
@@ -20,4 +22,8 @@ export const preset = {
 export const env = defineEnv({
   ...envConfig,
   ...preset,
+  env: {
+    EXPO_PUBLIC_POSTHOG_KEY: process.env.EXPO_PUBLIC_POSTHOG_KEY,
+    EXPO_PUBLIC_POSTHOG_HOST: process.env.EXPO_PUBLIC_POSTHOG_HOST,
+  },
 });

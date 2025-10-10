@@ -15,7 +15,7 @@ export const Footer = ({ origin }: FooterProps) => {
         height={45}
         className="mt-12"
       />
-      <Text className="max-w-[250px] leading-normal text-muted-foreground">
+      <Text className="text-muted-foreground max-w-[250px] leading-normal">
         <Link
           href="https://turbostarter.dev"
           className="text-muted-foreground"

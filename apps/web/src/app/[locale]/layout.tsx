@@ -2,11 +2,12 @@ import { notFound } from "next/navigation";
 
 import { config, isLocaleSupported } from "@turbostarter/i18n";
 
-import { BaseLayout } from "~/components/common/layout/base";
-import { TailwindIndicator } from "~/components/common/tailwind-indicator";
-import { Toaster } from "~/components/common/toast";
 import { getMetadata } from "~/lib/metadata";
-import { Providers } from "~/providers/providers";
+import { Providers } from "~/lib/providers/providers";
+import { ImpersonatingBanner } from "~/modules/admin/users/user/impersonating-banner";
+import { BaseLayout } from "~/modules/common/layout/base";
+import { Toaster } from "~/modules/common/toast";
+import { BuyCtaDialog } from "~/modules/marketing/layout/buy-cta-dialog";
 
 export function generateStaticParams() {
   return config.locales.map((locale) => ({ locale }));
@@ -30,8 +31,9 @@ export default async function RootLayout({
   return (
     <BaseLayout locale={locale}>
       <Providers locale={locale}>
+        <ImpersonatingBanner />
         {children}
-        <TailwindIndicator />
+        <BuyCtaDialog />
         <Toaster />
       </Providers>
     </BaseLayout>

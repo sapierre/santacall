@@ -11,7 +11,7 @@ import type { AnalyticsProviderClientStrategy } from "../types";
 
 const init = () => {
   mixpanel.init(env.NEXT_PUBLIC_MIXPANEL_TOKEN, {
-    debug: process.env.NODE_ENV === NodeEnv.DEVELOPMENT,
+    debug: env.NODE_ENV === NodeEnv.DEVELOPMENT,
     autocapture: true,
     persistence: "localStorage",
   });

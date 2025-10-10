@@ -6,6 +6,7 @@ import ChangeEmail from "./auth/change-email";
 import { ConfirmEmail } from "./auth/confirm-email";
 import DeleteAccount from "./auth/delete-account";
 import { MagicLink } from "./auth/magic-link";
+import { OrganizationInvitation } from "./auth/organization-invitation";
 import { ResetPassword } from "./auth/reset-password";
 import ContactForm from "./contact-form";
 
@@ -26,6 +27,7 @@ export const templates: {
   [EmailTemplate.CONFIRM_EMAIL]: ConfirmEmail,
   [EmailTemplate.DELETE_ACCOUNT]: DeleteAccount,
   [EmailTemplate.CHANGE_EMAIL]: ChangeEmail,
+  [EmailTemplate.ORGANIZATION_INVITATION]: OrganizationInvitation,
   [EmailTemplate.CONTACT_FORM]: ContactForm,
 } as const;
 

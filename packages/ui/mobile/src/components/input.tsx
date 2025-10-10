@@ -1,26 +1,27 @@
-import * as React from "react";
 import { TextInput } from "react-native";
 
 import { cn } from "@turbostarter/ui";
 
-const Input = React.forwardRef<
-  React.ElementRef<typeof TextInput>,
-  React.ComponentPropsWithoutRef<typeof TextInput>
->(({ className, placeholderClassName, ...props }, ref) => {
+import type { TextInputProps } from "react-native";
+
+function Input({
+  className,
+  placeholderClassName,
+  style,
+  ...props
+}: TextInputProps & React.RefAttributes<TextInput>) {
   return (
     <TextInput
-      ref={ref}
       className={cn(
-        "web:flex native:h-12 web:w-full web:py-2 native:text-lg native:leading-[1.25] web:ring-offset-background web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2 h-10 rounded-md border border-input bg-background px-3 text-base text-foreground file:border-0 file:bg-transparent file:font-medium placeholder:text-muted-foreground lg:text-sm",
-        props.editable === false && "web:cursor-not-allowed opacity-50",
+        "border-input native:leading-[1.25] bg-background text-foreground dark:bg-input/30 flex h-12 w-full min-w-0 flex-row items-center rounded-md border px-3 py-1 font-sans text-base shadow-sm shadow-black/5",
+        props.editable === false && "opacity-50",
         className,
       )}
       placeholderClassName={cn("text-muted-foreground", placeholderClassName)}
+      style={[{ paddingHorizontal: 12 }, style]}
       {...props}
     />
   );
-});
-
-Input.displayName = "Input";
+}
 
 export { Input };

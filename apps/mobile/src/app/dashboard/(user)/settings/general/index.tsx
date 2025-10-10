@@ -1,0 +1,32 @@
+import { router } from "expo-router";
+import { View } from "react-native";
+
+import { useTranslation } from "@turbostarter/i18n";
+import { Icons } from "@turbostarter/ui-mobile/icons";
+import { Text } from "@turbostarter/ui-mobile/text";
+
+import { pathsConfig } from "~/config/paths";
+import { SettingsTile } from "~/modules/common/settings-tile";
+import { I18nSettings } from "~/modules/user/settings/i18n";
+import { ThemeSettings } from "~/modules/user/settings/theme";
+
+export default function General() {
+  const { t } = useTranslation("common");
+
+  return (
+    <View className="bg-background flex-1 py-2">
+      <SettingsTile
+        icon={Icons.Bell}
+        onPress={() =>
+          router.navigate(
+            pathsConfig.dashboard.user.settings.general.notifications,
+          )
+        }
+      >
+        <Text className="mr-auto">{t("notifications")}</Text>
+      </SettingsTile>
+      <ThemeSettings />
+      <I18nSettings />
+    </View>
+  );
+}

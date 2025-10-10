@@ -1,37 +1,48 @@
 import * as CheckboxPrimitive from "@rn-primitives/checkbox";
-import * as React from "react";
-import { Platform } from "react-native";
 
 import { cn } from "@turbostarter/ui";
 
 import { Icons } from "./icons";
 
-const Checkbox = React.forwardRef<
-  CheckboxPrimitive.RootRef,
-  CheckboxPrimitive.RootProps
->(({ className, ...props }, ref) => {
+const DEFAULT_HIT_SLOP = 24;
+
+function Checkbox({
+  className,
+  checkedClassName,
+  indicatorClassName,
+  iconClassName,
+  ...props
+}: CheckboxPrimitive.RootProps &
+  React.RefAttributes<CheckboxPrimitive.RootRef> & {
+    checkedClassName?: string;
+    indicatorClassName?: string;
+    iconClassName?: string;
+  }) {
   return (
     <CheckboxPrimitive.Root
-      ref={ref}
       className={cn(
-        "web:peer native:h-[20] native:w-[20] native:rounded web:ring-offset-background web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2 h-4 w-4 shrink-0 rounded-sm border border-primary disabled:cursor-not-allowed disabled:opacity-50",
-        props.checked && "bg-primary",
+        "border-input dark:bg-input/30 size-5 shrink-0 overflow-hidden rounded-[4px] border shadow-sm shadow-black/5",
+        props.checked && cn("border-primary", checkedClassName),
+        props.disabled && "opacity-50",
         className,
       )}
+      hitSlop={DEFAULT_HIT_SLOP}
       {...props}
     >
       <CheckboxPrimitive.Indicator
-        className={cn("h-full w-full items-center justify-center")}
+        className={cn(
+          "bg-primary h-full w-full items-center justify-center",
+          indicatorClassName,
+        )}
       >
         <Icons.Check
           size={12}
-          strokeWidth={Platform.OS === "web" ? 2.5 : 3.5}
-          className="text-primary-foreground"
+          strokeWidth={3.5}
+          className={cn("text-primary-foreground", iconClassName)}
         />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   );
-});
-Checkbox.displayName = CheckboxPrimitive.Root.displayName;
+}
 
 export { Checkbox };

@@ -32,5 +32,5 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: 💨 Publish!
-        run: cd apps/mobile && eas build --platform all --profile preview --non-interactive --no-wait
+        run: cd apps/mobile && eas build --platform android --profile production --non-interactive --no-wait
         # run: cd apps/mobile && eas build --platform all --profile production --non-interactive --no-wait --auto-submit

@@ -1,4 +1,3 @@
-import { vars } from "nativewind";
 import { memo } from "react";
 import { View } from "react-native";
 
@@ -15,7 +14,6 @@ import type { ThemeConfig } from "@turbostarter/ui";
 interface ThemeCustomizerProps {
   readonly config: ThemeConfig;
   readonly onChange: (config: ThemeConfig) => Promise<void>;
-  readonly colors: Record<ThemeColor, string>;
 }
 
 export const MODE_ICONS = {
@@ -25,7 +23,7 @@ export const MODE_ICONS = {
 } as const;
 
 export const ThemeCustomizer = memo<ThemeCustomizerProps>(
-  ({ config, onChange, colors }) => {
+  ({ config, onChange }) => {
     const { t } = useTranslation("common");
     return (
       <View className="mt-2 flex-1 items-center gap-4">
@@ -47,21 +45,17 @@ export const ThemeCustomizer = memo<ThemeCustomizerProps>(
                     onPress={() => onChange({ ...config, color })}
                     hitSlop={2}
                     className={cn(
-                      "h-11 grow basis-[100px] flex-row justify-start gap-2 px-3",
-                      isActive && "border-2 border-primary",
+                      "h-11 grow basis-[100px] flex-row justify-start gap-3 px-3",
+                      isActive && "border-primary border-2",
+                      `theme-${color}`,
                     )}
                   >
                     <View
                       className={cn(
-                        "flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary",
+                        "bg-primary flex h-5 w-5 shrink-0 items-center justify-center rounded-full",
                       )}
-                      {...(colors[color] && {
-                        style: vars({
-                          "--color-primary": colors[color],
-                        }),
-                      })}
-                    ></View>
-                    <Text className="text-xs capitalize">
+                    />
+                    <Text className="text-sm capitalize">
                       {t(`theme.color.${color}`)}
                     </Text>
                   </Button>
@@ -86,16 +80,18 @@ export const ThemeCustomizer = memo<ThemeCustomizerProps>(
                   onPress={() => onChange({ ...config, mode })}
                   hitSlop={2}
                   className={cn(
-                    "h-11 grow basis-[100px] flex-row justify-start gap-2 text-xs capitalize",
-                    isActive && "border-2 border-primary",
+                    "h-11 grow basis-[100px] flex-row justify-start gap-2 capitalize",
+                    isActive && "border-primary border-2",
                   )}
                 >
                   <Icon
-                    className="shrink-0 text-foreground"
+                    className="text-foreground shrink-0"
                     width={20}
                     height={20}
                   />
-                  <Text className="capitalize">{t(`theme.mode.${mode}`)}</Text>
+                  <Text className="text-sm capitalize">
+                    {t(`theme.mode.${mode}`)}
+                  </Text>
                 </Button>
               );
             })}

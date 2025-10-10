@@ -3,7 +3,8 @@
   "extends": ["//"],
   "tasks": {
     "dev": {
-      "interactive": true
+      "interactive": true,
+      "env": ["ANDROID_HOME"]
     }
   }
 }

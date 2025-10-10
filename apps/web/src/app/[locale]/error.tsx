@@ -4,8 +4,8 @@ import { useEffect } from "react";
 
 import { Trans, useTranslation } from "@turbostarter/i18n";
 
-import { TurboLink } from "~/components/common/turbo-link";
 import { pathsConfig } from "~/config/paths";
+import { TurboLink } from "~/modules/common/turbo-link";
 
 export default function Error({ error }: { error: Error }) {
   const { t } = useTranslation(["marketing", "common"]);
@@ -18,7 +18,7 @@ export default function Error({ error }: { error: Error }) {
     <main className="mx-auto flex max-w-xl flex-1 items-center justify-center px-6">
       <div className="text-center">
         <h1 className="mt-4 text-4xl font-bold">{t("error.general")}</h1>
-        <p className="text-pretty text-center text-lg leading-tight">
+        <p className="text-center text-lg leading-tight text-pretty">
           <Trans
             i18nKey="editToReload"
             t={t}
@@ -27,14 +27,14 @@ export default function Error({ error }: { error: Error }) {
             }}
             components={{
               code: (
-                <code className="mt-4 inline-block rounded-sm bg-muted px-1.5 text-sm text-muted-foreground" />
+                <code className="bg-muted text-muted-foreground mt-4 inline-block rounded-sm px-1.5 text-sm" />
               ),
             }}
           />
         </p>
         <TurboLink
           href={pathsConfig.index}
-          className="mt-6 inline-block text-primary underline hover:no-underline"
+          className="text-primary mt-6 inline-block underline underline-offset-4 hover:no-underline"
         >
           {t("goBackHome")}
         </TurboLink>

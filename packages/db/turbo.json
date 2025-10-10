@@ -7,6 +7,13 @@
       "cache": false,
       "dependsOn": ["@turbostarter/auth#db:generate"]
     },
+    "db:migrate": {
+      "cache": false
+    },
+    "db:seed": {
+      "cache": false,
+      "dependsOn": ["@turbostarter/auth#db:seed"]
+    },
     "db:setup": {}
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import debounce from "lodash/debounce";
 import { useEffect, useMemo, useRef } from "react";
 
@@ -15,13 +16,13 @@ interface ControlFunctions {
   isPending: () => boolean;
 }
 
-export type DebouncedState<T extends (...args: unknown[]) => ReturnType<T>> = ((
+export type DebouncedState<T extends (...args: any[]) => ReturnType<T>> = ((
   ...args: Parameters<T>
 ) => ReturnType<T> | undefined) &
   ControlFunctions;
 
 export function useDebounceCallback<
-  T extends (...args: unknown[]) => ReturnType<T>,
+  T extends (...args: any[]) => ReturnType<T>,
 >(func: T, delay = 500, options?: DebounceOptions): DebouncedState<T> {
   const debouncedFunc = useRef<ReturnType<typeof debounce>>(null);
 

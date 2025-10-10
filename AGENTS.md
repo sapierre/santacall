@@ -2,19 +2,34 @@
 
 A dedicated guide for coding agents working on the Turbostarter monorepo. Use this file for setup, commands, and architecture/conventions when implementing changes.
 
+## Quickstart
+
+- Ensure versions: Node ≥ 22.17.0, pnpm 10.18.x
+- Create `.env` at repo root (loaded automatically by `pnpm with-env`):
+
+```bash
+# minimal example — adjust per environment
+DATABASE_URL="postgres://user:pass@localhost:5432/turbostarter"
+PRODUCT_NAME="Turbostarter"
+URL="http://localhost:3000"
+DEFAULT_LOCALE="en"
+```
+
+- Install dependencies: `pnpm install`
+- Start databases/services (Docker): `pnpm services:start`
+- First-time DB setup: `pnpm with-env -F @turbostarter/db db:setup`
+- Apply migrations: `pnpm with-env -F @turbostarter/db db:migrate`
+- Start dev for all apps: `pnpm dev`
+  - Or target a single app (e.g., web): `pnpm --filter web dev`
+
 ## Environment & Tooling
 
 - Node: >= 22.17.0
-- Package manager: pnpm 10.15.x
+- Package manager: pnpm 10.18.x
 - Monorepo: Turborepo (`turbo.json`)
 - Env loader: `dotenv-cli` via `with-env` script
 - Global envs (turborepo): `DATABASE_URL`, `PRODUCT_NAME`, `URL`, `DEFAULT_LOCALE`
 - Place a `.env` at the repo root; root scripts use `pnpm with-env` to load it.
-
-## Setup commands
-
-- Install deps: `pnpm install`
-- Clean caches/artifacts: `pnpm clean`
 
 ## Dev commands
 
@@ -38,6 +53,26 @@ A dedicated guide for coding agents working on the Turbostarter monorepo. Use th
     - Chrome: `pnpm --filter extension build:chrome`
     - Firefox: `pnpm --filter extension build:firefox`
 
+## Command cheat sheet
+
+| Goal                             | Command                                                                          |
+| -------------------------------- | -------------------------------------------------------------------------------- |
+| Install dependencies             | `pnpm install`                                                                   |
+| Start all dev tasks              | `pnpm dev`                                                                       |
+| Start web only                   | `pnpm --filter web dev`                                                          |
+| Start mobile (iOS/Android)       | `pnpm --filter mobile ios` / `pnpm --filter mobile android`                      |
+| Start extension (Chrome/Firefox) | `pnpm --filter extension dev` / `pnpm --filter extension dev:firefox`            |
+| Build everything                 | `pnpm build`                                                                     |
+| Build web only                   | `pnpm --filter web build`                                                        |
+| Build extension zips             | `pnpm --filter extension build:chrome` / `pnpm --filter extension build:firefox` |
+| Lint (check/fix)                 | `pnpm lint` / `pnpm lint:fix`                                                    |
+| Format (check/fix)               | `pnpm format` / `pnpm format:fix`                                                |
+| Typecheck                        | `pnpm typecheck`                                                                 |
+| Clean caches                     | `pnpm clean`                                                                     |
+| Start/stop services (Docker)     | `pnpm services:start` / `pnpm services:stop`                                     |
+| DB: generate/apply migrations    | `pnpm with-env -F @turbostarter/db db:generate` / `db:migrate`                   |
+| DB: push/check/studio            | `pnpm with-env -F @turbostarter/db db:push` / `db:check` / `db:studio`           |
+
 ## Quality & Types
 
 - Format (check): `pnpm format`
@@ -45,6 +80,7 @@ A dedicated guide for coding agents working on the Turbostarter monorepo. Use th
 - Lint (check): `pnpm lint`
 - Lint (fix): `pnpm lint:fix`
 - Typecheck: `pnpm typecheck`
+- Commit messages: follow Conventional Commits (enforced via `commitlint.config.ts`)
 
 ## Database (Drizzle)
 
@@ -52,14 +88,60 @@ A dedicated guide for coding agents working on the Turbostarter monorepo. Use th
 - Stop services: `pnpm services:stop`
 - Services status: `pnpm services:status`
 - Services logs: `pnpm services:logs`
-- First-time setup: `pnpm --filter @turbostarter/db setup`
-- Generate migrations: `pnpm with-env -F @turbostarter/db generate`
-- Apply migrations: `pnpm with-env -F @turbostarter/db migrate`
-- Push schema (safe envs): `pnpm with-env -F @turbostarter/db push`
-- Check schema drift: `pnpm with-env -F @turbostarter/db check`
-- Studio: `pnpm with-env -F @turbostarter/db studio`
+- First-time setup: `pnpm with-env -F @turbostarter/db db:setup`
+- Generate migrations: `pnpm with-env -F @turbostarter/db db:generate`
+- Apply migrations: `pnpm with-env -F @turbostarter/db db:migrate`
+- Push schema (safe envs): `pnpm with-env -F @turbostarter/db db:push`
+- Check schema drift: `pnpm with-env -F @turbostarter/db db:check`
+- Studio: `pnpm with-env -F @turbostarter/db db:studio`
 
 Note: All db commands will load `.env` via `with-env`.
+
+## Common workflows
+
+- Web only dev: `pnpm --filter web dev`
+- Mobile local run:
+  - iOS simulator: `pnpm --filter mobile ios`
+  - Android emulator: `pnpm --filter mobile android`
+- Extension dev:
+  - Chrome: `pnpm --filter extension dev`
+  - Firefox: `pnpm --filter extension dev:firefox`
+- Extension release zips:
+  - Chrome: `pnpm --filter extension build:chrome`
+  - Firefox: `pnpm --filter extension build:firefox`
+- Code quality loop:
+  - `pnpm typecheck`
+  - `pnpm lint` → `pnpm lint:fix`
+  - `pnpm format` → `pnpm format:fix`
+- Database iteration:
+  1. Update schema in `packages/db/src/schema/*`
+  2. Generate migration: `pnpm with-env -F @turbostarter/db db:generate`
+  3. Apply migration: `pnpm with-env -F @turbostarter/db db:migrate`
+  4. Verify in studio: `pnpm with-env -F @turbostarter/db db:studio`
+
+## Troubleshooting
+
+- Node/pnpm version mismatch
+  - Ensure Node ≥ 22.17.0 and pnpm 10.18.x (`node -v`, `pnpm -v`)
+- Services not available / connection refused
+  - Make sure Docker is running; start services: `pnpm services:start`
+  - Check logs: `pnpm services:logs`
+- `DATABASE_URL` or env not loaded
+  - Create `.env` at repo root; use `pnpm with-env` for DB commands
+- Turbo or module resolution oddities after refactors
+  - Clear caches: `pnpm clean`; then reinstall: `pnpm install`
+- Migration drift or conflicts
+  - Run: `pnpm with-env -F @turbostarter/db db:check`
+  - Re-generate and apply: `generate` → `migrate`
+
+## Agent workflow tips
+
+- Prefer targeted commands with `pnpm --filter <app-or-package> <cmd>` to minimize work
+- Use `pnpm with-env` whenever a command depends on environment variables
+- Keep changes modular; share logic in `packages/*` to avoid duplication
+- For web (`apps/web`): prefer React Server Components; avoid unnecessary client code
+- For mobile: minimize `useEffect`; memoize where appropriate; use safe-area primitives
+- For extension: use background for long tasks; content scripts for DOM; leverage messaging
 
 ## Project structure
 

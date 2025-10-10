@@ -42,7 +42,7 @@ function InputOTPSlot({
   return (
     <View
       className={cn(
-        "relative flex size-14 items-center justify-center border border-input outline-none transition-all",
+        "border-input relative flex size-14 items-center justify-center border transition-all outline-none",
         "dark:bg-input/30",
         {
           "border-ring": isActive,
@@ -54,7 +54,9 @@ function InputOTPSlot({
       {...props}
     >
       {char !== null && (
-        <Text className="text-2xl font-medium text-foreground">{char}</Text>
+        <Text className="text-foreground font-sans-medium text-2xl">
+          {char}
+        </Text>
       )}
       {hasFakeCaret && <FakeCaret />}
     </View>
@@ -102,7 +104,7 @@ function InputOTPSeparator({
       {...props}
       className={cn("w-2 items-center justify-center", className)}
     >
-      <View className="h-0.5 w-2 rounded-sm bg-muted-foreground" />
+      <View className="bg-muted-foreground h-0.5 w-2 rounded-sm" />
     </View>
   );
 }

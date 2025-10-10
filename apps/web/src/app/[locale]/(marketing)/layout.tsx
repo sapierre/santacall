@@ -1,5 +1,5 @@
-import { Footer } from "~/components/common/layout/footer";
-import { Header } from "~/components/common/layout/header/header";
+import { Footer } from "~/modules/marketing/layout/footer";
+import { Header } from "~/modules/marketing/layout/header/header";
 
 export default function MainLayout(props: { children: React.ReactNode }) {
   return (

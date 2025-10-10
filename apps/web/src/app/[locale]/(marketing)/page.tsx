@@ -1,11 +1,11 @@
 import { withI18n } from "@turbostarter/i18n/with-i18n";
 
-import { Banner } from "~/components/marketing/home/banner";
-import { Faq } from "~/components/marketing/home/faq";
-import { Features } from "~/components/marketing/home/features";
-import { Hero } from "~/components/marketing/home/hero";
-import { Testimonials } from "~/components/marketing/home/testimonials";
-import { Pricing } from "~/components/marketing/pricing/pricing";
+import { Pricing } from "~/modules/billing/pricing/pricing";
+import { Banner } from "~/modules/marketing/home/banner";
+import { Faq } from "~/modules/marketing/home/faq";
+import { Features } from "~/modules/marketing/home/features";
+import { Hero } from "~/modules/marketing/home/hero";
+import { Testimonials } from "~/modules/marketing/home/testimonials";
 
 const HomePage = () => {
   return (

@@ -29,10 +29,18 @@
   },
   "announcement": "Amazing feature of your SaaS!",
   "shippedWith": "Shipped with awesome tools",
-
   "cta": {
     "question": "Ready to start?",
-    "button": "Start for free"
+    "button": "Start for free",
+    "buy": {
+      "question": "Ready to start?",
+      "description": "Purchase to unlock full access to the codebase and start shipping your product today. On all platforms.",
+      "button": "Get access",
+      "join": {
+        "description": "Join our Discord community to stay updated and connect with like-minded individuals.",
+        "button": "Join us"
+      }
+    }
   },
   "editToReload": "Edit <code>{{file}}</code> and save to reload.",
   "workInProgress": {
@@ -157,16 +165,6 @@
       "body": "New contact form submission"
     }
   },
-  "ai": {
-    "prompt": {
-      "history": "Tell the history of the internet",
-      "capitals": "Quiz me on the world capitals",
-      "quantum": "Explain quantum computing",
-      "realWorld": "Describe a real-world AI case"
-    },
-    "placeholder": "Ask a question...",
-    "cta": "Submit"
-  },
   "blog": {
     "label": "Blog",
     "title": "News and updates about the platform",
@@ -182,23 +180,6 @@
       "launch": "launch"
     }
   },
-  "dashboard": {
-    "title": "Dashboard",
-    "description": "An overview of your account's activity across all your projects.",
-    "chart": {
-      "cta": "Add chart",
-      "showing": "Showing total visitors for the last period",
-      "trending": "Trending by up to 5.2% this month",
-      "period": "January - June 2024",
-      "bar": "Bar Chart",
-      "pie": "Pie Chart",
-      "area": "Area Chart",
-      "line": "Line Chart",
-      "shape": "Shape Chart",
-      "radial": "Radial Chart",
-      "radar": "Radar Chart"
-    }
-  },
   "api": {
     "title": "API Reference",
     "description": "Build integrations with our API"
@@ -210,6 +191,17 @@
   "docs": {
     "title": "Docs",
     "description": "Learn how to use TurboStarter"
+  },
+  "ai": {
+    "description": "Unlock productivity and innovation with TurboStarter's AI assistant. Get instant answers, automate tasks, and boost your workflow using advanced artificial intelligence—secure, reliable, and designed for modern teams.",
+    "prompt": {
+      "history": "Tell the history of the internet",
+      "capitals": "Quiz me on the world capitals",
+      "quantum": "Explain quantum computing",
+      "realWorld": "Describe a real-world AI case"
+    },
+    "placeholder": "Ask a question...",
+    "cta": "Submit"
   },
   "setup": {
     "steps": {

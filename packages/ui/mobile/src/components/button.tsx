@@ -9,23 +9,22 @@ import { TextClassContext } from "./text";
 import type { VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2 group flex items-center justify-center rounded-md",
+  "group shrink-0 flex-row items-center justify-center gap-2 rounded-md shadow-none",
   {
     variants: {
       variant: {
-        default: "web:hover:opacity-90 bg-primary active:opacity-90",
-        destructive: "web:hover:opacity-90 bg-destructive active:opacity-90",
+        default: "bg-primary hover:opacity-90 active:opacity-90",
+        destructive: "bg-destructive active:opacity-90",
         outline:
-          "web:hover:bg-accent web:hover:text-accent-foreground border border-input bg-background active:bg-accent",
-        secondary: "web:hover:opacity-80 bg-secondary active:opacity-80",
-        ghost:
-          "web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent",
-        link: "web:underline-offset-4 web:hover:underline web:focus:underline",
+          "border-input bg-background active:bg-accent border shadow-xs shadow-black/5",
+        secondary: "bg-secondary active:opacity-80",
+        ghost: "active:bg-accent",
+        link: "",
       },
       size: {
-        default: "native:h-12 native:px-5 native:py-3 h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "native:h-14 h-11 rounded-md px-8",
+        default: "h-12 px-5 py-3",
+        sm: "h-10 rounded-md px-4",
+        lg: "h-14 rounded-md px-8",
         icon: "h-10 w-10",
       },
     },
@@ -36,60 +35,49 @@ const buttonVariants = cva(
   },
 );
 
-const buttonTextVariants = cva(
-  "web:whitespace-nowrap native:text-base web:transition-colors font-sans-medium text-sm text-foreground",
-  {
-    variants: {
-      variant: {
-        default: "text-primary-foreground",
-        destructive: "text-destructive-foreground",
-        outline: "group-active:text-accent-foreground",
-        secondary:
-          "text-secondary-foreground group-active:text-secondary-foreground",
-        ghost: "group-active:text-accent-foreground",
-        link: "text-primary group-active:underline",
-      },
-      size: {
-        default: "",
-        sm: "",
-        lg: "text-lg",
-        icon: "",
-      },
+const buttonTextVariants = cva("text-foreground font-sans-medium text-base", {
+  variants: {
+    variant: {
+      default: "text-primary-foreground",
+      destructive: "text-destructive-foreground",
+      outline: "group-active:text-accent-foreground",
+      secondary:
+        "text-secondary-foreground group-active:text-secondary-foreground",
+      ghost: "group-active:text-accent-foreground",
+      link: "text-primary group-active:underline",
     },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
+    size: {
+      default: "",
+      sm: "",
+      lg: "",
+      icon: "",
     },
   },
-);
+  defaultVariants: {
+    variant: "default",
+    size: "default",
+  },
+});
 
-type ButtonProps = React.ComponentPropsWithoutRef<typeof Pressable> &
+type ButtonProps = React.ComponentProps<typeof Pressable> &
+  React.RefAttributes<typeof Pressable> &
   VariantProps<typeof buttonVariants>;
 
-const Button = React.forwardRef<
-  React.ElementRef<typeof Pressable>,
-  ButtonProps
->(({ className, variant, size, ...props }, ref) => {
+function Button({ className, variant, size, ...props }: ButtonProps) {
   return (
-    <TextClassContext.Provider
-      value={cn(
-        props.disabled && "web:pointer-events-none",
-        buttonTextVariants({ variant, size }),
-      )}
-    >
+    <TextClassContext.Provider value={buttonTextVariants({ variant, size })}>
       <Pressable
         className={cn(
-          props.disabled && "web:pointer-events-none opacity-50",
-          buttonVariants({ variant, size, className }),
+          props.disabled && "opacity-50",
+          buttonVariants({ variant, size }),
+          className,
         )}
-        ref={ref}
         role="button"
         {...props}
       />
     </TextClassContext.Provider>
   );
-});
-Button.displayName = "Button";
+}
 
 export { Button, buttonTextVariants, buttonVariants };
 export type { ButtonProps };

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable turbo/no-undeclared-env-vars */
 import { defineEnv } from "envin";
 import * as z from "zod";
 
@@ -34,5 +32,19 @@ export default defineEnv({
       .enum(ThemeColor)
       .optional()
       .default(ThemeColor.ORANGE),
+  },
+  env: {
+    ...process.env,
+    EXPO_PUBLIC_SITE_URL: process.env.EXPO_PUBLIC_SITE_URL,
+    EXPO_PUBLIC_DEFAULT_LOCALE: process.env.EXPO_PUBLIC_DEFAULT_LOCALE,
+    EXPO_PUBLIC_THEME_MODE: process.env.EXPO_PUBLIC_THEME_MODE,
+    EXPO_PUBLIC_THEME_COLOR: process.env.EXPO_PUBLIC_THEME_COLOR,
+
+    EXPO_PUBLIC_AUTH_PASSWORD: process.env.EXPO_PUBLIC_AUTH_PASSWORD,
+    EXPO_PUBLIC_AUTH_MAGIC_LINK: process.env.EXPO_PUBLIC_AUTH_MAGIC_LINK,
+    EXPO_PUBLIC_AUTH_ANONYMOUS: process.env.EXPO_PUBLIC_AUTH_ANONYMOUS,
+
+    EXPO_PUBLIC_POSTHOG_KEY: process.env.EXPO_PUBLIC_POSTHOG_KEY,
+    EXPO_PUBLIC_POSTHOG_HOST: process.env.EXPO_PUBLIC_POSTHOG_HOST,
   },
 });

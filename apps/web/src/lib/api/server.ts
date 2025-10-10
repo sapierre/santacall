@@ -8,6 +8,6 @@ import type { AppRouter } from "@turbostarter/api";
 export const { api } = hc<AppRouter>(getBaseUrl(), {
   headers: async () => ({
     ...Object.fromEntries((await headers()).entries()),
-    "x-api-source": "web-server",
+    "x-client-platform": "web-server",
   }),
 });

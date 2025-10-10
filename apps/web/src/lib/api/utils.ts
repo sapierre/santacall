@@ -1,4 +1,3 @@
-import { QueryClient } from "@tanstack/react-query";
 import env from "env.config";
 
 export const getBaseUrl = () => {
@@ -8,14 +7,3 @@ export const getBaseUrl = () => {
   // eslint-disable-next-line no-restricted-properties, turbo/no-undeclared-env-vars
   return `http://localhost:${process.env.PORT ?? 3000}`;
 };
-
-export const createQueryClient = () =>
-  new QueryClient({
-    defaultOptions: {
-      queries: {
-        // With SSR, we usually want to set some default staleTime
-        // above 0 to avoid refetching immediately on the client
-        staleTime: 30 * 1000,
-      },
-    },
-  });

@@ -1,8 +1,8 @@
 import { getTranslation } from "@turbostarter/i18n/server";
 import { Icons } from "@turbostarter/ui-web/icons";
 
-import { TurboLink } from "~/components/common/turbo-link";
 import { pathsConfig } from "~/config/paths";
+import { TurboLink } from "~/modules/common/turbo-link";
 
 export default async function AuthLayout({
   children,
@@ -20,14 +20,16 @@ export default async function AuthLayout({
             className="flex shrink-0 items-center gap-3"
             aria-label={t("home")}
           >
-            <Icons.Logo className="h-8 text-primary" />
-            <Icons.LogoText className="h-4 text-foreground" />
+            <Icons.Logo className="text-primary h-8" />
+            <Icons.LogoText className="text-foreground h-4" />
           </TurboLink>
         </header>
-        {children}
+        <div className="mt-16 mb-auto flex w-full max-w-md flex-col gap-6 pb-16">
+          {children}
+        </div>
       </section>
 
-      <aside className="hidden flex-1 bg-muted lg:block"></aside>
+      <aside className="bg-muted hidden flex-1 lg:block"></aside>
     </main>
   );
 }

@@ -2,56 +2,60 @@ import * as React from "react";
 
 import { cn } from "@turbostarter/ui";
 
-const Card = ({ className, ...props }: React.ComponentProps<"div">) => (
-  <div
-    className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
-      className,
-    )}
-    {...props}
-  />
-);
-Card.displayName = "Card";
+export function Card({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "bg-card text-card-foreground rounded-lg border",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
 
-const CardHeader = ({ className, ...props }: React.ComponentProps<"div">) => (
-  <div className={cn("flex flex-col space-y-2 p-6", className)} {...props} />
-);
-CardHeader.displayName = "CardHeader";
-
-const CardTitle = ({ className, ...props }: React.ComponentProps<"h3">) => (
-  <h3
-    className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
-      className,
-    )}
-    {...props}
-  />
-);
-CardTitle.displayName = "CardTitle";
-
-const CardDescription = ({
+export function CardHeader({
   className,
   ...props
-}: React.ComponentProps<"p">) => (
-  <p className={cn("text-sm text-muted-foreground", className)} {...props} />
-);
-CardDescription.displayName = "CardDescription";
+}: React.ComponentProps<"div">) {
+  return (
+    <div className={cn("flex flex-col space-y-2 p-6", className)} {...props} />
+  );
+}
 
-const CardContent = ({ className, ...props }: React.ComponentProps<"div">) => (
-  <div className={cn("p-6 pt-0", className)} {...props} />
-);
-CardContent.displayName = "CardContent";
+export function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
+  return (
+    <h3
+      className={cn(
+        "text-2xl leading-none font-semibold tracking-tight",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
 
-const CardFooter = ({ className, ...props }: React.ComponentProps<"div">) => (
-  <div className={cn("flex items-center p-6 pt-0", className)} {...props} />
-);
-CardFooter.displayName = "CardFooter";
+export function CardDescription({
+  className,
+  ...props
+}: React.ComponentProps<"p">) {
+  return (
+    <p className={cn("text-muted-foreground text-sm", className)} {...props} />
+  );
+}
 
-export {
-  Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardDescription,
-  CardContent,
-};
+export function CardContent({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return <div className={cn("p-6 pt-0", className)} {...props} />;
+}
+
+export function CardFooter({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div className={cn("flex items-center p-6 pt-0", className)} {...props} />
+  );
+}

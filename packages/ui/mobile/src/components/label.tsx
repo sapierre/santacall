@@ -1,34 +1,37 @@
 import * as LabelPrimitive from "@rn-primitives/label";
-import * as React from "react";
 
 import { cn } from "@turbostarter/ui";
 
-const Label = React.forwardRef<
-  LabelPrimitive.TextRef,
-  LabelPrimitive.TextProps
->(
-  (
-    { className, onPress, onLongPress, onPressIn, onPressOut, ...props },
-    ref,
-  ) => (
+function Label({
+  className,
+  onPress,
+  onLongPress,
+  onPressIn,
+  onPressOut,
+  disabled,
+  ...props
+}: LabelPrimitive.TextProps & React.RefAttributes<LabelPrimitive.TextRef>) {
+  return (
     <LabelPrimitive.Root
-      className="web:cursor-default"
+      className={cn(
+        "flex flex-row items-center gap-2 select-none",
+        disabled && "opacity-50",
+      )}
       onPress={onPress}
       onLongPress={onLongPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      disabled={disabled}
     >
       <LabelPrimitive.Text
-        ref={ref}
         className={cn(
-          "native:text-base web:peer-disabled:cursor-not-allowed web:peer-disabled:opacity-70 font-sans-medium text-sm leading-none text-foreground",
+          "text-foreground native:leading-tight font-sans-medium text-base",
           className,
         )}
         {...props}
       />
     </LabelPrimitive.Root>
-  ),
-);
-Label.displayName = LabelPrimitive.Root.displayName;
+  );
+}
 
 export { Label };

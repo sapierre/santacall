@@ -48,7 +48,7 @@ export const LocaleCustomizer = ({
       <SelectTrigger
         className={cn({
           "w-full": variant === "default",
-          "flex size-10 items-center justify-center rounded-full border-none p-0 text-lg transition-colors hover:bg-accent hover:text-accent-foreground [&>*:nth-child(2)]:hidden":
+          "hover:bg-accent hover:text-accent-foreground flex size-10 items-center justify-center rounded-full border-none p-0 text-lg transition-colors [&>*:nth-child(2)]:hidden":
             variant === "icon",
         })}
       >

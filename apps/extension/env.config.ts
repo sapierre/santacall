@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { defineEnv } from "envin";
 import * as z from "zod";
 
@@ -28,6 +26,9 @@ export default defineEnv({
 
     VITE_POSTHOG_KEY: import.meta.env.VITE_POSTHOG_KEY,
     VITE_POSTHOG_HOST: import.meta.env.VITE_POSTHOG_HOST,
+    VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID: import.meta.env
+      .VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID,
+    VITE_GOOGLE_ANALYTICS_SECRET: import.meta.env.VITE_GOOGLE_ANALYTICS_SECRET,
   },
   skip:
     (!!import.meta.env.SKIP_ENV_VALIDATION &&

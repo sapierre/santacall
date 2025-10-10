@@ -20,5 +20,5 @@ export const middleware = (request: NextRequest) =>
 
 export const config = {
   matcher: "/((?!api|static|.*\\..*|_next).*)",
-  unstable_allowDynamic: ["lodash"],
+  unstable_allowDynamic: ["**/node_modules/lodash*/**/*.js"],
 };

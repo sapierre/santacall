@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 
 import {
@@ -18,22 +17,21 @@ import {
   CardTitle,
 } from "@turbostarter/ui-web/card";
 
+import { pathsConfig } from "~/config/paths";
+import { getMetadata } from "~/lib/metadata";
+import { TurboLink } from "~/modules/common/turbo-link";
+import { TagsPicker } from "~/modules/marketing/blog/tags-picker";
 import {
   Section,
   SectionBadge,
   SectionDescription,
   SectionHeader,
   SectionTitle,
-} from "~/components/common/layout/section";
-import { TurboLink } from "~/components/common/turbo-link";
-import { TagsPicker } from "~/components/marketing/blog/tags-picker";
-import { pathsConfig } from "~/config/paths";
-import { getMetadata } from "~/lib/metadata";
+} from "~/modules/marketing/layout/section";
 
 import type { ContentTag } from "@turbostarter/cms";
 
 dayjs.extend(duration);
-dayjs.extend(relativeTime);
 
 export const generateMetadata = getMetadata({
   title: "marketing:blog.label",
@@ -80,9 +78,9 @@ export default async function BlogPage({
             href={pathsConfig.marketing.blog.post(post.slug)}
             className="group h-full basis-[34rem]"
           >
-            <Card className="h-full border-none shadow-none group-hover:bg-muted/50">
+            <Card className="group-hover:bg-muted/50 h-full border-none shadow-none">
               <CardHeader className="space-y-2 p-3 pb-2">
-                <div className="-mx-3 -mt-3 mb-3 aspect-[12/8] overflow-hidden rounded-lg bg-muted">
+                <div className="bg-muted -mx-3 -mt-3 mb-3 aspect-[12/8] overflow-hidden rounded-lg">
                   <div className="relative h-full w-full transition-transform duration-300 group-hover:scale-105">
                     <Image
                       alt=""
@@ -101,7 +99,7 @@ export default async function BlogPage({
                   ))}
                 </div>
                 <CardTitle className="leading-tight">{post.title}</CardTitle>
-                <div className="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground">
+                <div className="text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm">
                   <time dateTime={post.publishedAt.toISOString()}>
                     {dayjs(post.publishedAt).format("MMMM D, YYYY")}
                   </time>
@@ -117,7 +115,7 @@ export default async function BlogPage({
               </CardHeader>
 
               <CardContent className="p-3 pt-0">
-                <p className="text-sm leading-relaxed text-muted-foreground">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   {post.description}
                 </p>
               </CardContent>

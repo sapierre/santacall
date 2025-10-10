@@ -32,7 +32,16 @@
   "shippedWith": "Enviado con herramientas increíbles",
   "cta": {
     "question": "¿Listo para empezar?",
-    "button": "Comienza gratis"
+    "button": "Comienza gratis",
+    "buy": {
+      "question": "¿Listo para empezar?",
+      "description": "Compra para desbloquear acceso completo a la base de código y comenzar a lanzar tu producto hoy. En todas las plataformas.",
+      "button": "Obtener acceso",
+      "join": {
+        "description": "Únete a nuestra comunidad de Discord para mantenerte actualizado y conectarte con individuos con ideas afines.",
+        "button": "Únete a nosotros"
+      }
+    }
   },
   "editToReload": "Edita <code>{{file}}</code> y guarda para recargar.",
   "workInProgress": {
@@ -162,17 +171,6 @@
     }
   },
 
-  "ai": {
-    "prompt": {
-      "history": "Cuenta la historia de internet",
-      "capitals": "Hazme un cuestionario sobre las capitales del mundo",
-      "quantum": "Explica la computación cuántica",
-      "realWorld": "Describe un caso real de IA"
-    },
-    "placeholder": "Haz una pregunta...",
-    "cta": "Enviar"
-  },
-
   "blog": {
     "label": "Blog",
     "title": "Noticias y actualizaciones sobre la plataforma",
@@ -189,24 +187,6 @@
     }
   },
 
-  "dashboard": {
-    "title": "Panel",
-    "description": "Un resumen de la actividad de tu cuenta en todos tus proyectos.",
-    "chart": {
-      "cta": "Añadir gráfico",
-      "showing": "Mostrando visitantes totales del último período",
-      "trending": "Tendencia de hasta 5.2% este mes",
-      "period": "Enero - Junio 2024",
-      "bar": "Gráfico de barras",
-      "pie": "Gráfico circular",
-      "area": "Gráfico de área",
-      "line": "Gráfico de líneas",
-      "shape": "Gráfico de formas",
-      "radial": "Gráfico radial",
-      "radar": "Gráfico de radar"
-    }
-  },
-
   "api": {
     "title": "Referencia de API",
     "description": "Crea integraciones con nuestra API"
@@ -220,6 +200,17 @@
   "docs": {
     "title": "Documentación",
     "description": "Aprende a usar TurboStarter"
+  },
+  "ai": {
+    "description": "Desbloquea la productividad y la innovación con la asistente de IA de TurboStarter. Obtén respuestas instantáneas, automatiza tareas y potencia tu flujo de trabajo utilizando una IA avanzada y segura, diseñada para equipos modernos.",
+    "prompt": {
+      "history": "Cuenta la historia de internet",
+      "capitals": "Hazme un cuestionario sobre las capitales del mundo",
+      "quantum": "Explica la computación cuántica",
+      "realWorld": "Describe un caso real de IA"
+    },
+    "placeholder": "Haz una pregunta...",
+    "cta": "Enviar"
   },
   "setup": {
     "steps": {

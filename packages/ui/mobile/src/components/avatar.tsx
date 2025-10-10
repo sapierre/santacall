@@ -3,46 +3,45 @@ import * as React from "react";
 
 import { cn } from "@turbostarter/ui";
 
-const Avatar = React.forwardRef<
-  AvatarPrimitive.RootRef,
-  AvatarPrimitive.RootProps
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Root
-    ref={ref}
-    className={cn(
-      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
-      className,
-    )}
-    {...props}
-  />
-));
-Avatar.displayName = AvatarPrimitive.Root.displayName;
+function Avatar({
+  className,
+  ...props
+}: AvatarPrimitive.RootProps & React.RefAttributes<AvatarPrimitive.RootRef>) {
+  return (
+    <AvatarPrimitive.Root
+      className={cn(
+        "relative flex size-10 shrink-0 overflow-hidden rounded-full",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+function AvatarImage({
+  className,
+  ...props
+}: AvatarPrimitive.ImageProps & React.RefAttributes<AvatarPrimitive.ImageRef>) {
+  return (
+    <AvatarPrimitive.Image
+      className={cn("aspect-square size-full", className)}
+      {...props}
+    />
+  );
+}
 
-const AvatarImage = React.forwardRef<
-  AvatarPrimitive.ImageRef,
-  AvatarPrimitive.ImageProps
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Image
-    ref={ref}
-    className={cn("aspect-square h-full w-full", className)}
-    {...props}
-  />
-));
-AvatarImage.displayName = AvatarPrimitive.Image.displayName;
-
-const AvatarFallback = React.forwardRef<
-  AvatarPrimitive.FallbackRef,
-  AvatarPrimitive.FallbackProps
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Fallback
-    ref={ref}
-    className={cn(
-      "flex h-full w-full items-center justify-center rounded-full bg-muted",
-      className,
-    )}
-    {...props}
-  />
-));
-AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
-
+function AvatarFallback({
+  className,
+  ...props
+}: AvatarPrimitive.FallbackProps &
+  React.RefAttributes<AvatarPrimitive.FallbackRef>) {
+  return (
+    <AvatarPrimitive.Fallback
+      className={cn(
+        "bg-muted border-border flex size-full flex-row items-center justify-center rounded-full border",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
 export { Avatar, AvatarFallback, AvatarImage };

@@ -1,6 +1,4 @@
-import baseConfig, {
-  restrictEnvAccess,
-} from "@turbostarter/eslint-config/base";
+import baseConfig from "@turbostarter/eslint-config/base";
 
 /** @type {import('typescript-eslint').Config} */
 export default [
@@ -8,5 +6,4 @@ export default [
     ignores: [],
   },
   ...baseConfig,
-  ...restrictEnvAccess,
 ];

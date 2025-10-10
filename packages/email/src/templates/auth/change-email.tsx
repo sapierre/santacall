@@ -22,7 +22,7 @@ export const ChangeEmail = async ({ url, locale }: Props) => {
   return (
     <Layout origin={origin} locale={locale}>
       <Preview>{t("account.email.change.email.preview")}</Preview>
-      <Heading className="tracking-tight">
+      <Heading className="leading-tight tracking-tight">
         {t("account.email.change.email.subject")}
       </Heading>
 
@@ -32,7 +32,7 @@ export const ChangeEmail = async ({ url, locale }: Props) => {
 
       <Text>{t("account.email.change.email.or")}</Text>
 
-      <code className="inline-block rounded-md border border-solid border-border bg-muted px-5 py-3.5 font-mono text-xs">
+      <code className="border-border bg-muted inline-block rounded-md border border-solid px-5 py-3.5 font-mono text-xs">
         {url}
       </code>
 

@@ -14,7 +14,7 @@ const getClient = () => {
   }
 
   client = Mixpanel.init(env.NEXT_PUBLIC_MIXPANEL_TOKEN, {
-    debug: process.env.NODE_ENV === NodeEnv.DEVELOPMENT,
+    debug: env.NODE_ENV === NodeEnv.DEVELOPMENT,
   });
 
   return client;

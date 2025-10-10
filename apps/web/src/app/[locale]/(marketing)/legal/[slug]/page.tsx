@@ -7,15 +7,15 @@ import {
 } from "@turbostarter/cms";
 import { getTranslation } from "@turbostarter/i18n/server";
 
+import { getMetadata } from "~/lib/metadata";
+import { Mdx } from "~/modules/common/mdx";
 import {
   Section,
   SectionBadge,
   SectionDescription,
   SectionHeader,
   SectionTitle,
-} from "~/components/common/layout/section";
-import { Mdx } from "~/components/common/mdx";
-import { getMetadata } from "~/lib/metadata";
+} from "~/modules/marketing/layout/section";
 
 interface PageParams {
   params: Promise<{
@@ -32,7 +32,7 @@ export default async function Page({ params }: PageParams) {
   });
 
   if (!item) {
-    notFound();
+    return notFound();
   }
 
   const { t } = await getTranslation({ ns: "common" });

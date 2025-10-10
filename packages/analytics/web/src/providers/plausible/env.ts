@@ -18,6 +18,7 @@ export const env = defineEnv({
   ...envConfig,
   ...preset,
   env: {
+    ...process.env,
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
     NEXT_PUBLIC_PLAUSIBLE_HOST: process.env.NEXT_PUBLIC_PLAUSIBLE_HOST,
   },

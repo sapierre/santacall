@@ -1,1 +1,1 @@
-export * from "./resend/env";
+export * from "./nodemailer/env";

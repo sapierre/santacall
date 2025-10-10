@@ -20,6 +20,7 @@ export const env = defineEnv({
   ...envConfig,
   ...preset,
   env: {
+    ...process.env,
     NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID:
       process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID,
   },
