@@ -63,7 +63,7 @@ export const AccountSwitcher = () => {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className={cn("h-14 flex-row items-center gap-3 px-2", {
+            className={cn("h-14 w-full flex-row items-center gap-3 px-2", {
               "bg-accent": open,
             })}
           >
@@ -98,8 +98,11 @@ export const AccountSwitcher = () => {
               )}
             </Avatar>
 
-            <View>
-              <Text className="font-sans-medium native:leading-tight">
+            <View className="flex-1">
+              <Text
+                className="font-sans-medium native:leading-tight"
+                numberOfLines={1}
+              >
                 {activeOrganization.data
                   ? activeOrganization.data.name
                   : t("account.personal")}
@@ -177,7 +180,7 @@ export const AccountSwitcher = () => {
                         </Text>
                       </AvatarFallback>
                     </Avatar>
-                    <Text>{organization.name}</Text>
+                    <Text numberOfLines={1}>{organization.name}</Text>
 
                     {activeOrganization.data?.id === organization.id ? (
                       <Icons.Check

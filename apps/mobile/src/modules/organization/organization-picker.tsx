@@ -55,7 +55,7 @@ export const OrganizationPicker = () => {
           <View className="w-full flex-row items-center justify-between gap-3">
             <View className="items-start gap-3">
               <Avatar alt="" style={{ width: 64, height: 64 }}>
-                <AvatarImage src={organization.logo ?? undefined} />
+                <AvatarImage source={{ uri: organization.logo ?? undefined }} />
                 <AvatarFallback>
                   <Text className="text-muted-foreground text-2xl">
                     {organization.name.charAt(0).toUpperCase()}

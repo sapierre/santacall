@@ -1,6 +1,6 @@
 import { LinearGradient, matchFont, vec } from "@shopify/react-native-skia";
 import { useState } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { useNativeVariable } from "react-native-css/native";
 import { CartesianChart, StackedArea } from "victory-native";
 
@@ -213,7 +213,10 @@ export function AreaChart() {
           domainPadding={{ top: 200 }}
           xAxis={{
             font: matchFont({
-              fontFamily: "Helvetica Neue",
+              fontFamily: Platform.select({
+                android: "helvetica",
+                ios: "Helvetica Neue",
+              }),
               fontSize: 12,
             }),
             labelOffset: 4,

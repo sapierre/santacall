@@ -55,6 +55,7 @@ export const OrganizationInfo = () => {
   return (
     <View className="items-center gap-4">
       <AvatarForm
+        key={activeOrganization.data.id}
         id={activeOrganization.data.id}
         image={activeOrganization.data.logo}
         update={(image) =>

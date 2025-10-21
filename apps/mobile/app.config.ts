@@ -26,7 +26,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   newArchEnabled: true,
   ios: {
     bundleIdentifier: "com.turbostarter.core",
-    supportsTablet: false,
+    supportsTablet: true,
+    infoPlist: {
+      ITSAppUsesNonExemptEncryption: false,
+    },
   },
   android: {
     package: "com.turbostarter.core",
@@ -50,11 +53,20 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     "expo-router",
     "expo-font",
     "expo-secure-store",
-    "expo-build-properties",
     "expo-image-picker",
     "expo-web-browser",
     /* required to enable i18n */
     "expo-localization",
+    [
+      "expo-build-properties",
+      {
+        android: {
+          /* https://github.com/expo/expo/issues/15761 */
+          extraProguardRules: "-keep public class com.horcrux.svg.** {*;}",
+          allowBackup: false,
+        },
+      },
+    ],
     [
       "expo-tracking-transparency",
       {

@@ -31,7 +31,7 @@ export const InvitationSummaryCard = ({
   return (
     <Card className="flex-row items-center gap-4 p-4">
       <Avatar className="size-10" alt={organization.name}>
-        <AvatarImage src={organization.logo ?? undefined} />
+        <AvatarImage source={{ uri: organization.logo ?? undefined }} />
         <AvatarFallback>
           <Text className="text-muted-foreground text-xl uppercase">
             {organization.name.charAt(0)}

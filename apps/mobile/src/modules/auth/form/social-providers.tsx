@@ -109,8 +109,14 @@ export const SocialProviders = memo<SocialProvidersProps>(
       onSettled: () => {
         setIsSubmitting(false);
       },
-      onSuccess: () => {
-        router.navigate(redirectTo);
+      onSuccess: async () => {
+        const session = await authClient.getSession({
+          fetchOptions: { throw: true },
+        });
+
+        if (session?.session) {
+          router.navigate(redirectTo);
+        }
       },
     });
 

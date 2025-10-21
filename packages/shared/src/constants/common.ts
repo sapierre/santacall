@@ -17,5 +17,4 @@ export const envConfig = {
     (!!process.env.SKIP_ENV_VALIDATION &&
       ["1", "true"].includes(process.env.SKIP_ENV_VALIDATION)) ||
     ["postinstall", "lint"].includes(process.env.npm_lifecycle_event ?? ""),
-  emptyStringAsUndefined: true,
 } as const;

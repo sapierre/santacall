@@ -1,5 +1,5 @@
 import { matchFont } from "@shopify/react-native-skia";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { useNativeVariable } from "react-native-css/native";
 import { Bar, CartesianChart } from "victory-native";
 
@@ -68,7 +68,10 @@ export function BarChart() {
           padding={{ bottom: 12 }}
           xAxis={{
             font: matchFont({
-              fontFamily: "Helvetica Neue",
+              fontFamily: Platform.select({
+                android: "helvetica",
+                ios: "Helvetica Neue",
+              }),
               fontSize: 12,
             }),
             lineWidth: 0,

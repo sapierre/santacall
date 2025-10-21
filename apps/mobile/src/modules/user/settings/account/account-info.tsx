@@ -50,7 +50,7 @@ export const AccountInfo = () => {
           <AvatarFormRemoveButton />
         </View>
       </AvatarForm>
-      <View className="items-center">
+      <View className="items-center px-6">
         <Text className="font-sans-semibold text-xl">{data.user.name}</Text>
         <Text className="text-muted-foreground text-center">
           {data.user.email}

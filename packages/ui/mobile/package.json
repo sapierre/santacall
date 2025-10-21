@@ -37,7 +37,7 @@
     "lucide-react-native": "0.525.0",
     "nativewind": "5.0.0-preview.1",
     "react-native": "catalog:",
-    "react-native-keyboard-controller": "1.19.0",
+    "react-native-keyboard-controller": "1.18.5",
     "react-native-svg": "15.12.1"
   },
   "devDependencies": {

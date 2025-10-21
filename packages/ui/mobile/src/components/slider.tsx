@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import { Dimensions, View } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,
@@ -10,7 +11,8 @@ import Animated, {
 
 import { cn } from "@turbostarter/ui";
 
-import type { FlatList, ViewProps } from "react-native";
+import type { FlatList } from "react-native";
+import type { ViewProps } from "react-native";
 import type {
   SharedValue,
   ScrollHandlerProcessed,
@@ -55,21 +57,24 @@ const SliderList = <ItemT,>(
   },
 ) => {
   const { onScroll, threshold } = useContext(SliderContext);
+  const native = Gesture.Native();
 
   return (
-    <Animated.FlatList
-      onScroll={onScroll}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      initialNumToRender={1}
-      maxToRenderPerBatch={1}
-      scrollEventThrottle={16}
-      decelerationRate="fast"
-      snapToAlignment="start"
-      pagingEnabled
-      snapToInterval={threshold}
-      {...props}
-    />
+    <GestureDetector gesture={native}>
+      <Animated.FlatList
+        onScroll={onScroll}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        initialNumToRender={1}
+        maxToRenderPerBatch={1}
+        scrollEventThrottle={16}
+        decelerationRate="fast"
+        snapToAlignment="start"
+        pagingEnabled
+        snapToInterval={threshold}
+        {...props}
+      />
+    </GestureDetector>
   );
 };
 
