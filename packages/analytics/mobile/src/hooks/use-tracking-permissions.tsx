@@ -1,4 +1,4 @@
-import { getTrackingPermissionsAsync } from "expo-tracking-transparency";
+import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import { useEffect, useState, useCallback } from "react";
 import { AppState } from "react-native";
 
@@ -6,7 +6,7 @@ export const useTrackingPermissions = () => {
   const [granted, setGranted] = useState(false);
 
   const checkPermission = useCallback(async () => {
-    const { granted: isGranted } = await getTrackingPermissionsAsync();
+    const { granted: isGranted } = await requestTrackingPermissionsAsync();
     setGranted(isGranted);
   }, []);
 

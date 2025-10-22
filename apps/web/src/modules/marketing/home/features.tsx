@@ -1360,8 +1360,8 @@ const Mobile = async () => {
         </CardDescription>
 
         <div className="flex flex-wrap items-start gap-2 pt-2">
-          <GooglePlayButton href="https://turbostarter.dev" />
-          <AppStoreButton href="https://turbostarter.dev" />
+          <GooglePlayButton href="https://play.google.com/store/apps/details?id=com.turbostarter.core" />
+          <AppStoreButton href="https://apps.apple.com/app/id6754278899" />
         </div>
       </CardHeader>
 

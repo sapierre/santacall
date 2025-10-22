@@ -17,6 +17,7 @@ import { db } from "@turbostarter/db/server";
 import { EmailTemplate } from "@turbostarter/email";
 import { sendEmail } from "@turbostarter/email/server";
 import { getLocaleFromRequest } from "@turbostarter/i18n/server";
+import { NodeEnv } from "@turbostarter/shared/constants";
 
 import { env } from "./env";
 import { getUrl } from "./lib/utils";
@@ -67,8 +68,9 @@ export const auth = betterAuth({
   trustedOrigins: [
     "chrome-extension://",
     "turbostarter://",
-    "http://localhost:*",
-    "https://localhost:*",
+    ...(env.NODE_ENV === NodeEnv.DEVELOPMENT
+      ? ["http://localhost", "https://localhost"]
+      : []),
   ],
   emailAndPassword: {
     enabled: true,

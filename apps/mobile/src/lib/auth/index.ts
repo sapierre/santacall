@@ -11,6 +11,7 @@ export const authClient = createClient({
   disableDefaultFetchPlugins: true,
   mobile: {
     storage: SecureStore,
+    cookiePrefix: "turbostarter",
   },
   fetchOptions: {
     headers: {

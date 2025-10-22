@@ -18,13 +18,13 @@ const links = [
       {
         title: "marketing:product.mobile.ios.title",
         description: "marketing:product.mobile.ios.description",
-        href: "https://turbostarter.dev",
+        href: "https://apps.apple.com/app/id6754278899",
         icon: Icons.Apple,
       },
       {
         title: "marketing:product.mobile.android.title",
         description: "marketing:product.mobile.android.description",
-        href: "https://turbostarter.dev",
+        href: "https://play.google.com/store/apps/details?id=com.turbostarter.core",
         icon: Icons.Android,
       },
       {

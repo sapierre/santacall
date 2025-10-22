@@ -19,14 +19,6 @@ const INTERNAL_PACKAGES = [
 
 const config: NextConfig = {
   reactStrictMode: true,
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/i,
-      use: ["@svgr/webpack"],
-    });
-
-    return config;
-  },
   turbopack: {
     rules: {
       "*.svg": {
@@ -34,10 +26,6 @@ const config: NextConfig = {
         as: "*.js",
       },
     },
-  },
-
-  experimental: {
-    optimizePackageImports: INTERNAL_PACKAGES,
   },
 
   images: {
@@ -50,10 +38,9 @@ const config: NextConfig = {
 
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: INTERNAL_PACKAGES,
-
-  /** We already do linting and typechecking as separate tasks in CI */
-  eslint: { ignoreDuringBuilds: true },
-  typescript: { ignoreBuildErrors: true },
+  experimental: {
+    optimizePackageImports: INTERNAL_PACKAGES,
+  },
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

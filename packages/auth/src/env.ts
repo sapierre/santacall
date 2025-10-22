@@ -1,12 +1,15 @@
 import { defineEnv } from "envin";
 import * as z from "zod";
 
-import { envConfig } from "@turbostarter/shared/constants";
+import { envConfig, NodeEnv } from "@turbostarter/shared/constants";
 
 import type { Preset } from "envin/types";
 
 export const preset = {
   id: "auth",
+  shared: {
+    NODE_ENV: z.enum(NodeEnv).default(NodeEnv.DEVELOPMENT),
+  },
   server: {
     BETTER_AUTH_SECRET: z.string(),
 

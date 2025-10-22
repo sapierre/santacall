@@ -7,6 +7,8 @@ import { SafeAreaView as NativeSafeAreaView } from "react-native-safe-area-conte
 import { cn } from "@turbostarter/ui";
 import { Text } from "@turbostarter/ui-mobile/text";
 
+import { WIDTH } from "~/utils/device";
+
 export const KeyboardAvoidingView = styled(NativeKeyboardAvoidingView, {
   className: "style",
 });
@@ -33,7 +35,11 @@ export const TabBarLabel = ({
 }) => {
   return (
     <Text
-      className={cn("text-muted-foreground text-xs", focused && "text-primary")}
+      className={cn(
+        "text-muted-foreground text-xs",
+        focused && "text-primary",
+        WIDTH > 640 && "ml-3 text-sm",
+      )}
     >
       {children}
     </Text>

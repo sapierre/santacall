@@ -3,7 +3,10 @@ import * as z from "zod";
 import type { AuthErrorCode } from "./server";
 import type { expoClient } from "@better-auth/expo/client";
 import type { TranslationKey } from "@turbostarter/i18n";
-import type { ClientOptions, BetterAuthClientPlugin } from "better-auth";
+import type {
+  BetterAuthClientPlugin,
+  BetterAuthClientOptions,
+} from "better-auth";
 
 type AuthMobileClientOptions = Parameters<typeof expoClient>[0];
 
@@ -79,6 +82,8 @@ type AuthConfig = z.infer<typeof authConfigSchema>;
 
 const ERROR_MESSAGES: Record<AuthErrorCode, TranslationKey> = {
   YOU_CANNOT_BAN_YOURSELF: "auth:error.user.cannotBanYourself",
+  YOU_ARE_NOT_ALLOWED_TO_SET_NON_EXISTENT_VALUE:
+    "auth:error.cannotSetNonExistentValue",
   YOU_ARE_NOT_ALLOWED_TO_CHANGE_USERS_ROLE: "auth:error.user.cannotChangeRole",
   YOU_ARE_NOT_ALLOWED_TO_CREATE_USERS: "admin:error.cannotCreateUsers",
   YOU_ARE_NOT_ALLOWED_TO_LIST_USERS: "admin:error.cannotListUsers",
@@ -233,7 +238,7 @@ const ERROR_MESSAGES: Record<AuthErrorCode, TranslationKey> = {
 } as const;
 
 export type {
-  ClientOptions as AuthClientOptions,
+  BetterAuthClientOptions as AuthClientOptions,
   BetterAuthClientPlugin as AuthClientPlugin,
   AuthMobileClientOptions,
   AuthConfig,

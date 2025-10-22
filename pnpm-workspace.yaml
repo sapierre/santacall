@@ -11,7 +11,7 @@ catalog:
   envin: 1.1.10
   eslint: 9.37.0
   prettier: 3.6.2
-  react-native: 0.81.4
+  react-native: 0.81.5
   typescript: 5.9.2
   zod: 4.1.12
 

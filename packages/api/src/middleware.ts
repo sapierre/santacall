@@ -18,6 +18,12 @@ import type { TFunction } from "@turbostarter/i18n";
 import type { Context, ValidationTargets } from "hono";
 import type { $ZodRawIssue, $ZodType } from "zod/v4/core";
 
+type PermissionsInput = NonNullable<
+  NonNullable<
+    Parameters<typeof auth.api.hasPermission>[0]
+  >["body"]["permissions"]
+>;
+
 /**
  * Reusable middleware that enforces users are logged in before running the
  * procedure
@@ -67,9 +73,7 @@ export const enforceAdmin = createMiddleware<{
 export const enforceUserPermission = ({
   permissions,
 }: {
-  permissions: NonNullable<
-    Parameters<typeof auth.api.hasPermission>[0]["body"]["permissions"]
-  >;
+  permissions: PermissionsInput;
 }) =>
   createMiddleware<{ Variables: { user: User } }>(async (c, next) => {
     const hasPermission = await auth.api.hasPermission({
@@ -97,9 +101,7 @@ export const enforceOrganizationPermission = ({
   permissions,
 }: {
   organizationId?: string;
-  permissions: NonNullable<
-    Parameters<typeof auth.api.hasPermission>[0]["body"]["permissions"]
-  >;
+  permissions: PermissionsInput;
 }) =>
   createMiddleware<{
     Variables: {

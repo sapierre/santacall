@@ -8,7 +8,7 @@ import { appConfig } from "~/config/app";
 
 import type { NextRequest } from "next/server";
 
-export const middleware = (request: NextRequest) =>
+export const proxy = (request: NextRequest) =>
   i18nRouter(request, {
     locales: i18nConfig.locales,
     defaultLocale:

@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 
 import { useTranslation } from "@turbostarter/i18n";
 import { cn, ThemeColor, ThemeMode } from "@turbostarter/ui";
@@ -31,53 +31,63 @@ export const ThemeCustomizer = memo<ThemeCustomizerProps>(
           <Label nativeID="color" className="text-xs">
             {t("theme.color.label")}
           </Label>
-          <View className="flex-row flex-wrap gap-2">
-            {Object.values(ThemeColor)
-              .filter((color) => Object.values(ThemeColor).includes(color))
-              .map((color) => {
-                const isActive = config.color === color;
-
-                return (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    key={color}
-                    onPress={() => onChange({ ...config, color })}
-                    hitSlop={2}
+          <FlatList
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+            numColumns={3}
+            data={Object.values(ThemeColor).filter((color) =>
+              Object.values(ThemeColor).includes(color),
+            )}
+            columnWrapperClassName="gap-2"
+            contentContainerClassName="gap-2"
+            renderItem={({ item }) => {
+              return (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  key={item}
+                  onPress={() => onChange({ ...config, color: item })}
+                  hitSlop={2}
+                  className={cn(
+                    "h-11 grow basis-[100px] flex-row justify-start gap-3 px-3",
+                    config.color === item && "border-primary border-2",
+                    `theme-${item}`,
+                  )}
+                >
+                  <View
                     className={cn(
-                      "h-11 grow basis-[100px] flex-row justify-start gap-3 px-3",
-                      isActive && "border-primary border-2",
-                      `theme-${color}`,
+                      "bg-primary flex h-5 w-5 shrink-0 items-center justify-center rounded-full",
                     )}
-                  >
-                    <View
-                      className={cn(
-                        "bg-primary flex h-5 w-5 shrink-0 items-center justify-center rounded-full",
-                      )}
-                    />
-                    <Text className="text-sm capitalize">
-                      {t(`theme.color.${color}`)}
-                    </Text>
-                  </Button>
-                );
-              })}
-          </View>
+                  />
+                  <Text className="text-sm capitalize">
+                    {t(`theme.color.${item}`)}
+                  </Text>
+                </Button>
+              );
+            }}
+          />
         </View>
         <View className="w-full gap-1.5">
           <Label nativeID="mode" className="text-xs">
             {t("theme.mode.label")}
           </Label>
-          <View className="flex-row flex-wrap gap-2">
-            {Object.values(ThemeMode).map((mode) => {
-              const isActive = config.mode === mode;
-              const Icon = MODE_ICONS[mode];
+          <FlatList
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+            numColumns={3}
+            data={Object.values(ThemeMode)}
+            columnWrapperClassName="gap-2"
+            contentContainerClassName="gap-2"
+            renderItem={({ item }) => {
+              const isActive = config.mode === item;
+              const Icon = MODE_ICONS[item];
 
               return (
                 <Button
                   variant="outline"
                   size="sm"
-                  key={mode}
-                  onPress={() => onChange({ ...config, mode })}
+                  key={item}
+                  onPress={() => onChange({ ...config, mode: item })}
                   hitSlop={2}
                   className={cn(
                     "h-11 grow basis-[100px] flex-row justify-start gap-2 capitalize",
@@ -90,12 +100,12 @@ export const ThemeCustomizer = memo<ThemeCustomizerProps>(
                     height={20}
                   />
                   <Text className="text-sm capitalize">
-                    {t(`theme.mode.${mode}`)}
+                    {t(`theme.mode.${item}`)}
                   </Text>
                 </Button>
               );
-            })}
-          </View>
+            }}
+          />
         </View>
       </View>
     );

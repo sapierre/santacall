@@ -73,12 +73,12 @@ const WelcomePage = () => {
             </SliderPaginationDots>
           </Slider>
 
-          <View className="mt-auto gap-3">
-            <Text className="font-sans-bold text-center text-4xl tracking-tighter">
+          <View className="mx-auto mt-auto max-w-xl gap-3">
+            <Text className="font-sans-bold text-center text-4xl tracking-tighter sm:text-5xl">
               {t("product.title")}
             </Text>
 
-            <Text className="text-muted-foreground px-6 text-center text-lg leading-snug">
+            <Text className="text-muted-foreground px-6 text-center text-lg leading-snug sm:text-xl">
               {t("product.description")}
             </Text>
           </View>

@@ -41,9 +41,10 @@ const Setup = () => {
   const granted = useTrackingPermissions();
 
   useEffect(() => {
-    const optedOut = client.optedOut;
-    if (granted && optedOut) {
+    if (granted) {
       void client.optIn();
+    } else {
+      void client.optOut();
     }
   }, [granted, client]);
 

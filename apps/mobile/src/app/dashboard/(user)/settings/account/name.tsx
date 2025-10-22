@@ -1,4 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useForm } from "react-hook-form";
 import { View } from "react-native";
@@ -18,8 +19,7 @@ import { Spin } from "@turbostarter/ui-mobile/spin";
 import { Text } from "@turbostarter/ui-mobile/text";
 
 import { authClient } from "~/lib/auth";
-
-import type { UpdateUserPayload } from "@turbostarter/auth";
+import { user } from "~/modules/user/lib/api";
 
 const EditName = () => {
   const { t } = useTranslation(["common", "auth"]);
@@ -32,13 +32,12 @@ const EditName = () => {
     },
   });
 
-  const onSubmit = async (data: Pick<UpdateUserPayload, "name">) => {
-    await authClient.updateUser(data, {
-      onSuccess: () => {
-        router.back();
-      },
-    });
-  };
+  const updateUser = useMutation({
+    ...user.mutations.update,
+    onSuccess: () => {
+      router.back();
+    },
+  });
 
   return (
     <View className="bg-background flex-1 p-6">
@@ -70,7 +69,7 @@ const EditName = () => {
           <Button
             className="w-full"
             size="lg"
-            onPress={form.handleSubmit(onSubmit)}
+            onPress={form.handleSubmit((data) => updateUser.mutateAsync(data))}
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? (

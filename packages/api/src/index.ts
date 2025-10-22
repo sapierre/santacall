@@ -20,9 +20,7 @@ const appRouter = new Hono()
     cors({
       origin: "*" /* set to your app url in production */,
       allowHeaders: ["Content-Type", "Authorization"],
-      allowMethods: ["POST", "GET", "OPTIONS"],
-      exposeHeaders: ["Content-Length"],
-      maxAge: 600,
+      maxAge: 3600,
       credentials: true,
     }),
   )

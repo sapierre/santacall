@@ -28,7 +28,7 @@
     "@turbostarter/storage": "workspace:*",
     "ai": "5.0.29",
     "envin": "catalog:",
-    "hono": "4.9.8",
+    "hono": "4.10.3",
     "zod": "catalog:"
   },
   "devDependencies": {

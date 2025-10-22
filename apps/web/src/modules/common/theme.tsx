@@ -119,7 +119,7 @@ export const ThemeControlsProvider = ({
     <Drawer>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-6 pt-0">
-        <div className="pt-4">
+        <div className="space-y-4 pt-4">
           <Customizer />
         </div>
       </DrawerContent>

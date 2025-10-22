@@ -132,6 +132,7 @@
     "missingPermission": "You need additional permissions to delete this organization."
   },
   "error": {
+    "slugAlreadyTaken": "The slug is already taken.",
     "cannotCreateNew": "You cannot create a new organization.",
     "maximumNumberOfOrganizations": "You have reached the maximum number of organizations.",
     "alreadyExists": "An organization with this name already exists.",

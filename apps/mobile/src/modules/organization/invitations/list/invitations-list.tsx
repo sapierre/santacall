@@ -28,9 +28,10 @@ export const InvitationsList = () => {
     Record<string, string | string[] | null>
   >({});
 
+  const perPage = 20;
   const params = {
     id: activeOrganization.data?.id ?? "",
-    perPage: "20",
+    perPage: perPage.toString(),
     sort: JSON.stringify([{ id: "expiresAt", desc: true }]),
     ...pickBy(filters, Boolean),
   };
@@ -45,7 +46,8 @@ export const InvitationsList = () => {
         })
         .queryFn(),
     initialPageParam: 1,
-    getNextPageParam: (_, pages) => pages.length + 1,
+    getNextPageParam: ({ total }, pages) =>
+      total > pages.length * perPage ? pages.length + 1 : undefined,
   });
 
   const data = invitations.data?.pages.flatMap((page) => page.data) ?? [];
