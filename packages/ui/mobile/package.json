@@ -35,7 +35,7 @@
     "@turbostarter/ui": "workspace:*",
     "input-otp-native": "0.5.0",
     "lucide-react-native": "0.525.0",
-    "nativewind": "5.0.0-preview.1",
+    "nativewind": "5.0.0-preview.2",
     "react-native": "catalog:",
     "react-native-keyboard-controller": "1.18.5",
     "react-native-svg": "15.12.1"

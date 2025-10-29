@@ -10,7 +10,7 @@ function Switch({
     <SwitchPrimitives.Root
       className={cn(
         "flex h-8 w-14 shrink-0 flex-row items-center rounded-full border border-transparent shadow-sm shadow-black/5",
-        props.checked ? "bg-primary" : "bg-input dark:bg-input/80",
+        props.checked ? "bg-primary" : "bg-input dark:bg-input/20",
         props.disabled && "opacity-50",
         className,
       )}

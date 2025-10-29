@@ -52,7 +52,7 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       ref={ref}
       className={cn(
-        "border-input dark:bg-input/30 dark:active:bg-input/50 bg-background flex h-12 flex-row items-center justify-between gap-2 rounded-md border px-3 py-2 shadow-sm shadow-black/5",
+        "border-input dark:bg-input/10 dark:active:bg-input/20 bg-background flex h-12 flex-row items-center justify-between gap-2 rounded-md border px-3 py-2 shadow-sm shadow-black/5",
         props.disabled && "opacity-50",
         size === "sm" && "h-10 py-2 sm:py-1.5",
         className,

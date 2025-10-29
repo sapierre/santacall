@@ -49,7 +49,7 @@ function TabsTrigger({
           "flex h-[calc(100%-1px)] flex-row items-center justify-center gap-1.5 rounded-md border border-transparent px-4 py-2 shadow-none shadow-black/5",
           props.disabled && "opacity-50",
           props.value === value &&
-            "bg-background dark:border-foreground/10 dark:bg-input/30 shadow-xs",
+            "bg-background dark:border-foreground/10 dark:bg-input/10 shadow-xs",
           className,
         )}
         {...props}

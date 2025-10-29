@@ -21,7 +21,7 @@ function Checkbox({
   return (
     <CheckboxPrimitive.Root
       className={cn(
-        "border-input dark:bg-input/30 size-5 shrink-0 overflow-hidden rounded-[4px] border shadow-sm shadow-black/5",
+        "border-input dark:bg-input/10 size-5 shrink-0 overflow-hidden rounded-[4px] border shadow-sm shadow-black/5",
         props.checked && cn("border-primary", checkedClassName),
         props.disabled && "opacity-50",
         className,

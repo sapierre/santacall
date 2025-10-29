@@ -43,7 +43,7 @@ function InputOTPSlot({
     <View
       className={cn(
         "border-input relative flex size-14 items-center justify-center border transition-all outline-none",
-        "dark:bg-input/30",
+        "dark:bg-input/10",
         {
           "border-ring": isActive,
           "rounded-l-md": isFirst,

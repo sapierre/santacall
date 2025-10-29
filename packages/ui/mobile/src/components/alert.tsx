@@ -1,3 +1,4 @@
+import { cva } from "class-variance-authority";
 import * as React from "react";
 import { View } from "react-native";
 
@@ -6,7 +7,59 @@ import { cn } from "@turbostarter/ui";
 import { Text, TextClassContext } from "./text";
 
 import type { Icon } from "./icons";
+import type { VariantProps } from "class-variance-authority";
 import type { ViewProps } from "react-native";
+
+const alertVariants = cva(
+  "bg-card border-border relative w-full rounded-lg border px-4 pt-3.5 pb-2",
+  {
+    variants: {
+      variant: {
+        default: "bg-card border-border",
+        destructive: "border-destructive/20 bg-destructive/5",
+        primary: "border-primary/20 bg-primary/5",
+        success: "border-success/20 bg-success/5",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
+);
+
+const alertTextVariants = cva("text-sm", {
+  variants: {
+    variant: {
+      default: "text-foreground",
+      destructive: "text-destructive",
+      primary: "text-primary",
+      success: "text-success",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+});
+
+const alertDescriptionVariants = cva(
+  "ml-0.5 pb-1.5 pl-6 text-sm leading-relaxed",
+  {
+    variants: {
+      variant: {
+        default: "text-muted-foreground",
+        destructive: "text-destructive/90",
+        primary: "text-primary/90",
+        success: "text-success/90",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
+);
+
+const AlertContext =
+  React.createContext<VariantProps<typeof alertVariants>["variant"]>(null);
 
 function Alert({
   className,
@@ -16,41 +69,33 @@ function Alert({
   iconClassName,
   ...props
 }: ViewProps &
-  React.RefAttributes<View> & {
+  React.RefAttributes<View> &
+  VariantProps<typeof alertVariants> & {
     icon?: Icon;
-    variant?: "default" | "destructive";
     iconClassName?: string;
   }) {
   return (
-    <TextClassContext.Provider
-      value={cn(
-        "text-foreground text-sm",
-        variant === "destructive" && "text-destructive",
-        className,
-      )}
-    >
-      <View
-        role="alert"
-        className={cn(
-          "bg-card border-border relative w-full rounded-lg border px-4 pt-3.5 pb-2",
-          className,
-        )}
-        {...props}
+    <AlertContext.Provider value={variant}>
+      <TextClassContext.Provider
+        value={cn(alertTextVariants({ variant }), className)}
       >
-        {Icon && (
-          <View className="absolute top-3 left-3.5">
-            <Icon
-              className={cn(
-                variant === "destructive" && "text-destructive",
-                iconClassName,
-              )}
-              size={16}
-            />
-          </View>
-        )}
-        {children}
-      </View>
-    </TextClassContext.Provider>
+        <View
+          role="alert"
+          className={cn(alertVariants({ variant }), className)}
+          {...props}
+        >
+          {Icon && (
+            <View className="absolute top-3 left-3.5">
+              <Icon
+                className={cn(alertTextVariants({ variant }), iconClassName)}
+                size={16}
+              />
+            </View>
+          )}
+          {children}
+        </View>
+      </TextClassContext.Provider>
+    </AlertContext.Provider>
   );
 }
 
@@ -73,14 +118,11 @@ function AlertDescription({
   className,
   ...props
 }: React.ComponentProps<typeof Text> & React.RefAttributes<Text>) {
-  const textClass = React.useContext(TextClassContext);
+  const variant = React.useContext(AlertContext);
+
   return (
     <Text
-      className={cn(
-        "text-muted-foreground ml-0.5 pb-1.5 pl-6 text-sm leading-relaxed",
-        textClass?.includes("text-destructive") && "text-destructive/90",
-        className,
-      )}
+      className={cn(alertDescriptionVariants({ variant }), className)}
       {...props}
     />
   );

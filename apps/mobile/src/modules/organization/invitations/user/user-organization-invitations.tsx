@@ -57,7 +57,7 @@ export const UserOrganizationInvitationsBanner = memo(() => {
       invitations={pendingInvitations}
     >
       <Pressable>
-        <AlertBox>
+        <AlertBox variant="primary">
           <AlertTitle className="pl-0">
             {t("invitations.user.banner.title", {
               count: pendingInvitations.length,
