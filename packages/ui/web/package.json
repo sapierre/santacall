@@ -25,7 +25,7 @@
     "@turbostarter/ui": "workspace:*",
     "cmdk": "1.1.1",
     "input-otp": "1.4.2",
-    "lucide-react": "0.544.0",
+    "lucide-react": "0.552.0",
     "radix-ui": "1.4.3",
     "react-day-picker": "9.10.0",
     "recharts": "2.15.4",
