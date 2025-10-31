@@ -3,7 +3,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { SocialProvider } from "@turbostarter/auth";
 import { useTranslation } from "@turbostarter/i18n";
 import { capitalize } from "@turbostarter/shared/utils";
 import { Button } from "@turbostarter/ui-web/button";
@@ -20,8 +19,10 @@ import {
 } from "@turbostarter/ui-web/modal";
 import { Skeleton } from "@turbostarter/ui-web/skeleton";
 
+import { authConfig } from "~/config/auth";
 import { pathsConfig } from "~/config/paths";
 import { authClient } from "~/lib/auth/client";
+import { SocialIcons } from "~/modules/auth/form/social-providers";
 import { auth } from "~/modules/auth/lib/api";
 import {
   SettingsCard,
@@ -32,12 +33,7 @@ import {
   SettingsCardTitle,
 } from "~/modules/common/layout/dashboard/settings-card";
 
-import type { SVGProps } from "react";
-
-const ICONS: Record<SocialProvider, React.FC<SVGProps<SVGElement>>> = {
-  [SocialProvider.GITHUB]: Icons.Github,
-  [SocialProvider.GOOGLE]: Icons.Google,
-};
+import type { SocialProvider } from "@turbostarter/auth";
 
 export const Accounts = () => {
   const { t, i18n } = useTranslation(["auth", "common"]);
@@ -51,9 +47,9 @@ export const Accounts = () => {
 
   const accounts = data ?? [];
   const socials = accounts.filter((account) =>
-    Object.values(SocialProvider).includes(account.providerId),
+    authConfig.providers.oAuth.includes(account.providerId),
   );
-  const missing = Object.values(SocialProvider).filter(
+  const missing = authConfig.providers.oAuth.filter(
     (provider) => !socials.some((social) => social.providerId === provider),
   );
 
@@ -97,7 +93,7 @@ export const Accounts = () => {
           <ul className="overflow-hidden rounded-md border">
             {socials.map((social) => {
               const provider = social.providerId as SocialProvider;
-              const Icon = ICONS[provider];
+              const Icon = SocialIcons[provider];
 
               return (
                 <li
@@ -159,7 +155,7 @@ export const Accounts = () => {
             <hr className="bg-border w-full" />
             <div className="flex flex-wrap gap-2">
               {missing.map((provider) => {
-                const Icon = ICONS[provider as SocialProvider];
+                const Icon = SocialIcons[provider];
 
                 return (
                   <Button

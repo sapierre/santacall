@@ -92,7 +92,9 @@ export const UserNavigation = memo<UserNavigationProps>(({ user }) => {
 
             <div className="flex w-full min-w-0 flex-col space-y-1">
               {user.name && (
-                <p className="text-sm leading-none font-medium">{user.name}</p>
+                <p className="truncate text-sm leading-none font-medium">
+                  {user.name}
+                </p>
               )}
               {user.email && (
                 <p className="text-muted-foreground truncate text-xs leading-none">

@@ -3,6 +3,9 @@ import { cors } from "hono/cors";
 import { csrf } from "hono/csrf";
 import { logger } from "hono/logger";
 
+import { auth } from "@turbostarter/auth/server";
+import { matchesPattern } from "@turbostarter/shared/utils";
+
 import { localize, timing } from "./middleware";
 import { adminRouter } from "./modules/admin/router";
 import { aiRouter } from "./modules/ai/router";
@@ -15,10 +18,17 @@ import { onError } from "./utils/on-error";
 const appRouter = new Hono()
   .basePath("/api")
   .use(logger())
-  .use(csrf())
+  .use(
+    csrf({
+      origin: (origin, c) =>
+        [...auth.options.trustedOrigins, c.req.url].some((trustedOrigin) =>
+          matchesPattern(trustedOrigin, origin),
+        ),
+    }),
+  )
   .use(
     cors({
-      origin: "*" /* set to your app url in production */,
+      origin: "*",
       allowHeaders: ["Content-Type", "Authorization"],
       maxAge: 3600,
       credentials: true,

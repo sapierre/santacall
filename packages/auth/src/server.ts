@@ -68,8 +68,10 @@ export const auth = betterAuth({
   trustedOrigins: [
     "chrome-extension://",
     "turbostarter://",
+    /* Needed only for Apple ID authentication */
+    "https://appleid.apple.com",
     ...(env.NODE_ENV === NodeEnv.DEVELOPMENT
-      ? ["http://localhost", "https://localhost"]
+      ? ["http://localhost*", "https://localhost*"]
       : []),
   ],
   emailAndPassword: {
@@ -165,17 +167,30 @@ export const auth = betterAuth({
     nextCookies(),
   ],
   socialProviders: {
-    [SocialProvider.GITHUB]: {
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
+    [SocialProvider.APPLE]: {
+      clientId: env.APPLE_CLIENT_ID,
+      clientSecret: env.APPLE_CLIENT_SECRET,
+      appBundleIdentifier: env.APPLE_APP_BUNDLE_IDENTIFIER,
     },
     [SocialProvider.GOOGLE]: {
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     },
+    [SocialProvider.GITHUB]: {
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+    },
   },
   advanced: {
     cookiePrefix: "turbostarter",
+    cookies: {
+      state: {
+        attributes: {
+          sameSite: "none",
+          secure: true,
+        },
+      },
+    },
   },
 });
 

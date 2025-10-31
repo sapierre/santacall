@@ -13,10 +13,13 @@ export const preset = {
   server: {
     BETTER_AUTH_SECRET: z.string(),
 
-    GITHUB_CLIENT_ID: z.string().optional().default(""),
-    GITHUB_CLIENT_SECRET: z.string().optional().default(""),
+    APPLE_CLIENT_ID: z.string().optional().default(""),
+    APPLE_CLIENT_SECRET: z.string().optional().default(""),
+    APPLE_APP_BUNDLE_IDENTIFIER: z.string().optional().default(""),
     GOOGLE_CLIENT_ID: z.string().optional().default(""),
     GOOGLE_CLIENT_SECRET: z.string().optional().default(""),
+    GITHUB_CLIENT_ID: z.string().optional().default(""),
+    GITHUB_CLIENT_SECRET: z.string().optional().default(""),
 
     SEED_EMAIL: z.email().optional().default("me@turbostarter.dev"),
     SEED_PASSWORD: z.string().optional().default("Pa$$w0rd"),

@@ -10,32 +10,7 @@ const hslToHex = (h: number, s: number, l: number) => {
   return `#${f(0)}${f(8)}${f(4)}`;
 };
 
-const isExternal = (url: string) =>
-  ["http", "https", "mailto", "tel", "//", "www"].some((protocol) =>
-    url.startsWith(protocol),
-  );
-
-const mergeSearchParams = (
-  target: URL,
-  source: URL,
-  options?: { overwrite?: boolean; replace?: boolean },
-) => {
-  const overwrite = options?.overwrite ?? false;
-  const replace = options?.replace ?? false;
-
-  if (replace) {
-    target.search = source.search;
-    return;
-  }
-
-  source.searchParams.forEach((value, key) => {
-    if (overwrite || !target.searchParams.has(key)) {
-      target.searchParams.set(key, value);
-    }
-  });
-};
-
-export { hslToHex, isExternal, mergeSearchParams };
+export { hslToHex };
 export { default as capitalize } from "lodash/capitalize";
 export { default as mapValues } from "lodash/mapValues";
 export { default as pickBy } from "lodash/pickBy";

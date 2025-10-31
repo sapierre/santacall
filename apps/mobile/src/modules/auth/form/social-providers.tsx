@@ -1,4 +1,11 @@
+import {
+  GoogleSignin,
+  isCancelledResponse,
+  isSuccessResponse,
+} from "@react-native-google-signin/google-signin";
 import { useMutation } from "@tanstack/react-query";
+import env from "env.config";
+import * as AppleAuthentication from "expo-apple-authentication";
 import { router } from "expo-router";
 import { memo } from "react";
 import { View } from "react-native";
@@ -11,9 +18,11 @@ import { Icons } from "@turbostarter/ui-mobile/icons";
 import { Spin } from "@turbostarter/ui-mobile/spin";
 import { Text } from "@turbostarter/ui-mobile/text";
 
+import { authConfig } from "~/config/auth";
 import { pathsConfig } from "~/config/paths";
 import { authClient } from "~/lib/auth";
 import { useAuthFormStore } from "~/modules/auth/form/store";
+import { isAndroid, isIOS } from "~/utils/device";
 
 import { auth } from "../lib/api";
 
@@ -26,10 +35,20 @@ interface SocialProvidersProps {
   readonly redirectTo?: Route;
 }
 
-const SocialIcons: Record<SocialProviderType, Icon> = {
+export const SocialIcons: Record<SocialProviderType, Icon> = {
   [SocialProviderType.GITHUB]: Icons.Github,
   [SocialProviderType.GOOGLE]: Icons.Google,
+  [SocialProviderType.APPLE]: Icons.Apple,
 };
+
+if (
+  authConfig.providers.oAuth.includes(SocialProviderType.GOOGLE) &&
+  isAndroid
+) {
+  GoogleSignin.configure({
+    webClientId: env.EXPO_PUBLIC_GOOGLE_CLIENT_ID,
+  });
+}
 
 const SocialProvider = ({
   provider,
@@ -120,19 +139,67 @@ export const SocialProviders = memo<SocialProvidersProps>(
       },
     });
 
+    const getParams = async (provider: SocialProviderType) => {
+      const shared = {
+        provider,
+        callbackURL: redirectTo,
+        errorCallbackURL: pathsConfig.setup.auth.error,
+      };
+
+      if (provider === SocialProviderType.APPLE && isIOS) {
+        const credential = await AppleAuthentication.signInAsync({
+          requestedScopes: [
+            AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+            AppleAuthentication.AppleAuthenticationScope.EMAIL,
+          ],
+        });
+
+        return {
+          ...shared,
+          ...(credential.identityToken
+            ? { idToken: { token: credential.identityToken } }
+            : {}),
+        };
+      }
+
+      if (provider === SocialProviderType.GOOGLE && isAndroid) {
+        await GoogleSignin.hasPlayServices();
+        const response = await GoogleSignin.signIn();
+
+        if (isCancelledResponse(response)) {
+          return null;
+        }
+
+        const tokens = await GoogleSignin.getTokens();
+
+        return {
+          ...shared,
+          ...(isSuccessResponse(response)
+            ? {
+                idToken: {
+                  token: tokens.idToken,
+                  accessToken: tokens.accessToken,
+                },
+              }
+            : {}),
+        };
+      }
+
+      return shared;
+    };
+
     return (
       <View className="flex w-full items-stretch justify-center gap-2">
         {Object.values(providers).map((provider) => (
           <SocialProvider
             key={provider}
             provider={provider}
-            onClick={() =>
-              signIn.mutate({
-                provider,
-                callbackURL: redirectTo,
-                errorCallbackURL: pathsConfig.setup.auth.error,
-              })
-            }
+            onClick={async () => {
+              const params = await getParams(provider);
+              if (params) {
+                await signIn.mutateAsync(params);
+              }
+            }}
             actualProvider={actualProvider}
             isSubmitting={isSubmitting}
           />

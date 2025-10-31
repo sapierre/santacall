@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { Trans } from "@turbostarter/i18n";
 import { getTranslation } from "@turbostarter/i18n/server";
+import { getOrigin } from "@turbostarter/shared/utils";
 
 import { Button } from "../_components/button";
 import { Layout } from "../_components/layout/layout";
@@ -23,7 +24,7 @@ export const OrganizationInvitation = async ({
   locale,
 }: Props) => {
   const { t } = await getTranslation({ locale, ns: "organization" });
-  const { origin } = new URL(url);
+  const origin = getOrigin(url);
 
   return (
     <Layout origin={origin} locale={locale}>

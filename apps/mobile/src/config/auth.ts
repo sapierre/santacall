@@ -1,4 +1,5 @@
 import env from "env.config";
+import { Platform } from "react-native";
 
 import { SocialProvider, authConfigSchema } from "@turbostarter/auth";
 
@@ -9,6 +10,12 @@ export const authConfig = authConfigSchema.parse({
     password: env.EXPO_PUBLIC_AUTH_PASSWORD,
     magicLink: env.EXPO_PUBLIC_AUTH_MAGIC_LINK,
     anonymous: env.EXPO_PUBLIC_AUTH_ANONYMOUS,
-    oAuth: [SocialProvider.GOOGLE, SocialProvider.GITHUB],
+    oAuth: [
+      Platform.select({
+        android: SocialProvider.GOOGLE,
+        ios: SocialProvider.APPLE,
+      }),
+      SocialProvider.GITHUB,
+    ],
   },
 }) satisfies AuthConfig;

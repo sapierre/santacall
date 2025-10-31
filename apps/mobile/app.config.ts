@@ -27,6 +27,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     bundleIdentifier: "com.turbostarter.core",
     supportsTablet: true,
+    usesAppleSignIn: true,
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
     },
@@ -55,6 +56,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     "expo-secure-store",
     "expo-image-picker",
     "expo-web-browser",
+    "expo-apple-authentication",
+    "@react-native-google-signin/google-signin",
     /* required to enable i18n */
     "expo-localization",
     [
@@ -62,6 +65,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         android: {
           /* https://github.com/expo/expo/issues/15761 */
+          enableProguardInReleaseBuilds: true,
           extraProguardRules: "-keep public class com.horcrux.svg.** {*;}",
           allowBackup: false,
         },

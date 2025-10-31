@@ -1,4 +1,4 @@
-import { mergeSearchParams } from "@turbostarter/shared/utils";
+import { getOrigin, mergeSearchParams } from "@turbostarter/shared/utils";
 
 import { MemberRole, UserRole } from "../types";
 
@@ -24,9 +24,7 @@ export const getUrl = ({
     if (url) {
       const urlObj = new URL(
         url,
-        resultUrl.origin !== "null"
-          ? resultUrl.origin
-          : (expoOrigin ?? undefined),
+        getOrigin(resultUrl.toString()) ?? expoOrigin ?? undefined,
       );
       mergeSearchParams(resultUrl, urlObj, { overwrite: false });
     }

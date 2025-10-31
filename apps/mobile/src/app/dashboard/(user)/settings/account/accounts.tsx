@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Alert } from "react-native";
 import { View } from "react-native";
 
-import { SocialProvider } from "@turbostarter/auth";
 import { useTranslation } from "@turbostarter/i18n";
 import { capitalize } from "@turbostarter/shared/utils";
 import { Button } from "@turbostarter/ui-mobile/button";
@@ -10,15 +9,12 @@ import { Icons } from "@turbostarter/ui-mobile/icons";
 import { Spin } from "@turbostarter/ui-mobile/spin";
 import { Text } from "@turbostarter/ui-mobile/text";
 
+import { authConfig } from "~/config/auth";
 import { authClient } from "~/lib/auth";
+import { SocialIcons } from "~/modules/auth/form/social-providers";
 import { auth } from "~/modules/auth/lib/api";
 
-import type { SVGProps } from "react";
-
-const ICONS: Record<SocialProvider, React.FC<SVGProps<SVGElement>>> = {
-  [SocialProvider.GITHUB]: Icons.Github,
-  [SocialProvider.GOOGLE]: Icons.Google,
-};
+import type { SocialProvider } from "@turbostarter/auth";
 
 export default function AccountsScreen() {
   const { t, i18n } = useTranslation(["auth", "common"]);
@@ -33,9 +29,9 @@ export default function AccountsScreen() {
 
   const accounts = data ?? [];
   const socials = accounts.filter((account) =>
-    Object.values(SocialProvider).includes(account.providerId),
+    authConfig.providers.oAuth.includes(account.providerId),
   );
-  const missing = Object.values(SocialProvider).filter(
+  const missing = authConfig.providers.oAuth.filter(
     (provider) => !socials.some((social) => social.providerId === provider),
   );
 
@@ -92,7 +88,7 @@ export default function AccountsScreen() {
             <View className="border-border overflow-hidden rounded-lg border">
               {socials.map((social) => {
                 const provider = social.providerId as SocialProvider;
-                const Icon = ICONS[provider];
+                const Icon = SocialIcons[provider];
 
                 return (
                   <View
@@ -140,7 +136,7 @@ export default function AccountsScreen() {
               <View className="bg-border h-px" />
               <View className="flex-row flex-wrap gap-2">
                 {missing.map((provider) => {
-                  const Icon = ICONS[provider as SocialProvider];
+                  const Icon = SocialIcons[provider];
 
                   return (
                     <Button

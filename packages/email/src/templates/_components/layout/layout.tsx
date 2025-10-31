@@ -16,7 +16,7 @@ export const Layout = ({
   children,
   origin,
   locale,
-}: PropsWithChildren<{ origin?: string; locale?: string }>) => {
+}: PropsWithChildren<{ origin?: string | null; locale?: string }>) => {
   return (
     <Html lang={locale}>
       <Head>

@@ -2,6 +2,7 @@ import { Heading, Preview, Text } from "@react-email/components";
 import * as React from "react";
 
 import { getTranslation } from "@turbostarter/i18n/server";
+import { getOrigin } from "@turbostarter/shared/utils";
 
 import { Button } from "../_components/button";
 import { Layout } from "../_components/layout/layout";
@@ -17,7 +18,7 @@ type Props = EmailVariables[typeof EmailTemplate.CONFIRM_EMAIL] &
 
 export const ConfirmEmail = async ({ url, locale }: Props) => {
   const { t } = await getTranslation({ locale, ns: "auth" });
-  const { origin } = new URL(url);
+  const origin = getOrigin(url);
 
   return (
     <Layout origin={origin} locale={locale}>

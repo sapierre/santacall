@@ -10,6 +10,6 @@ export const authConfig = authConfigSchema.parse({
     magicLink: env.NEXT_PUBLIC_AUTH_MAGIC_LINK,
     passkey: env.NEXT_PUBLIC_AUTH_PASSKEY,
     anonymous: env.NEXT_PUBLIC_AUTH_ANONYMOUS,
-    oAuth: [SocialProvider.GOOGLE, SocialProvider.GITHUB],
+    oAuth: [SocialProvider.APPLE, SocialProvider.GOOGLE, SocialProvider.GITHUB],
   },
 }) satisfies AuthConfig;

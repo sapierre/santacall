@@ -26,6 +26,7 @@ interface SocialProvidersProps {
 export const SocialIcons: Record<SocialProviderType, Icon> = {
   [SocialProviderType.GITHUB]: Icons.Github,
   [SocialProviderType.GOOGLE]: Icons.Google,
+  [SocialProviderType.APPLE]: Icons.Apple,
 };
 
 const SocialProvider = ({
@@ -48,7 +49,7 @@ const SocialProvider = ({
       variant="outline"
       type="button"
       size="lg"
-      className="relative grow gap-2.5"
+      className="relative grow basis-28 gap-2"
       disabled={isSubmitting}
       onClick={onClick}
     >
@@ -57,7 +58,7 @@ const SocialProvider = ({
       ) : (
         <>
           <Icon className="size-5 dark:brightness-125" />
-          <span className="capitalize">{provider}</span>
+          <span className="leading-none capitalize">{provider}</span>
         </>
       )}
 
@@ -91,7 +92,7 @@ export const SocialProviders = memo<SocialProvidersProps>(
     });
 
     return (
-      <div className="grid grid-cols-2 gap-2">
+      <div className="flex flex-wrap gap-2">
         {Object.values(providers).map((provider) => (
           <SocialProvider
             key={provider}

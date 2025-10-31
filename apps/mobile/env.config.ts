@@ -21,6 +21,7 @@ export default defineEnv({
     EXPO_PUBLIC_AUTH_PASSWORD: castStringToBool.optional().default(true),
     EXPO_PUBLIC_AUTH_MAGIC_LINK: castStringToBool.optional().default(false),
     EXPO_PUBLIC_AUTH_ANONYMOUS: castStringToBool.optional().default(true),
+    EXPO_PUBLIC_GOOGLE_CLIENT_ID: z.string().optional().default(""),
 
     EXPO_PUBLIC_SITE_URL: z.url(),
     EXPO_PUBLIC_DEFAULT_LOCALE: z.string().optional().default("en"),
@@ -43,6 +44,7 @@ export default defineEnv({
     EXPO_PUBLIC_AUTH_PASSWORD: process.env.EXPO_PUBLIC_AUTH_PASSWORD,
     EXPO_PUBLIC_AUTH_MAGIC_LINK: process.env.EXPO_PUBLIC_AUTH_MAGIC_LINK,
     EXPO_PUBLIC_AUTH_ANONYMOUS: process.env.EXPO_PUBLIC_AUTH_ANONYMOUS,
+    EXPO_PUBLIC_GOOGLE_CLIENT_ID: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID,
 
     EXPO_PUBLIC_POSTHOG_KEY: process.env.EXPO_PUBLIC_POSTHOG_KEY,
     EXPO_PUBLIC_POSTHOG_HOST: process.env.EXPO_PUBLIC_POSTHOG_HOST,
