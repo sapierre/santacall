@@ -23,7 +23,7 @@
     "@turbostarter/eslint-config": "workspace:*",
     "@turbostarter/prettier-config": "workspace:*",
     "@turbostarter/tsconfig": "workspace:*",
-    "@types/lodash": "4.17.9",
+    "@types/lodash": "4.17.20",
     "@types/react": "catalog:react19",
     "eslint": "catalog:",
     "prettier": "catalog:",
