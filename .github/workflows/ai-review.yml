@@ -23,6 +23,7 @@ jobs:
           github_action_config.auto_describe: "false"
 
   claude-review:
+    if: ${{ github.event.sender.type != 'Bot' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
