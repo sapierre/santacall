@@ -17,7 +17,7 @@
   },
   "prettier": "@turbostarter/prettier-config",
   "dependencies": {
-    "@ai-sdk/openai": "2.0.23",
+    "@ai-sdk/openai": "2.0.59",
     "@hono/zod-validator": "0.7.2",
     "@turbostarter/auth": "workspace:*",
     "@turbostarter/billing": "workspace:*",
