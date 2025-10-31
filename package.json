@@ -27,7 +27,7 @@
     "@commitlint/types": "20.0.0",
     "@turbo/gen": "2.5.8",
     "@turbostarter/prettier-config": "workspace:*",
-    "cross-env": "7.0.3",
+    "cross-env": "10.1.0",
     "dotenv-cli": "7.4.2",
     "husky": "^9.1.5",
     "prettier": "catalog:",
