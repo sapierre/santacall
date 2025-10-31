@@ -27,7 +27,7 @@
     "@turbostarter/eslint-config": "workspace:*",
     "@turbostarter/prettier-config": "workspace:*",
     "@turbostarter/tsconfig": "workspace:*",
-    "concurrently": "8.2.2",
+    "concurrently": "9.2.1",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
