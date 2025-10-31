@@ -715,8 +715,8 @@ importers:
         specifier: 2.0.59
         version: 2.0.59(zod@4.1.12)
       '@hono/zod-validator':
-        specifier: 0.7.2
-        version: 0.7.2(hono@4.10.4)(zod@4.1.12)
+        specifier: 0.7.4
+        version: 0.7.4(hono@4.10.4)(zod@4.1.12)
       '@turbostarter/auth':
         specifier: workspace:*
         version: link:../auth
@@ -3449,8 +3449,8 @@ packages:
   '@hexagon/base64@1.1.28':
     resolution: {integrity: sha512-lhqDEAvWixy3bZ+UOYbPwUbBkwBq5C1LAJ/xPC8Oi+lL54oyakv/npbA0aU2hgCsx/1NUd4IBvV03+aUBWxerw==}
 
-  '@hono/zod-validator@0.7.2':
-    resolution: {integrity: sha512-ub5eL/NeZ4eLZawu78JpW/J+dugDAYhwqUIdp9KYScI6PZECij4Hx4UsrthlEUutqDDhPwRI0MscUfNkvn/mqQ==}
+  '@hono/zod-validator@0.7.4':
+    resolution: {integrity: sha512-biKGn3BRJVaftZlIPMyK+HCe/UHAjJ6sH0UyXe3+v0OcgVr9xfImDROTJFLtn9e3XEEAHGZIM9U6evu85abm8Q==}
     peerDependencies:
       hono: '>=3.9.0'
       zod: ^3.25.0 || ^4.0.0
@@ -16292,7 +16292,7 @@ snapshots:
 
   '@hexagon/base64@1.1.28': {}
 
-  '@hono/zod-validator@0.7.2(hono@4.10.4)(zod@4.1.12)':
+  '@hono/zod-validator@0.7.4(hono@4.10.4)(zod@4.1.12)':
     dependencies:
       hono: 4.10.4
       zod: 4.1.12
