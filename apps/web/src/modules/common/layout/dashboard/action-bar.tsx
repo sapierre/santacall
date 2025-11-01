@@ -105,9 +105,7 @@ export const DashboardActionBar = () => {
 
   const rawPath = getPath(pathsConfig, pathname);
   const path =
-    rawPath && rawPath.length === 1
-      ? [{ ...rawPath[0], key: ROOT_KEY }]
-      : rawPath;
+    rawPath?.length === 1 ? [{ ...rawPath[0], key: ROOT_KEY }] : rawPath;
 
   const last = path?.at(-1);
 
