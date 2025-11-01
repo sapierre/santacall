@@ -31,12 +31,6 @@ export const webhookHandler: BillingProviderStrategy["webhookHandler"] = async (
 
     console.log(`🔔  Webhook received: ${type}`);
 
-    if (!type) {
-      throw new HttpException(HttpStatusCode.BAD_REQUEST, {
-        code: "billing:error.webhook.dataInvalid",
-      });
-    }
-
     if (relevantEvents.has(type)) {
       console.log(`🔔  Relevant event: ${type}`);
       switch (type) {

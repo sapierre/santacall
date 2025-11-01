@@ -16,13 +16,13 @@
   },
   "prettier": "@turbostarter/prettier-config",
   "dependencies": {
-    "@lemonsqueezy/lemonsqueezy.js": "3.3.1",
-    "@polar-sh/sdk": "0.32.13",
+    "@lemonsqueezy/lemonsqueezy.js": "4.0.0",
+    "@polar-sh/sdk": "0.40.3",
     "@turbostarter/auth": "workspace:*",
     "@turbostarter/db": "workspace:*",
     "@turbostarter/shared": "workspace:*",
     "envin": "catalog:",
-    "stripe": "16.10.0",
+    "stripe": "19.2.0",
     "zod": "catalog:"
   },
   "devDependencies": {

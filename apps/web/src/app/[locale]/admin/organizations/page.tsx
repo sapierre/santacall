@@ -5,7 +5,6 @@ import {
   parseAsString,
 } from "nuqs/server";
 import { Suspense } from "react";
-import * as z from "zod";
 
 import { getOrganizationsResponseSchema } from "@turbostarter/api/schema";
 import { handle } from "@turbostarter/api/utils";
@@ -33,8 +32,8 @@ const searchParamsCache = createSearchParamsCache({
   perPage: parseAsInteger.withDefault(10),
   sort: getSortingStateParser().withDefault([{ id: "name", desc: false }]),
   q: parseAsString,
-  createdAt: parseAsArrayOf(z.coerce.number()),
-  members: parseAsArrayOf(z.coerce.number()),
+  createdAt: parseAsArrayOf(parseAsInteger),
+  members: parseAsArrayOf(parseAsInteger),
 });
 
 export default async function OrganizationsPage(props: {

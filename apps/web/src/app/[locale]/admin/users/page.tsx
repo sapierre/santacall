@@ -4,9 +4,9 @@ import {
   parseAsString,
   parseAsArrayOf,
   parseAsBoolean,
+  parseAsStringEnum,
 } from "nuqs/server";
 import { Suspense } from "react";
-import * as z from "zod";
 
 import { getUsersResponseSchema } from "@turbostarter/api/schema";
 import { handle } from "@turbostarter/api/utils";
@@ -30,10 +30,10 @@ const searchParamsCache = createSearchParamsCache({
   perPage: parseAsInteger.withDefault(10),
   sort: getSortingStateParser().withDefault([{ id: "name", desc: false }]),
   q: parseAsString,
-  role: parseAsArrayOf(z.enum(UserRole)),
+  role: parseAsArrayOf(parseAsStringEnum<UserRole>(Object.values(UserRole))),
   twoFactorEnabled: parseAsBoolean,
   banned: parseAsBoolean,
-  createdAt: parseAsArrayOf(z.coerce.number()),
+  createdAt: parseAsArrayOf(parseAsInteger),
 });
 
 export const generateMetadata = getMetadata({

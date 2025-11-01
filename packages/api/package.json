@@ -26,7 +26,7 @@
     "@turbostarter/i18n": "workspace:*",
     "@turbostarter/shared": "workspace:*",
     "@turbostarter/storage": "workspace:*",
-    "ai": "5.0.29",
+    "ai": "5.0.86",
     "envin": "catalog:",
     "hono": "4.10.4",
     "zod": "catalog:"

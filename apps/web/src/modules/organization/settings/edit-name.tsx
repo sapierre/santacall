@@ -57,10 +57,13 @@ export const EditName = ({ organizationId }: { organizationId: string }) => {
         queryClient.invalidateQueries(
           organization.queries.get({ id: organizationId }),
         ),
-        activeOrganization &&
-          queryClient.invalidateQueries(
-            organization.queries.get({ slug: activeOrganization.slug }),
-          ),
+        ...(activeOrganization
+          ? [
+              queryClient.invalidateQueries(
+                organization.queries.get({ slug: activeOrganization.slug }),
+              ),
+            ]
+          : []),
       ]);
       toast.success(t("name.edit.success"));
     },

@@ -26,10 +26,10 @@
   "prettier": "@turbostarter/prettier-config",
   "dependencies": {
     "@turbostarter/shared": "workspace:*",
-    "drizzle-orm": "0.44.5",
+    "drizzle-orm": "0.44.7",
     "drizzle-zod": "0.8.3",
     "envin": "catalog:",
-    "postgres": "3.4.4",
+    "postgres": "3.4.7",
     "zod": "catalog:"
   },
   "devDependencies": {

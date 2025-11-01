@@ -17,7 +17,6 @@
     "@turbostarter/eslint-config": "workspace:*",
     "@turbostarter/prettier-config": "workspace:*",
     "@turbostarter/tsconfig": "workspace:*",
-    "@types/uuid": "11.0.0",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
@@ -26,8 +25,8 @@
   "dependencies": {
     "@turbostarter/shared": "workspace:*",
     "envin": "catalog:",
-    "posthog-js": "1.167.0",
-    "uuid": "11.1.0",
+    "posthog-js": "1.283.0",
+    "uuid": "13.0.0",
     "zod": "catalog:"
   }
 }

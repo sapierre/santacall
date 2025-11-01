@@ -1,7 +1,11 @@
-import { parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server";
+import {
+  parseAsArrayOf,
+  parseAsInteger,
+  parseAsString,
+  parseAsStringEnum,
+} from "nuqs/server";
 import { createSearchParamsCache } from "nuqs/server";
 import { Suspense } from "react";
-import { z } from "zod";
 
 import { getCustomersResponseSchema } from "@turbostarter/api/schema";
 import { handle } from "@turbostarter/api/utils";
@@ -30,9 +34,13 @@ const searchParamsCache = createSearchParamsCache({
   perPage: parseAsInteger.withDefault(10),
   sort: getSortingStateParser().withDefault([{ id: "user.name", desc: false }]),
   q: parseAsString,
-  status: parseAsArrayOf(z.enum(BillingStatus)),
-  plan: parseAsArrayOf(z.enum(PricingPlanType)),
-  createdAt: parseAsArrayOf(z.coerce.number()),
+  status: parseAsArrayOf(
+    parseAsStringEnum<BillingStatus>(Object.values(BillingStatus)),
+  ),
+  plan: parseAsArrayOf(
+    parseAsStringEnum<PricingPlanType>(Object.values(PricingPlanType)),
+  ),
+  createdAt: parseAsArrayOf(parseAsInteger),
 });
 
 export default async function CustomersPage(props: {

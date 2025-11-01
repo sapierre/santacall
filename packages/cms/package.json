@@ -16,14 +16,14 @@
   },
   "prettier": "@turbostarter/prettier-config",
   "dependencies": {
-    "@content-collections/core": "0.10.0",
+    "@content-collections/core": "0.11.1",
     "@turbostarter/shared": "workspace:*",
     "reading-time": "1.5.0"
   },
   "devDependencies": {
     "@content-collections/cli": "0.1.7",
     "@content-collections/mdx": "0.2.2",
-    "@shikijs/rehype": "1.21.1",
+    "@shikijs/rehype": "3.14.0",
     "@turbostarter/eslint-config": "workspace:*",
     "@turbostarter/prettier-config": "workspace:*",
     "@turbostarter/tsconfig": "workspace:*",

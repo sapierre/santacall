@@ -20,7 +20,7 @@
     "@react-email/components": "0.3.2",
     "@turbostarter/i18n": "workspace:*",
     "@turbostarter/ui": "workspace:*",
-    "nodemailer": "6.9.15",
+    "nodemailer": "7.0.10",
     "react-email": "4.2.4",
     "zod": "catalog:"
   },
@@ -30,7 +30,7 @@
     "@turbostarter/prettier-config": "workspace:*",
     "@turbostarter/shared": "workspace:*",
     "@turbostarter/tsconfig": "workspace:*",
-    "@types/nodemailer": "6.4.16",
+    "@types/nodemailer": "7.0.3",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
