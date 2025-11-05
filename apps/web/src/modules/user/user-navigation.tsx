@@ -26,6 +26,7 @@ import { SidebarMenuButton, useSidebar } from "@turbostarter/ui-web/sidebar";
 import { Skeleton } from "@turbostarter/ui-web/skeleton";
 
 import { pathsConfig } from "~/config/paths";
+import { authClient } from "~/lib/auth/client";
 import { auth } from "~/modules/auth/lib/api";
 import { ThemeControlsProvider } from "~/modules/common/theme";
 import { TurboLink } from "~/modules/common/turbo-link";
@@ -40,12 +41,14 @@ export const UserNavigation = memo<UserNavigationProps>(({ user }) => {
   const { t } = useTranslation(["common", "auth"]);
   const router = useRouter();
   const { isMobile, setOpenMobile } = useSidebar();
+  const { refetch } = authClient.useListOrganizations();
 
   const signOut = useMutation({
     ...auth.mutations.signOut,
     onSuccess: () => {
       router.replace(pathsConfig.index);
       router.refresh();
+      refetch();
     },
   });
 

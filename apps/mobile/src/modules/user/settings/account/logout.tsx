@@ -8,6 +8,7 @@ import { Text } from "@turbostarter/ui-mobile/text";
 
 import { useSetupSteps } from "~/app/(setup)/steps/_layout";
 import { pathsConfig } from "~/config/paths";
+import { authClient } from "~/lib/auth";
 import { auth } from "~/modules/auth/lib/api";
 import { SettingsTile } from "~/modules/common/settings-tile";
 import { Spinner } from "~/modules/common/spinner";
@@ -15,11 +16,14 @@ import { Spinner } from "~/modules/common/spinner";
 export const Logout = () => {
   const { t } = useTranslation(["common", "auth"]);
   const { reset } = useSetupSteps();
+  const { refetch } = authClient.useListOrganizations();
+
   const signOut = useMutation({
     ...auth.mutations.signOut,
     onSuccess: () => {
       reset();
       router.replace(pathsConfig.index);
+      refetch();
     },
   });
 

@@ -1,3 +1,33 @@
+---
+title: EULA (End User License Agreement)
+description: Information about the license for TurboStarter's services.
+---
+
+## TL;DR
+
+This summary is for convenience only. If anything here differs from the EULA, the EULA controls.
+
+**You can:**
+
+- Use the Software on multiple devices for yourself or your company
+- Build and ship unlimited End Products (commercial or free)
+- Sell and distribute your End Products to customers or users
+- Modify the code solely to build those End Products
+- Use the Software for unlimited client projects, as long as the client does not receive the Software or its source unless they buy their own license
+- Team use with one license (seat) per individual user (including contractors)
+- Allow employees and contractors to work with the Software on your behalf under confidentiality, provided each individual has their own license (seat)
+- Publish an open-source End Product only with prior written approval from the Licensor
+
+**You can't:**
+
+- Redistribute, resell, or share the Software or its source as a template/starter/boilerplate
+- Give the Software or its source code to a client or any third party who doesn’t have their own license
+- Transfer, assign, or sublicense your license
+- Create a competing product or starter substantially based on this Software
+- Remove copyright, trademark, or proprietary notices
+- Reverse engineer, decompile, or circumvent protections
+- Use the Software for illegal purposes
+
 Bartosz Zagrodzki ("**Licensor**") grants you ("**Licensee**") a non-exclusive, non-transferable, revocable license to use the TurboStarter download files ("**Software**") subject to the terms and conditions below. By purchasing a license or accessing the Software, you agree to be bound by this EULA.
 
 ## 1. Definitions
@@ -8,7 +38,7 @@ Bartosz Zagrodzki ("**Licensor**") grants you ("**Licensee**") a non-exclusive, 
 
 - **"Software"** means the TurboStarter codebase, including all files, source code, executable code, documentation, and any updates, patches, or modifications provided by Licensor, delivered in any form.
 
-- **"End Product"** means any application, website, service, system, or other artifact produced by Licensee that incorporates, incorporates derivatives of, or is created using the Software as a foundation.
+- **"End Product"** means any application, website, service, system, or other artifact produced by Licensee, for itself or for its clients, that incorporates, incorporates derivatives of, or is created using the Software as a foundation.
 
 - **"Documentation"** means all written materials, guides, tutorials, and online content provided by Licensor relating to the use and functionality of the Software.
 
@@ -29,8 +59,12 @@ Licensor grants Licensee a **non-exclusive, non-transferable, revocable, persona
 - Sell or distribute End Products to end users
 - Modify the Software solely for creating End Products
 - Create open-source End Products with prior written approval from Licensor
+- Use the Software to create End Products for unlimited clients as part of services provided by Licensee, provided the Software itself (including its source code) is not distributed or made available as a standalone deliverable to those clients unless they separately purchase their own license
+- Permit Licensee's employees and contractors to access and use the Software solely on Licensee's behalf to develop End Products for Licensee or its clients, provided each such individual holds their own valid license (seat) purchased from Licensor and is bound by confidentiality and use restrictions no less protective than this EULA
 
 This license is granted only to the individual or legal entity listed as the Licensee and may not be shared, transferred, or used by any other person or entity.
+
+Team/Seat Licensing: If the Software is used by a team, you must purchase one license (seat) for each individual who accesses the Software, including employees and contractors. Seats are assigned to named individuals and are not transferable between different people.
 
 ## 3. Restrictions
 
@@ -42,7 +76,9 @@ Licensee may **not**:
 - Remove, obscure, or alter any copyright, trademark, or proprietary notices in the Software
 - Use the Software for illegal purposes or in violation of any applicable law
 - Create a competing product using substantially similar code or design patterns from the Software
-- Use the Software on behalf of multiple organizations or individuals
+- Sublicense, share, or provide the Software or its source code to clients or any third party, except where such party has purchased its own license from Licensor
+- Distribute the Software as a template, starter, or boilerplate intended for reuse by parties other than Licensee, whether or not for a fee
+- Share a single license among multiple individuals; seat-sharing is prohibited
 
 ## 4. Ownership and Intellectual Property Rights
 
