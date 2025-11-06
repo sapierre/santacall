@@ -1,3 +1,5 @@
+import { BlurView as NativeBlurView } from "expo-blur";
+import { GlassView as NativeGlassView } from "expo-glass-effect";
 import { Link as NativeLink } from "expo-router";
 import { styled } from "react-native-css";
 import { ScrollView as NativeScrollView } from "react-native-gesture-handler";
@@ -23,6 +25,14 @@ export const ScrollView = styled(NativeScrollView, {
 });
 
 export const SafeAreaView = styled(NativeSafeAreaView, {
+  className: "style",
+});
+
+export const BlurView = styled(NativeBlurView, {
+  className: "style",
+});
+
+export const GlassView = styled(NativeGlassView, {
   className: "style",
 });
 

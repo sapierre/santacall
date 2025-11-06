@@ -14,14 +14,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   name: "TurboStarter",
   slug: "turbostarter",
   scheme: "turbostarter",
-  version: "1.0.0",
+  version: "1.0.1",
   orientation: "portrait",
   icon: "./public/images/icon/ios.png",
   userInterfaceStyle: "automatic",
   assetBundlePatterns: ["**/*"],
   platforms: ["ios", "android"],
   updates: {
-    fallbackToCacheTimeout: 0,
+    url: "https://u.expo.dev/a7958179-7450-4e6f-8791-da222215909e",
   },
   newArchEnabled: true,
   ios: {
@@ -49,6 +49,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   experiments: {
     tsconfigPaths: true,
     typedRoutes: true,
+  },
+  runtimeVersion: {
+    policy: "appVersion",
   },
   plugins: [
     "expo-router",

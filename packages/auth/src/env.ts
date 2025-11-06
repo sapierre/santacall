@@ -7,9 +7,6 @@ import type { Preset } from "envin/types";
 
 export const preset = {
   id: "auth",
-  shared: {
-    NODE_ENV: z.enum(NodeEnv).default(NodeEnv.DEVELOPMENT),
-  },
   server: {
     BETTER_AUTH_SECRET: z.string(),
 
@@ -29,4 +26,7 @@ export const preset = {
 export const env = defineEnv({
   ...envConfig,
   ...preset,
+  shared: {
+    NODE_ENV: z.enum(NodeEnv).default(NodeEnv.DEVELOPMENT),
+  },
 });

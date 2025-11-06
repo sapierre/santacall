@@ -16,6 +16,7 @@ import { authClient } from "~/lib/auth";
 import "~/lib/polyfills";
 import { Providers } from "~/lib/providers/providers";
 import { useTheme } from "~/modules/common/hooks/use-theme";
+import { Updates } from "~/modules/common/updates";
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -85,6 +86,7 @@ const RootLayout = () => {
 export default function Root() {
   return (
     <Providers>
+      <Updates />
       <RootLayout />
     </Providers>
   );

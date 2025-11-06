@@ -22,7 +22,7 @@ const appRouter = new Hono()
     csrf({
       origin: (origin, c) =>
         [...auth.options.trustedOrigins, c.req.url].some((trustedOrigin) =>
-          matchesPattern(trustedOrigin, origin),
+          matchesPattern(origin, trustedOrigin),
         ),
     }),
   )

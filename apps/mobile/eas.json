@@ -49,6 +49,7 @@
       "android": {
         "buildType": "apk"
       },
+      "channel": "preview",
       "environment": "preview",
       "env": {
         "APP_ENV": "preview"
@@ -59,6 +60,7 @@
       "extends": "base",
       "autoIncrement": true,
       "environment": "production",
+      "channel": "production",
       "env": {
         "APP_ENV": "production"
       }

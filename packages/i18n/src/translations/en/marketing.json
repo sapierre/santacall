@@ -228,5 +228,15 @@
         }
       }
     }
+  },
+  "update": {
+    "available": {
+      "title": "New update available!",
+      "description": "A new update is ready to be installed. Click below to install it or dismiss for later."
+    },
+    "installing": {
+      "title": "Installing update...",
+      "description": "The update is being installed. Please wait a moment."
+    }
   }
 }

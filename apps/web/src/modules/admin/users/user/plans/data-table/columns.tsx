@@ -35,7 +35,7 @@ export const useColumns = (): ColumnDef<
         const plan = config.plans.find((plan) => plan.id === row.original.plan);
 
         if (!plan) {
-          return null;
+          return <span>-</span>;
         }
 
         return (
@@ -62,6 +62,10 @@ export const useColumns = (): ColumnDef<
       ),
       cell: ({ row }) => {
         const statusKey = `status.${row.original.status?.replace(/_([a-z])/g, (_, letter: string) => letter.toUpperCase())}`;
+
+        if (!row.original.status) {
+          return <span>-</span>;
+        }
 
         return (
           <Badge variant="secondary">

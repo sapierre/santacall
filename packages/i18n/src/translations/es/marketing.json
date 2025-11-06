@@ -237,5 +237,15 @@
         }
       }
     }
+  },
+  "update": {
+    "available": {
+      "title": "Nueva actualización disponible!",
+      "description": "Una nueva actualización está lista para ser instalada. Haz clic abajo para instalarla o descarta para más tarde."
+    },
+    "installing": {
+      "title": "Instalando actualización...",
+      "description": "La actualización está siendo instalada. Por favor, espera un momento."
+    }
   }
 }
