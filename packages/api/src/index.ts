@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { some } from "hono/combine";
 import { cors } from "hono/cors";
 import { csrf } from "hono/csrf";
 import { logger } from "hono/logger";
@@ -15,16 +16,21 @@ import { organizationRouter } from "./modules/organization/router";
 import { storageRouter } from "./modules/storage/router";
 import { onError } from "./utils/on-error";
 
+import type { Context } from "hono";
+
 const appRouter = new Hono()
   .basePath("/api")
   .use(logger())
   .use(
-    csrf({
-      origin: (origin, c) =>
-        [...auth.options.trustedOrigins, c.req.url].some((trustedOrigin) =>
-          matchesPattern(origin, trustedOrigin),
-        ),
-    }),
+    some(
+      (c: Context) => !!c.req.header("x-client-platform")?.startsWith("mobile"),
+      csrf({
+        origin: (origin, c) =>
+          [...auth.options.trustedOrigins, new URL(c.req.url).origin].some(
+            (trustedOrigin) => matchesPattern(origin, trustedOrigin),
+          ),
+      }),
+    ),
   )
   .use(
     cors({

@@ -59,11 +59,11 @@ export const AccountSwitcher = () => {
 
   return (
     <>
-      <DropdownMenu onOpenChange={setOpen}>
+      <DropdownMenu onOpenChange={setOpen} className="flex-1">
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className={cn("h-14 w-full flex-row items-center gap-3 px-2", {
+            className={cn("h-14 flex-row items-center gap-3 self-start px-2", {
               "bg-accent": open,
             })}
           >
@@ -98,9 +98,9 @@ export const AccountSwitcher = () => {
               )}
             </Avatar>
 
-            <View className="flex-1">
+            <View className="shrink">
               <Text
-                className="font-sans-medium native:leading-tight"
+                className="font-sans-medium self-start leading-tight"
                 numberOfLines={1}
               >
                 {activeOrganization.data
@@ -112,7 +112,7 @@ export const AccountSwitcher = () => {
               ) : (
                 <Text
                   className={cn(
-                    "text-muted-foreground native:leading-tight font-sans text-sm capitalize",
+                    "text-muted-foreground font-sans text-sm leading-tight capitalize",
                     {
                       "text-accent-foreground": open,
                     },
@@ -126,7 +126,7 @@ export const AccountSwitcher = () => {
             <Icons.ChevronsUpDown
               width={16}
               height={16}
-              className="text-muted-foreground ml-4"
+              className="text-muted-foreground ml-2"
             />
           </Button>
         </DropdownMenuTrigger>

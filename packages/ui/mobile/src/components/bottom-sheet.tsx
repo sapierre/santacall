@@ -275,6 +275,7 @@ function BottomSheetScrollView({
       showsVerticalScrollIndicator={false}
       contentContainerStyle={[
         {
+          gap: 16,
           paddingBottom,
         },
         style,

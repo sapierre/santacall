@@ -110,7 +110,7 @@ export const AccountSwitcher = memo<AccountSwitcherProps>(({ user }) => {
 
           <PopoverPortal>
             <PopoverContent
-              className="w-[var(--radix-popover-trigger-width)] min-w-60 rounded-lg p-0"
+              className="w-(--radix-popover-trigger-width) min-w-60 rounded-lg p-0"
               align="start"
               side={isMobile ? "bottom" : "right"}
               sideOffset={4}
@@ -174,6 +174,7 @@ export const AccountSwitcher = memo<AccountSwitcherProps>(({ user }) => {
                                   organization.slug,
                                 ).index
                               }
+                              className="leading-tight"
                             >
                               <Avatar className="size-6">
                                 <AvatarImage

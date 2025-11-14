@@ -1,7 +1,7 @@
 {
   "product": {
-    "title": "Lanza tu startup en todas partes. En minutos.",
-    "description": "Esta es una aplicación de demostración construida con TurboStarter. Te ahorrará tiempo y esfuerzo al crear tu próximo SaaS.",
+    "title": "Esta podría ser tu propia startup de 1 millón de dólares",
+    "description": "Una aplicación TurboStarter totalmente personalizable. Sustituye tu contenido y lanza tu producto más rápido que nunca.",
     "mobile": {
       "ios": {
         "title": "App para iOS",
@@ -28,35 +28,35 @@
     }
   },
 
-  "announcement": "¡Increíble función de tu SaaS!",
-  "shippedWith": "Enviado con herramientas increíbles",
+  "announcement": "Aquí va el anuncio de tu próxima función",
+  "shippedWith": "Incluye herramientas listas para producción",
   "cta": {
     "question": "¿Listo para empezar?",
-    "button": "Comienza gratis",
+    "button": "Empieza gratis",
     "buy": {
       "question": "¿Listo para empezar?",
-      "description": "Compra para desbloquear acceso completo a la base de código y comenzar a lanzar tu producto hoy. En todas las plataformas.",
-      "button": "Obtener acceso",
+      "description": "Compra para desbloquear el acceso completo a la base de código y empieza a lanzar tu producto hoy mismo. En todas las plataformas.",
+      "button": "Obtén acceso",
       "join": {
-        "description": "Únete a nuestra comunidad de Discord para mantenerte actualizado y conectarte con individuos con ideas afines.",
-        "button": "Únete a nosotros"
+        "description": "Únete a otros fundadores que personalizan TurboStarter, comparte tácticas de lanzamiento y mantente al tanto de las novedades.",
+        "button": "Únete a la comunidad"
       }
     }
   },
   "editToReload": "Edita <code>{{file}}</code> y guarda para recargar.",
   "workInProgress": {
     "title": "¡Estamos trabajando en ello!",
-    "description": "{{feature}} no está disponible en este momento. Estamos trabajando en ello y estará disponible pronto."
+    "description": "Actualmente {{feature}} no está disponible. Estamos trabajando en ello y estará disponible pronto."
   },
 
   "features": {
     "label": "Características",
-    "title": "Funciones potentes que nos hacen diferentes",
+    "title": "Convierte a los visitantes en clientes",
     "description": "Todo lo que necesitas para crear, desplegar y escalar tus aplicaciones con confianza.",
     "feature": {
       "core": {
-        "title": "Plataforma principal",
-        "description": "Herramientas esenciales que potencian tu aplicación con autenticación, base de datos y API integradas."
+        "title": "Base fundamental",
+        "description": "Autenticación, base de datos y API ya conectadas para que puedas enfocarte en aportar valor a tus clientes."
       },
       "ai": {
         "title": "Capacidades impulsadas por IA",
@@ -68,41 +68,41 @@
       },
       "extension": {
         "title": "Extensión de navegador",
-        "description": "Potente extensión que te da acceso a funciones clave directamente desde tu navegador."
+        "description": "Mantén a los usuarios comprometidos en su navegador con accesos directos personalizables a tu producto."
       }
     }
   },
 
   "testimonials": {
     "label": "Testimonios",
-    "title": "Lo que dicen nuestros usuarios",
-    "description": "Escucha a nuestros usuarios sobre su experiencia con la plataforma.",
+    "title": "Los equipos lanzan más rápido con nosotros",
+    "description": "Conoce a fundadores y desarrolladores que personalizaron el starter para lanzar antes y convertir mejor.",
     "rating": "{{rating}} de {{count}}+ reseñas",
     "reviews": {
       "jack": {
         "name": "Jack",
         "position": "Desarrollador Full Stack",
-        "body": "Esta plataforma ha revolucionado mi flujo de trabajo. La integración perfecta y la documentación de primer nivel hacen que construir aplicaciones sea muy sencillo."
+        "body": "El starter liberó a nuestro equipo del trabajo repetitivo. Sustituimos el copy en un fin de semana y nos concentramos en las funciones que los clientes realmente querían."
       },
       "jill": {
         "name": "Jill",
         "position": "Fundadora de startup",
-        "body": "Como fundadora, esta plataforma me llevó de la idea al MVP en dos semanas. Los componentes integrados ahorraron incontables horas de desarrollo."
+        "body": "Lanzamos nuestro MVP en dos semanas. Todo, desde las páginas de marketing hasta la autenticación, estaba listo; solo reescribimos el copy para nuestra audiencia."
       },
       "john": {
         "name": "John",
         "position": "Desarrollador senior",
-        "body": "La experiencia de desarrollador es inigualable. Desde la configuración de TypeScript hasta el despliegue funciona de maravilla, con un pulido e atención al detalle increíbles."
+        "body": "La experiencia de desarrollador es incomparable. El stack funciona desde el primer momento y se mantiene lo suficientemente flexible como para adaptarse a la narrativa de nuestro producto."
       },
       "sarah": {
         "name": "Sarah",
         "position": "Product Manager",
-        "body": "Todo escala de forma impecable. Del prototipo a miles de usuarios sin problemas. La analítica ofrece información increíble sobre el rendimiento."
+        "body": "Escalamos del prototipo a miles de usuarios sin complicaciones. La analítica, la facturación y los flujos de marketing estaban listos para personalizar."
       },
       "mike": {
         "name": "Mike",
         "position": "Líder de ingeniería",
-        "body": "El apoyo de la comunidad es increíble. Respuestas rápidas y detalladas y actualizaciones regulares hacen que la plataforma sea cada vez mejor."
+        "body": "La comunidad es excelente. Respuestas rápidas, feedback para los lanzamientos y mejoras constantes mantienen a nuestro equipo avanzando."
       }
     }
   },
@@ -115,31 +115,31 @@
     "question": {
       "whatDoesOurPlatformDo": {
         "question": "¿Qué hace nuestra plataforma?",
-        "answer": "Nuestra plataforma es una solución integral que ayuda a las empresas a construir, escalar y crecer al siguiente nivel con herramientas impulsadas por IA y automatización."
+        "answer": "TurboStarter te ofrece una base SaaS full-stack: sitio de marketing, aplicación web, apps móviles y extensiones, para que puedas enfocarte en la experiencia única de tus clientes."
       },
       "howWillThisBenefitMyBusiness": {
         "question": "¿Cómo beneficiará esto a mi negocio?",
-        "answer": "Nuestra plataforma aumenta la eficiencia del equipo, mejora las tasas de conversión y proporciona información valiosa mediante analítica y automatización para ayudar a tu negocio a crecer más rápido."
+        "answer": "Lanzas más rápido, entregas funciones antes y conviertes más leads porque el producto base, la analítica y los flujos de facturación ya están listos."
       },
       "isMyDataSafe": {
         "question": "¿Mis datos están seguros?",
-        "answer": "Sí, implementamos funciones de seguridad de nivel empresarial y cumplimos con los estándares de la industria para garantizar que tus datos estén completamente seguros y protegidos."
+        "answer": "Sí. Seguimos prácticas de seguridad de nivel empresarial y ofrecemos salvaguardas para que adaptes las políticas a los requisitos de tu industria."
       },
       "whatKindOfIntegrationsAreAvailable": {
         "question": "¿Qué tipo de integraciones están disponibles?",
-        "answer": "Ofrecemos integraciones fluidas con herramientas y plataformas populares para optimizar tu flujo de trabajo y conectar con tu stack tecnológico existente."
+        "answer": "TurboStarter incluye desde el inicio integraciones SaaS populares, y su arquitectura modular facilita añadir tu propio stack."
       },
       "howEasyIsItToOnboardMyTeam": {
         "question": "¿Qué tan fácil es incorporar a mi equipo?",
-        "answer": "Nuestra plataforma está diseñada para una incorporación rápida y fácil con interfaces intuitivas, documentación completa y soporte dedicado para poner a tu equipo en marcha rápidamente."
+        "answer": "Tu equipo puede incorporarse rápidamente con documentación clara, patrones TypeScript-first y ejemplos que muestran exactamente dónde personalizar."
       },
       "whatTypesOfBusinessesCanUseThis": {
         "question": "¿Qué tipos de empresas pueden usar esto?",
-        "answer": "Nuestra plataforma es adecuada para empresas de todos los tamaños, desde startups hasta grandes empresas, en diversas industrias como tecnología, salud, educación y más."
+        "answer": "Desde fundadores individuales hasta equipos de innovación empresarial, TurboStarter se adapta a cualquier caso de uso SaaS que necesite una ventaja inicial."
       },
       "canICustomizeThisToFitMyBusinessNeeds": {
         "question": "¿Puedo personalizar esto para adaptarlo a las necesidades de mi negocio?",
-        "answer": "¡Absolutamente! Nuestra plataforma ofrece amplias opciones de personalización y flujos de trabajo flexibles que pueden adaptarse a tus requisitos y procesos específicos."
+        "answer": "Por supuesto. Cada módulo está diseñado para personalizarse rápidamente: actualiza el copy, cambia componentes y amplía la lógica sin pelearte con el framework."
       }
     }
   },
@@ -148,7 +148,7 @@
     "label": "Contacto",
     "title": "Ponte en contacto con nosotros hoy para soporte",
     "cta": "Hablar con ventas",
-    "description": "Contáctanos para cualquier pregunta o comentario",
+    "description": "Contáctanos para recibir ayuda o compartir comentarios",
     "form": {
       "name": {
         "placeholder": "Juan Pérez"
@@ -194,7 +194,7 @@
 
   "roadmap": {
     "title": "Hoja de ruta",
-    "description": "Mira lo que viene"
+    "description": "Descubre lo que viene después"
   },
 
   "docs": {
@@ -202,7 +202,7 @@
     "description": "Aprende a usar TurboStarter"
   },
   "ai": {
-    "description": "Desbloquea la productividad y la innovación con la asistente de IA de TurboStarter. Obtén respuestas instantáneas, automatiza tareas y potencia tu flujo de trabajo utilizando una IA avanzada y segura, diseñada para equipos modernos.",
+    "description": "Libera productividad e innovación con el asistente de IA de TurboStarter. Obtén respuestas al instante, automatiza tareas y potencia tu flujo de trabajo con inteligencia artificial avanzada, segura, confiable y diseñada para equipos modernos.",
     "prompt": {
       "history": "Cuenta la historia de internet",
       "capitals": "Hazme un cuestionario sobre las capitales del mundo",
@@ -228,7 +228,7 @@
           }
         },
         "skip": {
-          "title": "Este es un paso opcional",
+          "title": "Este es un paso que puedes omitir",
           "description": "Puedes omitir este paso y proceder al siguiente paso"
         },
         "final": {

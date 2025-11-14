@@ -29,7 +29,6 @@
     "radix-ui": "1.4.3",
     "react-day-picker": "9.11.1",
     "recharts": "2.15.4",
-    "tailwindcss": "4.1.16",
     "vaul": "1.1.2"
   },
   "devDependencies": {
@@ -41,6 +40,7 @@
     "prettier": "catalog:",
     "react": "catalog:react19",
     "react-hook-form": "catalog:",
+    "tailwindcss": "4.1.16",
     "typescript": "catalog:",
     "zod": "catalog:"
   },

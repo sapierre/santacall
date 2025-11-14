@@ -32,13 +32,15 @@ const RootNavigator = () => {
   );
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        animation: "fade",
-        animationDuration: 200,
-      }}
-    />
+    <Providers>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          animation: "fade",
+          animationDuration: 200,
+        }}
+      />
+    </Providers>
   );
 };
 
@@ -85,9 +87,9 @@ const RootLayout = () => {
 
 export default function Root() {
   return (
-    <Providers>
+    <>
       <Updates />
       <RootLayout />
-    </Providers>
+    </>
   );
 }

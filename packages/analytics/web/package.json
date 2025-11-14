@@ -24,7 +24,7 @@
   },
   "prettier": "@turbostarter/prettier-config",
   "dependencies": {
-    "@openpanel/nextjs": "1.0.8",
+    "@openpanel/nextjs": "1.0.9",
     "@turbostarter/shared": "workspace:*",
     "@vemetric/node": "0.1.3",
     "@vemetric/react": "0.5.5",

@@ -171,30 +171,26 @@ const seedOrganizationInvitation = async ({
   });
 
 const seedOrganization = async () => {
-  const organization = await db.transaction(async (tx) => {
-    const organizationId = context
-      .generateId({ model: "organization" })
-      .toString();
-    const organizationSlug = "seed-organization";
+  const organizationId = context
+    .generateId({ model: "organization" })
+    .toString();
+  const organizationSlug = "seed-organization";
 
-    const organizationToInsert = {
-      name: organizationSlug,
-      slug: organizationSlug,
-      logo: getImage(organizationSlug),
-      createdAt: new Date(),
-    };
+  const organizationToInsert = {
+    name: organizationSlug,
+    slug: organizationSlug,
+    logo: getImage(organizationSlug),
+    createdAt: new Date(),
+  };
 
-    const [organization] = await tx
-      .insert(schema.organization)
-      .values({ ...organizationToInsert, id: organizationId })
-      .onConflictDoUpdate({
-        target: schema.organization.slug,
-        set: organizationToInsert,
-      })
-      .returning();
-
-    return organization;
-  });
+  const [organization] = await db
+    .insert(schema.organization)
+    .values({ ...organizationToInsert, id: organizationId })
+    .onConflictDoUpdate({
+      target: schema.organization.slug,
+      set: organizationToInsert,
+    })
+    .returning();
 
   if (!organization) {
     return;
