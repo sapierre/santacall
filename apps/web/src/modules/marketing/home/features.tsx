@@ -1369,8 +1369,8 @@ const Mobile = async () => {
         <div className="relative h-full w-full rounded-[7rem] shadow-[0_-15px_30px_-15px_rgba(0,0,0,0.3)]">
           <div className="pointer-events-none absolute top-0 left-0 flex h-full w-full flex-col gap-1.5 overflow-hidden select-none">
             <ThemedImage
-              light="/images/features/mobile/light.png"
-              dark="/images/features/mobile/dark.png"
+              light="/images/features/mobile/light.webp"
+              dark="/images/features/mobile/dark.webp"
               alt="Mobile"
               width={1290}
               height={2796}
@@ -1405,8 +1405,8 @@ const Extension = async () => {
         <div className="relative h-full w-full">
           <ThemedImage
             className="absolute top-0 right-0 rounded-ss-lg rounded-es-lg border-t border-l shadow-lg"
-            light="/images/features/extension/light.png"
-            dark="/images/features/extension/dark.png"
+            light="/images/features/extension/light.webp"
+            dark="/images/features/extension/dark.webp"
             alt="Extension"
             width={367}
             height={436}
@@ -1436,8 +1436,8 @@ const Core = async () => {
         <CardContent className="p-0 pr-6">
           <ThemedImage
             className="rounded-se-lg border-t border-r shadow-lg"
-            light="/images/features/core/light.png"
-            dark="/images/features/core/dark.png"
+            light="/images/features/core/light.webp"
+            dark="/images/features/core/dark.webp"
             alt="AI"
             width={2600}
             height={1700}
@@ -1467,8 +1467,8 @@ const AI = async () => {
         <CardContent className="p-0 pl-6">
           <ThemedImage
             className="rounded-ss-lg border-t border-l shadow-lg"
-            light="/images/features/ai/light.png"
-            dark="/images/features/ai/dark.png"
+            light="/images/features/ai/light.webp"
+            dark="/images/features/ai/dark.webp"
             alt="AI"
             width={2600}
             height={1700}

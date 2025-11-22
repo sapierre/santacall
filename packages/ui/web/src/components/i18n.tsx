@@ -33,7 +33,7 @@ export const LocaleCustomizer = ({
   onChange,
   variant = "default",
 }: LocaleCustomizerProps) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation("common");
   const locale = i18n.language as Locale;
 
   const handleLocaleChange = async (locale: Locale) => {
@@ -51,6 +51,7 @@ export const LocaleCustomizer = ({
           "hover:bg-accent hover:text-accent-foreground flex size-10 items-center justify-center rounded-full border-none p-0 text-lg transition-colors [&>*:nth-child(2)]:hidden":
             variant === "icon",
         })}
+        aria-label={t("language.change")}
       >
         {variant === "default" ? (
           <SelectValue aria-label={LocaleLabel[locale]} />

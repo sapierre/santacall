@@ -20,6 +20,8 @@ if (typeof window !== "undefined") {
     api_host: env.NEXT_PUBLIC_POSTHOG_HOST,
     person_profiles: "always",
     capture_pageview: false,
+    disable_external_dependency_loading: true,
+    disable_session_recording: true,
   });
 }
 

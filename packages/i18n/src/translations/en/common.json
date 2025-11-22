@@ -156,7 +156,8 @@
   "language": {
     "label": "Language",
     "description": "Pick a language for your app.",
-    "info": "This will change the language of the app. It will not change the language of the browser."
+    "info": "This will change the language of the app. It will not change the language of the browser.",
+    "change": "Change language"
   },
   "theme": {
     "title": "Theme",

@@ -72,6 +72,7 @@ export const PricingHeader = memo<PricingHeaderProps>(
                   key={interval}
                   value={interval}
                   className="capitalize"
+                  aria-controls={undefined}
                 >
                   {t(`interval.${interval}`)}
                 </TabsTrigger>
