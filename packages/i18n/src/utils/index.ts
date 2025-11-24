@@ -2,19 +2,18 @@ import { config } from "../config";
 import { translations } from "../translations";
 
 import type { TranslationKey } from "../client";
-import type { DefaultNamespace, Namespace, ReadCallback, i18n } from "i18next";
+import type { DefaultNamespace, Namespace, i18n } from "i18next";
 
 export const loadTranslation = async (
   locale: (typeof config.locales)[number],
   namespace: (typeof config.namespaces)[number],
-  callback: ReadCallback,
 ) => {
   try {
     const data = await translations[locale][namespace]();
 
-    return callback(null, data.default);
+    return data.default;
   } catch {
-    console.log(`Error loading i18n file: ${locale}/${namespace}.json`);
+    console.log(`Error while loading i18n file: ${locale}/${namespace}.json`);
 
     return {};
   }

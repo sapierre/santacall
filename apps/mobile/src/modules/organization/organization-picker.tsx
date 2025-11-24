@@ -23,12 +23,16 @@ import { CreateOrganizationBottomSheet } from "./create-organization";
 import { organization } from "./lib/api";
 
 export const OrganizationPicker = () => {
-  const { data: organizations, isPending } = authClient.useListOrganizations();
   const { t } = useTranslation("organization");
+  const { data: organizations, isPending } = authClient.useListOrganizations();
+  const activeOrganization = authClient.useActiveOrganization();
+  const activeMember = authClient.useActiveMember();
 
   const setActiveOrganization = useMutation({
     ...organization.mutations.setActive,
     onSuccess: () => {
+      activeOrganization.refetch();
+      activeMember.refetch();
       router.replace(pathsConfig.dashboard.organization.index);
     },
   });

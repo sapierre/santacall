@@ -22,11 +22,92 @@ export const initializeServerI18n = async ({
   ns?: Namespace;
 }): Promise<i18n> => {
   const i18n = createInstance();
+  const loadedNamespaces = new Set<string>();
 
-  await i18n
-    .use(initReactI18next)
-    .use(resourcesToBackend(loadTranslation))
-    .init(getInitOptions({ locale, defaultLocale, ns }));
+  await new Promise((resolve) => {
+    void i18n
+      .use(
+        resourcesToBackend(
+          async (
+            language: (typeof config.locales)[number],
+            namespace: (typeof config.namespaces)[number],
+            callback,
+          ) => {
+            const data = await loadTranslation(language, namespace);
+
+            loadedNamespaces.add(namespace);
+            return callback(null, data);
+          },
+        ),
+      )
+      .use({
+        type: "3rdParty",
+        init: async (i18next: typeof i18n) => {
+          let iterations = 0;
+          const maxIterations = 100;
+
+          while (i18next.isInitializing) {
+            iterations++;
+
+            if (iterations > maxIterations) {
+              console.error(
+                `i18next is not initialized after ${maxIterations} iterations`,
+              );
+
+              break;
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, 1));
+          }
+
+          initReactI18next.init(i18next);
+          resolve(i18next);
+        },
+      })
+      .init(getInitOptions({ locale, defaultLocale, ns }));
+  });
+
+  const namespaces = ns
+    ? typeof ns === "string"
+      ? [ns]
+      : ns
+    : config.namespaces;
+
+  // If all namespaces are already loaded, return the i18n instance
+  if (loadedNamespaces.size === namespaces.length) {
+    return i18n;
+  }
+
+  // Otherwise, wait for all namespaces to be loaded
+
+  const maxWaitTimeMs = 100;
+  const checkIntervalMs = 5;
+
+  async function waitForNamespaces() {
+    const startTime = Date.now();
+
+    while (Date.now() - startTime < maxWaitTimeMs) {
+      const allNamespacesLoaded = namespaces.every((ns) =>
+        loadedNamespaces.has(ns),
+      );
+
+      if (allNamespacesLoaded) {
+        return true;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, checkIntervalMs));
+    }
+
+    return false;
+  }
+
+  const success = await waitForNamespaces();
+
+  if (!success) {
+    console.warn(
+      `Not all namespaces were loaded after ${maxWaitTimeMs}ms. Initialization may be incomplete.`,
+    );
+  }
 
   return i18n;
 };

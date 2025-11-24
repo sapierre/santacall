@@ -26,6 +26,9 @@ import type { FallbackNs, UseTranslationOptions } from "react-i18next";
 
 let client: i18n | null = null;
 
+let iteration = 0;
+const MAX_ITERATIONS = 20;
+
 export const initializeI18nClient = async ({
   locale,
   defaultLocale,
@@ -39,25 +42,71 @@ export const initializeI18nClient = async ({
     return client;
   }
 
+  const loadedLanguages = new Set<string>();
+  const loadedNamespaces = new Set<string>();
   const i18n = i18next.createInstance();
 
   await i18n
     .use(initReactI18next)
     .use(initReactI18next)
-    .use(resourcesToBackend(loadTranslation))
+    .use(
+      resourcesToBackend(
+        async (
+          language: (typeof config.locales)[number],
+          namespace: (typeof config.namespaces)[number],
+          callback,
+        ) => {
+          const data = await loadTranslation(language, namespace);
+
+          if (!loadedLanguages.has(language)) {
+            loadedLanguages.add(language);
+          }
+
+          if (!loadedNamespaces.has(namespace)) {
+            loadedNamespaces.add(namespace);
+          }
+
+          return callback(null, data);
+        },
+      ),
+    )
     .use(LanguageDetector)
-    .init({
-      ...getInitOptions({
-        locale,
-        defaultLocale,
-        ns,
-      }),
-      detection: {
-        order: ["htmlTag", "cookie", "navigator"],
-        caches: ["cookie"],
-        lookupCookie: config.cookie,
+    .init(
+      {
+        ...getInitOptions({
+          locale,
+          defaultLocale,
+          ns,
+        }),
+        detection: {
+          order: ["htmlTag", "cookie", "navigator"],
+          caches: ["cookie"],
+          lookupCookie: config.cookie,
+        },
       },
-    });
+      (err) => {
+        if (err) {
+          console.error("Error initializing i18n client", err);
+        }
+      },
+    );
+
+  if (iteration >= MAX_ITERATIONS) {
+    console.debug(`Max iterations reached: ${MAX_ITERATIONS}`);
+
+    client = i18n;
+    return client;
+  }
+
+  if (loadedLanguages.size === 0 || loadedNamespaces.size === 0) {
+    iteration++;
+
+    console.debug(
+      `Keeping component from rendering if no languages or namespaces are loaded. Iteration: ${iteration}. Will stop after ${MAX_ITERATIONS} iterations.`,
+    );
+
+    throw new Error("No languages or namespaces loaded");
+  }
 
   client = i18n;
   return client;

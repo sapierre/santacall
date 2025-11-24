@@ -6,6 +6,7 @@ export interface WebhookCallbacks {
   onSubscriptionCreated?: (subscriptionId: string) => Promise<void> | void;
   onSubscriptionUpdated?: (subscriptionId: string) => Promise<void> | void;
   onSubscriptionDeleted?: (subscriptionId: string) => Promise<void> | void;
+  onEvent?: (event: unknown) => Promise<void> | void;
 }
 
 export interface BillingProviderStrategy {

@@ -10,8 +10,6 @@ import { checkoutStatusChangeHandler } from "../checkout";
 import { env } from "../env";
 import { subscriptionStatusChangeHandler } from "../subscription";
 
-import { relevantEvents } from "./constants";
-
 import type { BillingProviderStrategy } from "../../types";
 
 export const webhookHandler: BillingProviderStrategy["webhookHandler"] = async (
@@ -30,44 +28,34 @@ export const webhookHandler: BillingProviderStrategy["webhookHandler"] = async (
     const type = event.type;
 
     console.log(`🔔  Webhook received: ${type}`);
+    await callbacks?.onEvent?.(event);
 
-    if (relevantEvents.has(type)) {
-      console.log(`🔔  Relevant event: ${type}`);
-      switch (type) {
-        case "subscription.created":
-          await callbacks?.onSubscriptionCreated?.(event.data.id);
-          void subscriptionStatusChangeHandler({
-            id: event.data.id,
-          });
-          break;
-        case "subscription.updated":
-          await callbacks?.onSubscriptionUpdated?.(event.data.id);
-          void subscriptionStatusChangeHandler({
-            id: event.data.id,
-          });
-          break;
-        case "subscription.canceled":
-        case "subscription.revoked":
-          await callbacks?.onSubscriptionDeleted?.(event.data.id);
-          void subscriptionStatusChangeHandler({
-            id: event.data.id,
-          });
-          break;
-        case "order.created":
-          await callbacks?.onCheckoutSessionCompleted?.(event.data.id);
-          void checkoutStatusChangeHandler({
-            id: event.data.id,
-          });
-          break;
-        default:
-          throw new HttpException(HttpStatusCode.BAD_REQUEST, {
-            code: "billing:error.webhook.unhandledEvent",
-          });
-      }
-    } else {
-      throw new HttpException(HttpStatusCode.BAD_REQUEST, {
-        code: "billing:error.webhook.unsupportedEvent",
-      });
+    switch (type) {
+      case "subscription.created":
+        await callbacks?.onSubscriptionCreated?.(event.data.id);
+        await subscriptionStatusChangeHandler({
+          id: event.data.id,
+        });
+        break;
+      case "subscription.updated":
+        await callbacks?.onSubscriptionUpdated?.(event.data.id);
+        await subscriptionStatusChangeHandler({
+          id: event.data.id,
+        });
+        break;
+      case "subscription.canceled":
+      case "subscription.revoked":
+        await callbacks?.onSubscriptionDeleted?.(event.data.id);
+        await subscriptionStatusChangeHandler({
+          id: event.data.id,
+        });
+        break;
+      case "order.created":
+        await callbacks?.onCheckoutSessionCompleted?.(event.data.id);
+        await checkoutStatusChangeHandler({
+          id: event.data.id,
+        });
+        break;
     }
 
     return new Response(JSON.stringify({ received: true }), {

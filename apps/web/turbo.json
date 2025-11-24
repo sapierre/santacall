@@ -20,7 +20,6 @@
         "LEMON_SQUEEZY_STORE_ID",
 
         "BETTER_AUTH_SECRET",
-        "BETTER_AUTH_URL",
 
         "EMAIL_PROVIDER",
         "EMAIL_FROM",

@@ -5,7 +5,7 @@ import { checkoutStatusChangeHandler } from "../checkout";
 import { env } from "../env";
 import { subscriptionStatusChangeHandler } from "../subscription";
 
-import { LEMON_SQUEEZY_SIGNATURE_HEADER, relevantEvents } from "./constants";
+import { LEMON_SQUEEZY_SIGNATURE_HEADER } from "./constants";
 import { validateSignature } from "./signing";
 import { webhookHasData, webhookHasMeta } from "./type-guards";
 
@@ -44,42 +44,33 @@ export const webhookHandler: BillingProviderStrategy["webhookHandler"] = async (
     });
   }
 
-  if (relevantEvents.has(type)) {
-    console.log(`🔔  Relevant event: ${type}`);
-    switch (type) {
-      case "subscription_created":
-        await callbacks?.onSubscriptionCreated?.(data.data.id);
-        void subscriptionStatusChangeHandler({
-          id: data.data.id,
-        });
-        break;
-      case "subscription_updated":
-        await callbacks?.onSubscriptionUpdated?.(data.data.id);
-        void subscriptionStatusChangeHandler({
-          id: data.data.id,
-        });
-        break;
-      case "subscription_expired":
-        await callbacks?.onSubscriptionDeleted?.(data.data.id);
-        void subscriptionStatusChangeHandler({
-          id: data.data.id,
-        });
-        break;
-      case "order_created":
-        await callbacks?.onCheckoutSessionCompleted?.(data.data.id);
-        void checkoutStatusChangeHandler({
-          id: data.data.id,
-        });
-        break;
-      default:
-        throw new HttpException(HttpStatusCode.BAD_REQUEST, {
-          code: "billing:error.webhook.unhandledEvent",
-        });
-    }
-  } else {
-    throw new HttpException(HttpStatusCode.BAD_REQUEST, {
-      code: "billing:error.webhook.unsupportedEvent",
-    });
+  await callbacks?.onEvent?.(data);
+
+  switch (type) {
+    case "subscription_created":
+      await callbacks?.onSubscriptionCreated?.(data.data.id);
+      await subscriptionStatusChangeHandler({
+        id: data.data.id,
+      });
+      break;
+    case "subscription_updated":
+      await callbacks?.onSubscriptionUpdated?.(data.data.id);
+      await subscriptionStatusChangeHandler({
+        id: data.data.id,
+      });
+      break;
+    case "subscription_expired":
+      await callbacks?.onSubscriptionDeleted?.(data.data.id);
+      await subscriptionStatusChangeHandler({
+        id: data.data.id,
+      });
+      break;
+    case "order_created":
+      await callbacks?.onCheckoutSessionCompleted?.(data.data.id);
+      await checkoutStatusChangeHandler({
+        id: data.data.id,
+      });
+      break;
   }
 
   return new Response(JSON.stringify({ received: true }), {

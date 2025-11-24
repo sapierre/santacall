@@ -33,7 +33,15 @@ export const getInitOptions = ({
   defaultNS: config.namespaces,
   fallbackNS: config.namespaces,
   ns: ns ?? config.namespaces,
+  preload: false,
   interpolation: {
     escapeValue: false,
+  },
+  missingInterpolationHandler: (text, value, options) => {
+    console.debug(
+      `Missing interpolation value for key: ${text}`,
+      value,
+      options,
+    );
   },
 });
