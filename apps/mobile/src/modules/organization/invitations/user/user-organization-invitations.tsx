@@ -101,7 +101,7 @@ const UserOrganizationInvitationsListModalItem = ({
         }),
       );
       await queryClient.invalidateQueries(user.queries.invitations.getAll);
-      refetch();
+      await refetch();
       onSuccess?.();
     },
   });

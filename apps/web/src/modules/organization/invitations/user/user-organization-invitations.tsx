@@ -104,7 +104,7 @@ const UserOrganizationInvitationsListModalItem = ({
           organization: data?.organization?.name ?? "",
         }),
       );
-      refetch();
+      await refetch();
       onSuccess?.();
     },
   });
@@ -122,7 +122,7 @@ const UserOrganizationInvitationsListModalItem = ({
   });
 
   if (isLoading) {
-    return <Skeleton className="h-[4.75rem] w-full" />;
+    return <Skeleton className="h-19 w-full" />;
   }
 
   if (!data?.organization) {

@@ -7,6 +7,7 @@ node_modules
 
 # testing
 coverage
+coverage.json
 
 # next.js
 .next/
@@ -56,6 +57,3 @@ dist/
 
 # content collections
 .content-collections
-
-# css themes (auto-generated from TS)
-packages/ui/shared/src/styles/themes/variables.css

@@ -88,8 +88,8 @@ const ConfirmLeaveModal = ({
 
   const leaveOrganization = useMutation({
     ...organization.mutations.leave,
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       toast.success(t("leave.success"));
       router.replace(pathsConfig.dashboard.user.index);
     },

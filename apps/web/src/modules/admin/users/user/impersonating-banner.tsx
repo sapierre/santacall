@@ -22,8 +22,8 @@ export const ImpersonatingBanner = () => {
 
   const stop = useMutation({
     ...admin.mutations.users.stopImpersonating,
-    onSuccess: () => {
-      session.refetch();
+    onSuccess: async () => {
+      await session.refetch();
       router.replace(
         userId
           ? pathsConfig.admin.users.user(userId)

@@ -16,6 +16,7 @@ export const LeaveOrganization = () => {
   const { t } = useTranslation(["common", "organization"]);
   const activeOrganization = authClient.useActiveOrganization();
   const listOrganizations = authClient.useListOrganizations();
+  const activeMember = authClient.useActiveMember();
 
   const { data: isOnlyOwner } = useQuery({
     ...organization.queries.members.getIsOnlyOwner({
@@ -26,9 +27,10 @@ export const LeaveOrganization = () => {
 
   const leaveOrganization = useMutation({
     ...organization.mutations.leave,
-    onSuccess: () => {
-      activeOrganization.refetch();
-      listOrganizations.refetch();
+    onSuccess: async () => {
+      await activeOrganization.refetch();
+      await listOrganizations.refetch();
+      await activeMember.refetch();
       router.replace(pathsConfig.dashboard.user.index);
     },
   });

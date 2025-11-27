@@ -83,12 +83,12 @@ export const EditEmail = memo<EditEmailProps>((props) => {
               onClick={() =>
                 sendVerification.mutate({
                   email: props.user.email,
-                  callbackURL: pathsConfig.dashboard.user.index,
+                  callbackURL: pathsConfig.dashboard.user.settings.index,
                 })
               }
               disabled={sendVerification.isPending}
               type="button"
-              className="h-auto py-1 text-xs"
+              className="h-auto px-3 py-1 text-xs"
             >
               {sendVerification.isPending
                 ? t("account.email.confirm.loading")
@@ -107,7 +107,7 @@ export const EditEmail = memo<EditEmailProps>((props) => {
           onSubmit={form.handleSubmit((data) =>
             changeEmail.mutateAsync({
               newEmail: data.email,
-              callbackURL: pathsConfig.dashboard.user.index,
+              callbackURL: pathsConfig.dashboard.user.settings.index,
             }),
           )}
         >

@@ -46,9 +46,9 @@ export const AccountSwitcher = () => {
   const createOrganizationBottomSheet = useBottomSheet();
   const setActiveOrganization = useMutation({
     ...organization.mutations.setActive,
-    onSuccess: (_, variables) => {
-      activeOrganization.refetch();
-      activeMember.refetch();
+    onSuccess: async (_, variables) => {
+      await activeOrganization.refetch();
+      await activeMember.refetch();
       if (variables?.organizationId || variables?.organizationSlug) {
         router.replace(pathsConfig.dashboard.organization.index);
       } else {

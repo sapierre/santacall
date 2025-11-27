@@ -10,6 +10,7 @@ import { Spin } from "@turbostarter/ui-mobile/spin";
 import { Text } from "@turbostarter/ui-mobile/text";
 
 import { authConfig } from "~/config/auth";
+import { pathsConfig } from "~/config/paths";
 import { authClient } from "~/lib/auth";
 import { SocialIcons } from "~/modules/auth/form/social-providers";
 import { auth } from "~/modules/auth/lib/api";
@@ -143,7 +144,15 @@ export default function AccountsScreen() {
                       key={provider}
                       variant="outline"
                       disabled={connect.isPending}
-                      onPress={() => connect.mutate({ provider })}
+                      onPress={() =>
+                        connect.mutate({
+                          provider,
+                          callbackURL:
+                            pathsConfig.dashboard.user.settings.account
+                              .accounts,
+                          errorCallbackURL: pathsConfig.setup.auth.error,
+                        })
+                      }
                       className="h-[44px] flex-row items-center gap-2 px-4"
                     >
                       {connect.isPending &&

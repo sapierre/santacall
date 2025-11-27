@@ -168,6 +168,7 @@ export const Accounts = () => {
                         provider,
                         callbackURL:
                           pathsConfig.dashboard.user.settings.security,
+                        errorCallbackURL: pathsConfig.auth.error,
                       })
                     }
                   >

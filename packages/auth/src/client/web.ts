@@ -1,8 +1,8 @@
+import { passkeyClient } from "@better-auth/passkey/client";
 import {
   magicLinkClient,
   twoFactorClient,
   anonymousClient,
-  passkeyClient,
   adminClient,
   organizationClient,
   inferAdditionalFields,

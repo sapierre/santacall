@@ -33,6 +33,9 @@ export default defineConfig({
         }),
         tailwindcss(),
       ],
+      optimizeDeps: {
+        exclude: ["*/build"],
+      },
       define: {
         "process.env": Object.fromEntries(
           Object.entries(import.meta.env).filter(

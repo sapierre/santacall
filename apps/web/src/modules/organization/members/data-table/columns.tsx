@@ -91,7 +91,7 @@ const Actions = ({ member }: { member: Member }) => {
   const leaveOrganization = useMutation({
     ...organization.mutations.leave,
     onSuccess: () => {
-      refetch();
+      void refetch();
       router.replace(pathsConfig.dashboard.user.index);
       toast.success(t("leave.success"));
     },

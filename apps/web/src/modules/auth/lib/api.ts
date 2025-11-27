@@ -61,8 +61,9 @@ const mutations = {
   password: {
     forget: {
       mutationKey: [KEY, "password", "forget"],
-      mutationFn: (params: Parameters<typeof authClient.forgetPassword>[0]) =>
-        authClient.forgetPassword(params),
+      mutationFn: (
+        params: Parameters<typeof authClient.requestPasswordReset>[0],
+      ) => authClient.requestPasswordReset(params),
     },
     reset: {
       mutationKey: [KEY, "password", "update"],
@@ -177,13 +178,25 @@ const mutations = {
   passkeys: {
     add: {
       mutationKey: [KEY, "passkeys", "add"],
-      mutationFn: () => authClient.passkey.addPasskey(),
+      mutationFn: async () => {
+        const response = await authClient.passkey.addPasskey();
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      },
     },
     delete: {
       mutationKey: [KEY, "passkeys", "delete"],
-      mutationFn: (
+      mutationFn: async (
         params: Parameters<typeof authClient.passkey.deletePasskey>[0],
-      ) => authClient.passkey.deletePasskey(params),
+      ) => {
+        const response = await authClient.passkey.deletePasskey(params);
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      },
     },
   },
 };

@@ -54,9 +54,9 @@ export const CreateOrganizationBottomSheet = ({
   const getSlug = useMutation(organization.mutations.getSlug);
   const setActive = useMutation({
     ...organization.mutations.setActive,
-    onSuccess: () => {
-      activeOrganization.refetch();
-      activeMember.refetch();
+    onSuccess: async () => {
+      await activeOrganization.refetch();
+      await activeMember.refetch();
     },
   });
   const create = useMutation(organization.mutations.create);

@@ -29,6 +29,10 @@ export const EmailTemplate = {
 export type EmailTemplate = (typeof EmailTemplate)[keyof typeof EmailTemplate];
 
 export type EmailVariables = AuthEmailVariables & {
+  [EmailTemplate.CHANGE_EMAIL]: {
+    url: string;
+    newEmail: string;
+  };
   [EmailTemplate.ORGANIZATION_INVITATION]: {
     url: string;
     inviter: string;

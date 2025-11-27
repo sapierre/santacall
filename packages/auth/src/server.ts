@@ -1,6 +1,7 @@
 import { expo } from "@better-auth/expo";
-import { betterAuth } from "better-auth";
+import { passkey } from "@better-auth/passkey";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { betterAuth } from "better-auth/minimal";
 import { nextCookies } from "better-auth/next-js";
 import {
   anonymous,
@@ -10,7 +11,6 @@ import {
   admin,
   lastLoginMethod,
 } from "better-auth/plugins";
-import { passkey } from "better-auth/plugins/passkey";
 
 import * as schema from "@turbostarter/db/schema";
 import { db } from "@turbostarter/db/server";
@@ -50,9 +50,10 @@ export const auth = betterAuth({
     },
     changeEmail: {
       enabled: true,
-      sendChangeEmailVerification: async ({ newEmail, url }, request) =>
+      updateEmailWithoutVerification: true,
+      sendChangeEmailConfirmation: async ({ user, newEmail, url }, request) =>
         sendEmail({
-          to: newEmail,
+          to: user.email,
           template: EmailTemplate.CHANGE_EMAIL,
           locale: getLocaleFromRequest(request),
           variables: {
@@ -61,6 +62,7 @@ export const auth = betterAuth({
               url,
               type: VerificationType.CONFIRM_EMAIL,
             }).toString(),
+            newEmail,
           },
         }),
     },
@@ -110,14 +112,14 @@ export const auth = betterAuth({
   }),
   plugins: [
     magicLink({
-      sendMagicLink: async ({ email, url }, request) =>
+      sendMagicLink: async ({ email, url }, ctx) =>
         sendEmail({
           to: email,
           template: EmailTemplate.MAGIC_LINK,
-          locale: getLocaleFromRequest(request),
+          locale: getLocaleFromRequest(ctx?.request),
           variables: {
             url: getUrl({
-              request,
+              request: ctx?.request,
               url,
               type: VerificationType.MAGIC_LINK,
             }).toString(),

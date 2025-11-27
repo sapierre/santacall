@@ -33,7 +33,7 @@ const EditEmail = () => {
 
   useFocusEffect(
     useCallback(() => {
-      refetch();
+      void refetch();
     }, [refetch]),
   );
 

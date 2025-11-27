@@ -46,9 +46,9 @@ export const Invitation = (props: InvitationProps) => {
   const queryClient = useQueryClient();
   const setActive = useMutation({
     ...organization.mutations.setActive,
-    onSuccess: () => {
-      activeOrganization.refetch();
-      activeMember.refetch();
+    onSuccess: async () => {
+      await activeOrganization.refetch();
+      await activeMember.refetch();
     },
   });
   const acceptInvitation = useMutation({

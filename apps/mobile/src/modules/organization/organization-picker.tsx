@@ -30,9 +30,9 @@ export const OrganizationPicker = () => {
 
   const setActiveOrganization = useMutation({
     ...organization.mutations.setActive,
-    onSuccess: () => {
-      activeOrganization.refetch();
-      activeMember.refetch();
+    onSuccess: async () => {
+      await activeOrganization.refetch();
+      await activeMember.refetch();
       router.replace(pathsConfig.dashboard.organization.index);
     },
   });

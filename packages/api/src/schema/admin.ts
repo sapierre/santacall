@@ -55,7 +55,7 @@ export const getUsersResponseSchema = z.object({
       name: z.string(),
       image: z.string().nullish(),
       twoFactorEnabled: z.boolean().nullable(),
-      isAnonymous: z.boolean().nullish(),
+      isAnonymous: z.boolean(),
       banned: z.boolean().nullable(),
       role: z.string().nullish(),
       banReason: z.string().nullish(),

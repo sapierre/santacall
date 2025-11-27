@@ -35,8 +35,8 @@ export const useActiveOrganization = () => {
 
   const setActiveOrganization = useMutation({
     ...organization.mutations.setActive,
-    onSuccess: () => {
-      session.refetch();
+    onSuccess: async () => {
+      await session.refetch();
     },
   });
 
@@ -76,7 +76,7 @@ export const useActiveOrganization = () => {
 
   useEffect(() => {
     if (shouldRefetchMember) {
-      member.refetch();
+      void member.refetch();
     }
   }, [member, shouldRefetchMember]);
 

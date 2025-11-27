@@ -20,10 +20,10 @@ export const Logout = () => {
 
   const signOut = useMutation({
     ...auth.mutations.signOut,
-    onSuccess: () => {
+    onSuccess: async () => {
       reset();
+      await refetch();
       router.replace(pathsConfig.index);
-      refetch();
     },
   });
 

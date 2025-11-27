@@ -34,6 +34,7 @@ export const getMembersResponseSchema = z.object({
       createdAt: z.coerce.date(),
       userId: z.string(),
       user: z.object({
+        id: z.string(),
         name: z.string(),
         email: z.string(),
         image: z

@@ -46,8 +46,8 @@ const EditName = () => {
 
   const updateOrganization = useMutation({
     ...organization.mutations.update,
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       router.back();
     },
   });

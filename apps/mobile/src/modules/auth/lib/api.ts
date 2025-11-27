@@ -61,8 +61,9 @@ const mutations = {
   password: {
     forget: {
       mutationKey: [KEY, "password", "forget"],
-      mutationFn: (params: Parameters<typeof authClient.forgetPassword>[0]) =>
-        authClient.forgetPassword(params),
+      mutationFn: (
+        params: Parameters<typeof authClient.requestPasswordReset>[0],
+      ) => authClient.requestPasswordReset(params),
     },
     reset: {
       mutationKey: [KEY, "password", "update"],

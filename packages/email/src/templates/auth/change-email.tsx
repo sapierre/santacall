@@ -1,6 +1,7 @@
 import { Heading, Preview, Text } from "@react-email/components";
 import * as React from "react";
 
+import { Trans } from "@turbostarter/i18n";
 import { getTranslation } from "@turbostarter/i18n/server";
 import { getOrigin } from "@turbostarter/shared/utils";
 
@@ -16,19 +17,27 @@ import type {
 type Props = EmailVariables[typeof EmailTemplate.CHANGE_EMAIL] &
   CommonEmailProps;
 
-export const ChangeEmail = async ({ url, locale }: Props) => {
+export const ChangeEmail = async ({ url, locale, newEmail }: Props) => {
   const { t } = await getTranslation({ locale, ns: "auth" });
   const origin = getOrigin(url);
 
   return (
     <Layout origin={origin} locale={locale}>
-      <Preview>{t("account.email.change.email.preview")}</Preview>
+      <Preview>{t("account.email.change.email.preview", { newEmail })}</Preview>
       <Heading className="leading-tight tracking-tight">
         {t("account.email.change.email.subject")}
       </Heading>
 
-      <Text>{t("account.email.change.email.body")}</Text>
-
+      <Text>
+        <Trans
+          ns="auth"
+          i18nKey="account.email.change.email.body"
+          values={{ newEmail }}
+          components={{
+            bold: <strong />,
+          }}
+        />
+      </Text>
       <Button href={url}>{t("account.email.change.email.cta")}</Button>
 
       <Text>{t("account.email.change.email.or")}</Text>
@@ -52,6 +61,7 @@ ChangeEmail.subject = async ({ locale }: CommonEmailProps) => {
 ChangeEmail.PreviewProps = {
   url: "http://localhost:3000/api/auth/verify-email?token=123&callbackURL=/dashboard/settings",
   locale: "en",
+  newEmail: "john@doe.com",
 };
 
 export default ChangeEmail;
