@@ -1,4 +1,4 @@
-/// <reference types="./types.d.ts" />
+/// <reference types="../types.d.ts" />
 
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -41,7 +41,7 @@ export default defineConfig(
   includeIgnoreFile(
     path.resolve(
       path.dirname(fileURLToPath(import.meta.url)),
-      "../../.gitignore",
+      "../../../.gitignore",
     ),
   ),
   { ignores: ["**/*.config.*"] },

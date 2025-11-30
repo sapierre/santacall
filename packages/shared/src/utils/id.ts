@@ -8,7 +8,7 @@ Not cryptographically secure.
 @param separator - The separator between the prefix and the random part of the ID. Default: '-'.
 @param size - The size of the random part of the ID to generate. Default: 16.
  */
-const createIdGenerator = ({
+export const createIdGenerator = ({
   prefix,
   size = 32,
   alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",

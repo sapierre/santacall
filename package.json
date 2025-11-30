@@ -17,6 +17,9 @@
     "services:start": "docker compose up -d --wait",
     "services:status": "docker compose ps",
     "services:stop": "docker compose down",
+    "test": "turbo run test",
+    "test:projects": "vitest run",
+    "test:projects:watch": "vitest --watch",
     "typecheck": "turbo typecheck",
     "with-env": "dotenv -c --"
   },
@@ -32,7 +35,8 @@
     "husky": "^9.1.7",
     "prettier": "catalog:",
     "turbo": "2.6.1",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "packageManager": "pnpm@10.24.0",
   "engines": {

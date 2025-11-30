@@ -29,6 +29,9 @@
     "setup": {
       "cache": false,
       "dependsOn": ["@turbostarter/db#db:setup"]
+    },
+    "test": {
+      "outputs": ["coverage.json"]
     }
   },
   "globalEnv": ["DATABASE_URL", "PRODUCT_NAME", "URL", "DEFAULT_LOCALE"],

@@ -15,6 +15,7 @@
     "db:seed": "cross-env SKIP_ENV_VALIDATION=1 pnpm dlx tsx ./src/scripts/seed.ts",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@turbostarter/prettier-config",
@@ -33,8 +34,10 @@
     "@turbostarter/eslint-config": "workspace:*",
     "@turbostarter/prettier-config": "workspace:*",
     "@turbostarter/tsconfig": "workspace:*",
+    "@turbostarter/vitest-config": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
