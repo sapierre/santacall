@@ -26,5 +26,3 @@ catalogs:
     react: 19.1.0
     react-dom: 19.1.0
 
-patchedDependencies:
-  react-native-css@3.0.1: patches/react-native-css@3.0.1.patch
