@@ -1,0 +1,8 @@
+export { SantaHero } from "./hero";
+export { SantaFeatures } from "./features";
+export { SantaSteps } from "./steps";
+export { SantaDemo } from "./demo";
+export { SantaPricing } from "./pricing";
+export { SantaFaq } from "./faq";
+export { SantaFooter } from "./footer";
+export { SantaBookingSection } from "./booking-section";

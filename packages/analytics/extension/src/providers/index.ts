@@ -1,2 +1,2 @@
-export * from "./posthog";
-export * from "./posthog/env";
+export * from "./google-analytics";
+export * from "./google-analytics/env";

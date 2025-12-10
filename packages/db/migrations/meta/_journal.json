@@ -64,6 +64,20 @@
       "when": 1764263010234,
       "tag": "0008_curvy_yellow_claw",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1764787816703,
+      "tag": "0009_neat_spirit",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1765398651404,
+      "tag": "0010_ordinary_mathemanic",
+      "breakpoints": true
     }
   ]
 }

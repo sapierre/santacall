@@ -22,6 +22,15 @@ const pathsConfig = {
       index: `${ADMIN_PREFIX}/customers`,
       customer: (id: string) => `${ADMIN_PREFIX}/customers/${id}`,
     },
+    santacall: {
+      index: `${ADMIN_PREFIX}/santacall`,
+      orders: {
+        index: `${ADMIN_PREFIX}/santacall/orders`,
+        order: (id: string) => `${ADMIN_PREFIX}/santacall/orders/${id}`,
+      },
+      videos: `${ADMIN_PREFIX}/santacall/videos`,
+      calls: `${ADMIN_PREFIX}/santacall/calls`,
+    },
   },
   marketing: {
     pricing: "/pricing",

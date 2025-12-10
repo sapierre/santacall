@@ -35,6 +35,26 @@ const menu = [
       },
     ],
   },
+  {
+    label: "santacall",
+    items: [
+      {
+        title: "orders",
+        href: pathsConfig.admin.santacall.orders.index,
+        icon: Icons.ShoppingCart,
+      },
+      {
+        title: "videos",
+        href: pathsConfig.admin.santacall.videos,
+        icon: Icons.Video,
+      },
+      {
+        title: "calls",
+        href: pathsConfig.admin.santacall.calls,
+        icon: Icons.Phone,
+      },
+    ],
+  },
 ];
 
 export default async function AdminLayout({

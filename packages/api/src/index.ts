@@ -13,6 +13,7 @@ import { aiRouter } from "./modules/ai/router";
 import { authRouter } from "./modules/auth/router";
 import { billingRouter } from "./modules/billing/router";
 import { organizationRouter } from "./modules/organization/router";
+import { santacallRouter } from "./modules/santacall/router";
 import { storageRouter } from "./modules/storage/router";
 import { onError } from "./utils/on-error";
 
@@ -47,6 +48,7 @@ const appRouter = new Hono()
   .route("/auth", authRouter)
   .route("/billing", billingRouter)
   .route("/organizations", organizationRouter)
+  .route("/santacall", santacallRouter)
   .route("/storage", storageRouter)
   .onError(onError);
 
