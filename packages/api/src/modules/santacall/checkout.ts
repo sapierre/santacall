@@ -73,7 +73,7 @@ export const createCheckoutSession = async (input: CreateBookingInput) => {
             description:
               input.orderType === "video"
                 ? "A magical personalized video message from Santa Claus"
-                : "A live 5-minute video call with Santa Claus",
+                : "A live 3-minute video call with Santa Claus",
           },
           unit_amount: priceInCents,
         },

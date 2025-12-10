@@ -88,7 +88,7 @@ export const SantaHero = () => {
               </div>
               <div>
                 <p className="font-semibold text-gray-900">Live Call</p>
-                <p className="text-sm text-gray-500">5 min · $29.99</p>
+                <p className="text-sm text-gray-500">3 min · $12.99</p>
               </div>
             </div>
           </div>
@@ -99,10 +99,19 @@ export const SantaHero = () => {
               </div>
               <div>
                 <p className="font-semibold text-gray-900">Video Message</p>
-                <p className="text-sm text-gray-500">Personalized · $14.99</p>
+                <p className="text-sm text-gray-500">Personalized · $7.99</p>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Giving back callout */}
+        <div className="mt-6 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-red-50 to-green-50 border border-red-100 px-5 py-2.5 shadow-sm">
+          <Icons.Heart className="size-4 text-red-500" />
+          <span className="text-sm font-medium text-gray-700">
+            Every purchase donates a toy to a child in need
+          </span>
+          <Icons.Gift className="size-4 text-green-600" />
         </div>
 
         {/* Scroll indicator */}

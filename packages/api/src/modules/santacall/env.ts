@@ -13,8 +13,8 @@ export const preset = {
     STRIPE_SANTACALL_WEBHOOK_SECRET: z.string(), // Dedicated webhook secret for SantaCall
 
     // SantaCall pricing (in cents USD)
-    SANTACALL_VIDEO_PRICE_CENTS: z.coerce.number().int().default(1499), // $14.99
-    SANTACALL_CALL_PRICE_CENTS: z.coerce.number().int().default(2999), // $29.99
+    SANTACALL_VIDEO_PRICE_CENTS: z.coerce.number().int().default(799), // $7.99
+    SANTACALL_CALL_PRICE_CENTS: z.coerce.number().int().default(1299), // $12.99
 
     // App URLs
     NEXT_PUBLIC_APP_URL: z.string().url(),

@@ -95,6 +95,8 @@ import {
   ShieldCheck,
   Mail,
   Share2,
+  Heart,
+  Award,
 } from "lucide-react";
 
 import { Icons as GlobalIcons } from "@turbostarter/ui/assets";
@@ -197,6 +199,8 @@ export const Icons = {
   ShieldCheck,
   Mail,
   Share2,
+  Heart,
+  Award,
 };
 
 export type Icon = (typeof Icons)[keyof typeof Icons];

@@ -454,7 +454,7 @@ export function BookingForm({ orderType }: BookingFormProps) {
                 <h3 className="text-lg font-semibold">Schedule Your Call</h3>
                 <p className="text-muted-foreground text-sm">
                   Calls are available between 4:00 PM - 8:00 PM in your local timezone.
-                  Each call lasts approximately 5 minutes.
+                  Each call lasts approximately 3 minutes.
                 </p>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <FormField

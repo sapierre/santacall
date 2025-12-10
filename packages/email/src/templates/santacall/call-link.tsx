@@ -68,7 +68,7 @@ export const SantaCallCallLink = ({
       </Text>
 
       <Text className="text-muted-foreground text-sm">
-        The call will last approximately 5 minutes. If you need to reschedule,
+        The call will last approximately 3 minutes. If you need to reschedule,
         please contact our support team.
       </Text>
 

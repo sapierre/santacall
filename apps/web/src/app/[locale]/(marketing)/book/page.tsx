@@ -35,7 +35,7 @@ export default async function BookPage({ searchParams }: BookPageProps) {
         <SectionDescription>
           {orderType === "video"
             ? "Create a magical personalized video message from Santa Claus that your child will treasure forever."
-            : "Schedule a live 5-minute video call with Santa Claus. Watch your child's face light up as they talk to the real Santa!"}
+            : "Schedule a live 3-minute video call with Santa Claus. Watch your child's face light up as they talk to the real Santa!"}
         </SectionDescription>
       </SectionHeader>
 

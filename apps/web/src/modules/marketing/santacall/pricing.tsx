@@ -7,7 +7,7 @@ import { Icons } from "@turbostarter/ui-web/icons";
 const plans = [
   {
     name: "Santa Video",
-    price: "$14.99",
+    price: "$7.99",
     description: "A personalized video message from Santa",
     features: [
       "Personalized with child's name",
@@ -23,8 +23,8 @@ const plans = [
   },
   {
     name: "Santa Call",
-    price: "$29.99",
-    description: "Live 5-minute video call with AI Santa",
+    price: "$12.99",
+    description: "Live 3-minute video call with AI Santa",
     features: [
       "Real-time interactive conversation",
       "Santa sees & responds to your child",

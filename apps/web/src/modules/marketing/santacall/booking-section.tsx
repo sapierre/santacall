@@ -122,6 +122,7 @@ const bookingSchema = z.object({
       message: "Age must be between 1-17",
     }),
   interests: z.array(z.string()).min(1, "Select at least one interest").max(5),
+  excitedGift: z.string().max(80).optional(),
   specialMessage: z.string().max(500).optional(),
   scheduledDate: z.string().optional(),
   scheduledTime: z.string().optional(),
@@ -141,6 +142,7 @@ export function SantaBookingSection() {
       childName: "",
       childAge: "",
       interests: [] as string[],
+      excitedGift: "",
       specialMessage: "",
       scheduledDate: "",
       scheduledTime: "",
@@ -206,6 +208,7 @@ export function SantaBookingSection() {
         childName: data.childName,
         childAge,
         interests: data.interests as (typeof INTERESTS)[number]["value"][],
+        excitedGift: data.excitedGift || undefined,
         specialMessage: data.specialMessage || undefined,
         scheduledAt,
         timezone,
@@ -219,6 +222,7 @@ export function SantaBookingSection() {
         childName: data.childName,
         childAge,
         interests: data.interests as (typeof INTERESTS)[number]["value"][],
+        excitedGift: data.excitedGift || undefined,
         specialMessage: data.specialMessage || undefined,
       });
     }
@@ -275,7 +279,7 @@ export function SantaBookingSection() {
                     )}
                   >
                     <Icons.Phone className="size-4" />
-                    Live Call — $29.99
+                    Live Call — $12.99
                   </button>
                   <button
                     type="button"
@@ -288,7 +292,7 @@ export function SantaBookingSection() {
                     )}
                   >
                     <Icons.Video className="size-4" />
-                    Video — $14.99
+                    Video — $7.99
                   </button>
                 </div>
               </div>
@@ -297,7 +301,7 @@ export function SantaBookingSection() {
               <div className="mt-4 text-center">
                 {orderType === "call" ? (
                   <p className="text-sm text-gray-500">
-                    📞 A live 5-minute video call with Santa. Schedule between 4-8pm, up to 7 days ahead.
+                    📞 A live 3-minute video call with Santa. Schedule between 4-8pm, up to 7 days ahead.
                   </p>
                 ) : (
                   <p className="text-sm text-gray-500">
@@ -443,6 +447,30 @@ export function SantaBookingSection() {
                               );
                             })}
                           </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Most Excited About */}
+                    <FormField
+                      control={form.control}
+                      name="excitedGift"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Most Excited About (optional)</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="e.g., a red bicycle, a puppy, a trip to see grandma"
+                              className="rounded-xl"
+                              maxLength={80}
+                              {...field}
+                              disabled={form.formState.isSubmitting}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            What's the one thing they're hoping for most? Santa will mention it naturally!
+                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -594,7 +622,7 @@ export function SantaBookingSection() {
                         </>
                       ) : (
                         <>
-                          {orderType === "call" ? "Book Santa Call" : "Order Santa Video"} — {orderType === "call" ? "$29.99" : "$14.99"}
+                          {orderType === "call" ? "Book Santa Call" : "Order Santa Video"} — {orderType === "call" ? "$12.99" : "$7.99"}
                           <Icons.ArrowRight className="ml-2 size-5" />
                         </>
                       )}

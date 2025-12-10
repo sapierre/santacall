@@ -83,7 +83,7 @@ export const SantaDemo = () => {
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                   <Icons.Clock className="size-4" />
-                  <span>~5 min calls</span>
+                  <span>~3 min calls</span>
                 </div>
               </div>
             </div>

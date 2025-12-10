@@ -18,7 +18,7 @@ const faqs = [
   {
     question: "How long is the call?",
     answer:
-      "Each Santa call is approximately 5 minutes — perfect for a magical conversation without overwhelming little ones.",
+      "Each Santa call is approximately 3 minutes — perfect for a magical conversation without overwhelming little ones.",
   },
   {
     question: "What if I need to reschedule?",
@@ -33,12 +33,17 @@ const faqs = [
   {
     question: "What's the difference between video and call?",
     answer:
-      "A Video ($14.99) is a pre-recorded personalized message. A Call ($29.99) is a live, interactive 5-minute conversation where your child talks to Santa in real-time.",
+      "A Video ($7.99) is a pre-recorded personalized message delivered within 24 hours. A Call ($12.99) is a live, interactive 3-minute conversation where your child talks to Santa in real-time.",
   },
   {
     question: "Is it safe for my child?",
     answer:
       "Absolutely! Our AI Santa is family-friendly and designed for all ages. Parents should be present during calls.",
+  },
+  {
+    question: "How does the toy donation work?",
+    answer:
+      "For every SantaCall video or live call purchased, we donate a toy to a child in need through our partner toy banks and nonprofit organizations. Our founder has over 15 years of experience in the nonprofit sector with trusted partners who ensure every toy reaches a child who needs it.",
   },
 ];
 

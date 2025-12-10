@@ -18,7 +18,7 @@ Built with [Tavus](https://tavus.io) for AI video generation and conversational 
 ## Features
 
 - Personalized video messages mentioning child's name, age, interests, and gift wishes
-- Live 5-minute video calls with AI Santa (FaceTime-style fullscreen experience)
+- Live 3-minute video calls with AI Santa (FaceTime-style fullscreen experience)
 - Stripe checkout for payments
 - Email notifications (order confirmation, video ready, call link, call completed)
 - Admin dashboard to manage orders, videos, and calls
@@ -48,8 +48,8 @@ STRIPE_SECRET_KEY=sk_...
 STRIPE_SANTACALL_WEBHOOK_SECRET=whsec_...
 
 # Pricing (in cents)
-SANTACALL_VIDEO_PRICE_CENTS=1999
-SANTACALL_CALL_PRICE_CENTS=2999
+SANTACALL_VIDEO_PRICE_CENTS=799
+SANTACALL_CALL_PRICE_CENTS=1299
 
 # App URL (IMPORTANT: must be public URL for Tavus webhooks)
 NEXT_PUBLIC_APP_URL=https://yourdomain.com
