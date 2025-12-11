@@ -9,10 +9,10 @@ import type { Preset } from "envin/types";
 export const preset = {
   id: "google-analytics",
   client: {
-    NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID: z.string(),
+    NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID: z.string().optional().default(""),
   },
   server: {
-    GOOGLE_ANALYTICS_SECRET: z.string(),
+    GOOGLE_ANALYTICS_SECRET: z.string().optional().default(""),
   },
 } as const satisfies Preset;
 
