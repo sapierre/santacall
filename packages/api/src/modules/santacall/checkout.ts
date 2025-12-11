@@ -477,9 +477,9 @@ const scheduleConversation = async (orderId: string) => {
  */
 const describeInterests = (list: string[]): string => {
   if (!list || list.length === 0) return "all the things you enjoy";
-  if (list.length === 1) return `your love for ${list[0].replace(/_/g, " ")}`;
+  if (list.length === 1) return `your love for ${list[0]!.replace(/_/g, " ")}`;
   const items = list.map((i) => i.replace(/_/g, " "));
-  const last = items.pop();
+  const last = items.pop()!;
   return `${items.join(", ")} and ${last}`;
 };
 
