@@ -34,7 +34,28 @@
       "outputs": ["coverage.json"]
     }
   },
-  "globalEnv": ["DATABASE_URL", "PRODUCT_NAME", "URL", "DEFAULT_LOCALE"],
+  "globalEnv": [
+    "DATABASE_URL",
+    "PRODUCT_NAME",
+    "URL",
+    "DEFAULT_LOCALE",
+    "BETTER_AUTH_SECRET",
+    "STRIPE_SECRET_KEY",
+    "STRIPE_WEBHOOK_SECRET",
+    "STRIPE_SANTACALL_WEBHOOK_SECRET",
+    "TAVUS_API_KEY",
+    "TAVUS_REPLICA_ID",
+    "TAVUS_PERSONA_ID",
+    "TAVUS_WEBHOOK_SECRET",
+    "RESEND_API_KEY",
+    "EMAIL_FROM",
+    "CONTACT_EMAIL",
+    "NEXT_PUBLIC_APP_URL",
+    "NEXT_PUBLIC_PRODUCT_NAME",
+    "NEXT_PUBLIC_URL",
+    "SANTACALL_VIDEO_PRICE_CENTS",
+    "SANTACALL_CALL_PRICE_CENTS"
+  ],
   "globalPassThroughEnv": [
     "NODE_ENV",
     "SKIP_ENV_VALIDATION",
