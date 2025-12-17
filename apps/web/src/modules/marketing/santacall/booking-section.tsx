@@ -244,7 +244,7 @@ export function SantaBookingSection() {
   const availableDates = getAvailableDates();
 
   return (
-    <section id="book" className="relative bg-gradient-to-b from-green-50 to-white py-24">
+    <section id="book" className="relative bg-gradient-to-b from-green-50 via-white to-red-50/30 py-24">
       <div className="container mx-auto px-6">
         {/* Section header */}
         <div className="mx-auto mb-12 max-w-2xl text-center">
@@ -262,20 +262,20 @@ export function SantaBookingSection() {
 
         {/* Main booking card */}
         <div className="mx-auto max-w-4xl">
-          <div className="overflow-hidden rounded-3xl border-2 border-gray-100 bg-white shadow-xl">
+          <div className="overflow-hidden rounded-3xl border-2 border-red-100 bg-white shadow-xl shadow-red-100/20">
             {/* Type selector */}
             <div className="border-b border-gray-100 bg-gray-50 p-6">
               <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
                 <p className="text-sm font-medium text-gray-600">Choose your experience:</p>
-                <div className="flex gap-2 rounded-full bg-white p-1 shadow-sm">
+                <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:gap-2 sm:rounded-full sm:bg-white sm:p-1 sm:shadow-sm">
                   <button
                     type="button"
                     onClick={() => setOrderType("call")}
                     className={cn(
-                      "flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all",
+                      "flex items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-semibold transition-all sm:py-3",
                       orderType === "call"
                         ? "bg-red-600 text-white shadow-md"
-                        : "text-gray-600 hover:bg-gray-100"
+                        : "bg-white text-gray-600 shadow-sm hover:bg-gray-100 sm:bg-transparent sm:shadow-none"
                     )}
                   >
                     <Icons.Phone className="size-4" />
@@ -285,10 +285,10 @@ export function SantaBookingSection() {
                     type="button"
                     onClick={() => setOrderType("video")}
                     className={cn(
-                      "flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all",
+                      "flex items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-semibold transition-all sm:py-3",
                       orderType === "video"
                         ? "bg-green-600 text-white shadow-md"
-                        : "text-gray-600 hover:bg-gray-100"
+                        : "bg-white text-gray-600 shadow-sm hover:bg-gray-100 sm:bg-transparent sm:shadow-none"
                     )}
                   >
                     <Icons.Video className="size-4" />
@@ -314,7 +314,7 @@ export function SantaBookingSection() {
             {/* Form */}
             <div className="p-6 sm:p-8">
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
                   {/* Parent Info */}
                   <div className="space-y-4">
                     <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
@@ -331,7 +331,7 @@ export function SantaBookingSection() {
                             <FormControl>
                               <Input
                                 placeholder="Jane Doe"
-                                className="rounded-xl"
+                                className="h-12 rounded-xl text-base"
                                 {...field}
                                 disabled={form.formState.isSubmitting}
                               />
@@ -350,7 +350,7 @@ export function SantaBookingSection() {
                               <Input
                                 type="email"
                                 placeholder="jane@example.com"
-                                className="rounded-xl"
+                                className="h-12 rounded-xl text-base"
                                 {...field}
                                 disabled={form.formState.isSubmitting}
                               />
@@ -381,7 +381,7 @@ export function SantaBookingSection() {
                             <FormControl>
                               <Input
                                 placeholder="Tommy"
-                                className="rounded-xl"
+                                className="h-12 rounded-xl text-base"
                                 {...field}
                                 disabled={form.formState.isSubmitting}
                               />
@@ -405,7 +405,7 @@ export function SantaBookingSection() {
                                 inputMode="numeric"
                                 pattern="[0-9]*"
                                 placeholder="7"
-                                className="rounded-xl"
+                                className="h-12 rounded-xl text-base"
                                 {...field}
                                 disabled={form.formState.isSubmitting}
                               />
@@ -423,7 +423,7 @@ export function SantaBookingSection() {
                       render={() => (
                         <FormItem>
                           <FormLabel>What does your child love? (pick up to 5)</FormLabel>
-                          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                             {INTERESTS.map((interest) => {
                               const isSelected = selectedInterests.includes(interest.value);
                               const isDisabled = !isSelected && selectedInterests.length >= 5;
@@ -435,7 +435,7 @@ export function SantaBookingSection() {
                                   onClick={() => toggleInterest(interest.value)}
                                   disabled={isDisabled || form.formState.isSubmitting}
                                   className={cn(
-                                    "rounded-xl border-2 px-3 py-2 text-sm transition-all",
+                                    "rounded-xl border-2 px-3 py-3 text-sm transition-all",
                                     isSelected
                                       ? "border-green-500 bg-green-50 text-green-700"
                                       : "border-gray-200 hover:border-gray-300 hover:bg-gray-50",
@@ -462,7 +462,7 @@ export function SantaBookingSection() {
                           <FormControl>
                             <Input
                               placeholder="e.g., a red bicycle, a puppy, a trip to see grandma"
-                              className="rounded-xl"
+                              className="h-12 rounded-xl text-base"
                               maxLength={80}
                               {...field}
                               disabled={form.formState.isSubmitting}
@@ -505,11 +505,11 @@ export function SantaBookingSection() {
                   {orderType === "call" && (
                     <div className="space-y-4">
                       <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-                        <span className="flex size-7 items-center justify-center rounded-full bg-blue-100 text-sm">3</span>
+                        <span className="flex size-7 items-center justify-center rounded-full bg-amber-100 text-sm">3</span>
                         Schedule Your Call
                       </h3>
-                      <div className="rounded-xl bg-blue-50 p-4">
-                        <p className="text-sm text-blue-700">
+                      <div className="rounded-xl bg-amber-50 p-4">
+                        <p className="text-sm text-amber-700">
                           📅 Calls available <strong>4:00 PM - 8:00 PM</strong> in your timezone.
                           Book at least 2 hours ahead, up to 7 days in advance.
                         </p>
@@ -527,7 +527,7 @@ export function SantaBookingSection() {
                                   value={field.value}
                                   disabled={form.formState.isSubmitting}
                                 >
-                                  <SelectTrigger className="rounded-xl">
+                                  <SelectTrigger className="h-12 rounded-xl text-base">
                                     <SelectValue placeholder="Select a date" />
                                   </SelectTrigger>
                                   <SelectContent>
@@ -572,7 +572,7 @@ export function SantaBookingSection() {
                                     value={field.value}
                                     disabled={form.formState.isSubmitting}
                                   >
-                                    <SelectTrigger className="rounded-xl">
+                                    <SelectTrigger className="h-12 rounded-xl text-base">
                                       <SelectValue placeholder="Select a time" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -622,7 +622,7 @@ export function SantaBookingSection() {
                         </>
                       ) : (
                         <>
-                          {orderType === "call" ? "Book Santa Call" : "Order Santa Video"} — {orderType === "call" ? "$12.99" : "$7.99"}
+                          🎅 {orderType === "call" ? "Book Santa Call" : "Order Santa Video"} — {orderType === "call" ? "$12.99" : "$7.99"}
                           <Icons.ArrowRight className="ml-2 size-5" />
                         </>
                       )}
