@@ -115,6 +115,7 @@ export const santacallOrder = pgTable(
     createdAt: timestamp().notNull().defaultNow(),
     updatedAt: timestamp()
       .notNull()
+      .defaultNow()
       .$onUpdate(() => new Date()),
   },
   (table) => [
@@ -154,6 +155,7 @@ export const santacallVideoJob = pgTable(
     createdAt: timestamp().notNull().defaultNow(),
     updatedAt: timestamp()
       .notNull()
+      .defaultNow()
       .$onUpdate(() => new Date()),
     completedAt: timestamp(),
   },
@@ -193,6 +195,7 @@ export const santacallConversation = pgTable(
     createdAt: timestamp().notNull().defaultNow(),
     updatedAt: timestamp()
       .notNull()
+      .defaultNow()
       .$onUpdate(() => new Date()),
   },
   (table) => [
