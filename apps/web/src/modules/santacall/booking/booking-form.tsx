@@ -473,13 +473,6 @@ export function BookingForm({ orderType }: BookingFormProps) {
                               <SelectValue placeholder="Select a date" />
                             </SelectTrigger>
                             <SelectContent>
-                              {/* Testing option - schedule for now */}
-                              <SelectItem
-                                value={TEST_MODE_NOW}
-                                className="text-amber-600 font-medium"
-                              >
-                                🧪 Now (Testing)
-                              </SelectItem>
                               {availableDates.map((date) => (
                                 <SelectItem
                                   key={date.toISOString()}
