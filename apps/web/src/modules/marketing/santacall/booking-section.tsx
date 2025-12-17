@@ -531,13 +531,6 @@ export function SantaBookingSection() {
                                     <SelectValue placeholder="Select a date" />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    {/* Testing option - schedule for now */}
-                                    <SelectItem
-                                      value={TEST_MODE_NOW}
-                                      className="font-medium text-amber-600"
-                                    >
-                                      🧪 Now (Testing)
-                                    </SelectItem>
                                     {availableDates.map((date) => (
                                       <SelectItem
                                         key={date.toISOString()}
