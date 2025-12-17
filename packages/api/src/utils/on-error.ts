@@ -37,7 +37,7 @@ export const onError = async (
   const path = c?.req.raw.url ? new URL(c.req.raw.url).pathname : "/api";
 
   if (isError(e)) {
-    console.log(e.code, e.message);
+    console.error("[API Error]", e.code, e.message, e);
 
     return new Response(
       JSON.stringify({
@@ -54,6 +54,9 @@ export const onError = async (
       details,
     );
   }
+
+  // Log unknown errors with full details for debugging
+  console.error("[API Unknown Error]", e);
 
   return new Response(
     JSON.stringify({

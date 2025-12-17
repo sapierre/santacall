@@ -26,15 +26,20 @@ import type {
 export const createOrder = async (
   data: Omit<InsertSantacallOrder, "id" | "createdAt" | "updatedAt">,
 ) => {
-  const result = await db
-    .insert(santacallOrder)
-    .values({
-      ...data,
-      updatedAt: new Date(),
-    })
-    .returning();
+  try {
+    const result = await db
+      .insert(santacallOrder)
+      .values({
+        ...data,
+        updatedAt: new Date(),
+      })
+      .returning();
 
-  return result[0];
+    return result[0];
+  } catch (error) {
+    console.error("[createOrder] Database error:", error);
+    throw error;
+  }
 };
 
 /**
