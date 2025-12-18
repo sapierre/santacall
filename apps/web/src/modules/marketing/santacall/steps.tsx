@@ -4,7 +4,7 @@ const steps = [
   {
     number: "1",
     title: "Choose Your Experience",
-    description: "Live call ($29.99) or video message ($14.99)",
+    description: "Live call ($6.99) or video message ($4.99)",
     icon: Icons.Gift,
     emoji: "🎁",
   },

@@ -11,9 +11,9 @@ const features = [
   },
   {
     icon: Icons.Video,
-    title: "Hyper-Realistic AI",
+    title: "Real-Time Interactive",
     description:
-      "Powered by Tavus CVI. Santa sees, hears, and responds naturally in real-time.",
+      "Santa sees, hears, and responds naturally in real-time.",
     color: "text-green-600",
     bgColor: "bg-green-100",
   },

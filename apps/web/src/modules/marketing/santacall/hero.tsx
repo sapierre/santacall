@@ -28,7 +28,7 @@ export const SantaHero = () => {
               <span className="relative inline-flex size-2 rounded-full bg-green-500" />
             </span>
             <span className="text-sm font-medium text-gray-700">
-              🎄 Santa is ready for your child!
+              🎄 Create magical Christmas memories!
             </span>
           </div>
         </div>

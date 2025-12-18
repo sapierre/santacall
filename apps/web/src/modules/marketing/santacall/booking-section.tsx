@@ -296,7 +296,7 @@ export function SantaBookingSection() {
             </span>
           </h2>
           <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-            Fill out the form below and Santa will be ready for your child!
+            Fill out the form below to create a magical moment!
           </p>
         </div>
 
