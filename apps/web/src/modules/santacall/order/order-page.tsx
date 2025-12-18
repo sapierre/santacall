@@ -209,18 +209,19 @@ function CallSection({
   const isLowTime = remainingSeconds <= 60;
   const isCriticalTime = remainingSeconds <= 30;
 
-  // FULLSCREEN CALL EXPERIENCE
+  // FULLSCREEN CALL EXPERIENCE - FaceTime style
   return (
     <div className="fixed inset-0 z-50 bg-black">
       <CVIProvider>
         {/* Fullscreen call container */}
         <div className="relative h-full w-full">
-          {/* Header */}
-          <div className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between p-4">
-            <div className="flex items-center gap-2 text-white/80">
+          {/* Header bar - minimal top info */}
+          <div className="absolute left-0 right-0 top-0 z-30 flex items-center justify-between px-4 pb-2 pt-[max(1rem,env(safe-area-inset-top))]">
+            <div className="flex items-center gap-2 text-white/70">
               <Icons.Lock className="size-3" />
               <span className="text-xs font-medium">SantaCall</span>
             </div>
+            {/* Connection indicator */}
             <div className="flex items-center gap-1">
               <span className="size-1.5 rounded-full bg-green-400" />
               <span className="size-1.5 rounded-full bg-green-400" />
@@ -228,47 +229,34 @@ function CallSection({
             </div>
           </div>
 
-          {/* Timer chip - absolute positioned at top center */}
-          <div className="absolute left-1/2 top-12 z-20 -translate-x-1/2">
+          {/* Timer chip - positioned just below header */}
+          <div className="absolute left-1/2 z-30 -translate-x-1/2" style={{ top: 'calc(max(3.5rem, calc(2.5rem + env(safe-area-inset-top))))' }}>
             <span
-              className={`rounded-full px-4 py-1.5 text-sm backdrop-blur transition-colors ${
+              className={`rounded-full px-4 py-1.5 text-sm font-medium backdrop-blur-md transition-colors ${
                 isCriticalTime
-                  ? "animate-pulse bg-red-500/80 font-semibold text-white"
+                  ? "animate-pulse bg-red-500/90 text-white"
                   : isLowTime
-                    ? "bg-amber-500/60 font-medium text-white"
-                    : "bg-white/10 text-white"
+                    ? "bg-amber-500/80 text-white"
+                    : "bg-black/40 text-white/90"
               }`}
             >
               {formattedTime}
             </span>
           </div>
 
-          {/* Call embed fills entire screen */}
+          {/* Call embed fills entire screen - controls are built into Conversation component */}
           <SantaCallEmbed
             joinUrl={deliveryUrl}
             onJoined={handleJoined}
             onLeave={handleEndCall}
           />
 
-          {/* End call button - bottom center */}
-          <div className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2">
-            <Button
-              variant="destructive"
-              size="lg"
-              className="gap-2 rounded-full px-8"
-              onClick={handleEndCall}
-            >
-              <Icons.PhoneOff className="size-5" />
-              End Call
-            </Button>
-          </div>
-
-          {/* Screenshot prompt - shows when time is low */}
+          {/* Screenshot prompt - shows above the controls when time is low */}
           {isLowTime && !isCriticalTime && (
-            <div className="absolute bottom-24 left-1/2 z-20 -translate-x-1/2">
-              <div className="rounded-lg bg-green-500/80 px-4 py-2 text-center backdrop-blur">
-                <p className="text-sm text-white">
-                  Santa will smile soon — take a screenshot!
+            <div className="absolute bottom-28 left-1/2 z-20 -translate-x-1/2 sm:bottom-32">
+              <div className="rounded-full bg-green-500/90 px-4 py-2 text-center backdrop-blur-md">
+                <p className="text-sm font-medium text-white">
+                  📸 Santa will smile — take a screenshot!
                 </p>
               </div>
             </div>

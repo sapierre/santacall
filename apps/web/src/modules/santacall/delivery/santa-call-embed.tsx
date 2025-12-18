@@ -55,17 +55,6 @@ export const SantaCallEmbed = ({
   return (
     <div className="relative h-full w-full">
       <Conversation conversationUrl={joinUrl} onLeave={handleLeave} />
-      {/* Keep fallback link */}
-      <div className="absolute bottom-2 left-1/2 z-20 -translate-x-1/2">
-        <a
-          href={joinUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-full bg-black/40 px-3 py-1 text-xs text-white/60 backdrop-blur transition hover:bg-black/60 hover:text-white"
-        >
-          Having trouble? Open in new tab
-        </a>
-      </div>
     </div>
   );
 };
