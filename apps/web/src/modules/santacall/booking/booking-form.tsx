@@ -70,16 +70,17 @@ const generateTimeSlots = () => {
 
 const TIME_SLOTS = generateTimeSlots();
 
-// Testing mode - add "now" option for immediate testing
-const TEST_MODE_NOW = "now";
+// Special values for today scheduling
+const TODAY_NOW = "today-now";
+const TODAY_DATE = "today";
 
 /**
  * Validate scheduled call time (mirrors backend validation)
  * Returns error message or null if valid
  */
-const validateSchedule = (scheduledAt: Date, timezone: string, isTestMode: boolean): string | null => {
-  // Skip validation for test mode
-  if (isTestMode) return null;
+const validateSchedule = (scheduledAt: Date, timezone: string, isNowMode: boolean): string | null => {
+  // Skip validation for "now" mode
+  if (isNowMode) return null;
 
   const now = new Date();
   const minLeadMs = MIN_LEAD_TIME_HOURS * 60 * 60 * 1000;
@@ -113,12 +114,27 @@ const validateSchedule = (scheduledAt: Date, timezone: string, isTestMode: boole
 const getAvailableDates = () => {
   const dates = [];
   const today = new Date();
-  for (let i = 1; i <= 7; i++) {
+  for (let i = 1; i <= MAX_ADVANCE_DAYS; i++) {
     const date = new Date(today);
     date.setDate(today.getDate() + i);
     dates.push(date);
   }
   return dates;
+};
+
+// Get available time slots for today (only future times within the window)
+const getTodayTimeSlots = () => {
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
+
+  return TIME_SLOTS.filter((time) => {
+    const [hour, minute] = time.split(":").map(Number);
+    // Only show times that are at least 5 minutes in the future
+    if (hour! > currentHour) return true;
+    if (hour! === currentHour && minute! > currentMinute + 5) return true;
+    return false;
+  });
 };
 
 // Base form schema - keep childAge as string for form, validate as number
@@ -185,14 +201,30 @@ export function BookingForm({ orderType }: BookingFormProps) {
         return;
       }
 
-      // Check if test mode (now)
-      const isTestMode = data.scheduledDate === TEST_MODE_NOW;
+      // Check if "now" mode (Today: Now)
+      const isNowMode = data.scheduledDate === TODAY_NOW;
 
-      // For test mode, use current time + 1 minute
+      // For "now" mode, use current time + 1 minute
       let scheduledAt: Date;
-      if (isTestMode) {
+      if (isNowMode) {
         scheduledAt = new Date(Date.now() + 60 * 1000); // 1 minute from now
+      } else if (data.scheduledDate === TODAY_DATE) {
+        // Today with specific time
+        if (!data.scheduledTime) {
+          form.setError("scheduledTime", { message: "Please select a time" });
+          return;
+        }
+        const timeParts = data.scheduledTime.split(":").map(Number);
+        const today = new Date();
+        scheduledAt = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate(),
+          timeParts[0]!,
+          timeParts[1]!
+        );
       } else {
+        // Future date with specific time
         if (!data.scheduledTime) {
           form.setError("scheduledTime", { message: "Please select a time" });
           return;
@@ -214,7 +246,7 @@ export function BookingForm({ orderType }: BookingFormProps) {
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
       // Validate schedule before submitting (mirrors backend validation)
-      const scheduleError = validateSchedule(scheduledAt, timezone, isTestMode);
+      const scheduleError = validateSchedule(scheduledAt, timezone, isNowMode);
       if (scheduleError) {
         form.setError("scheduledDate", { message: scheduleError });
         return;
@@ -231,7 +263,7 @@ export function BookingForm({ orderType }: BookingFormProps) {
         specialMessage: data.specialMessage || undefined,
         scheduledAt,
         timezone,
-        testMode: isTestMode, // Skip backend validation for testing
+        testMode: isNowMode, // Skip backend validation for "now" mode
       });
     } else {
       checkout.mutate({
@@ -453,7 +485,7 @@ export function BookingForm({ orderType }: BookingFormProps) {
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold">Schedule Your Call</h3>
                 <p className="text-muted-foreground text-sm">
-                  Calls are available between 4:00 PM - 8:00 PM in your local timezone.
+                  Call Now or schedule for 4:00 PM - 8:00 PM in your local timezone, up to 7 days in advance.
                   Each call lasts approximately 3 minutes.
                 </p>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -473,6 +505,23 @@ export function BookingForm({ orderType }: BookingFormProps) {
                               <SelectValue placeholder="Select a date" />
                             </SelectTrigger>
                             <SelectContent>
+                              {/* Today: Now option */}
+                              <SelectItem
+                                value={TODAY_NOW}
+                                className="font-medium text-green-600"
+                              >
+                                🎅 Today: Now
+                              </SelectItem>
+                              {/* Today with scheduled time (only if times available) */}
+                              {getTodayTimeSlots().length > 0 && (
+                                <SelectItem
+                                  value={TODAY_DATE}
+                                  className="font-medium"
+                                >
+                                  📅 Today: Pick a time
+                                </SelectItem>
+                              )}
+                              {/* Future dates */}
                               {availableDates.map((date) => (
                                 <SelectItem
                                   key={date.toISOString()}
@@ -493,44 +542,50 @@ export function BookingForm({ orderType }: BookingFormProps) {
                     )}
                   />
 
-                  {/* Hide time selector when "Now (Testing)" is selected */}
-                  {form.watch("scheduledDate") !== TEST_MODE_NOW && (
+                  {/* Hide time selector when "Today: Now" is selected */}
+                  {form.watch("scheduledDate") !== TODAY_NOW && form.watch("scheduledDate") && (
                     <FormField
                       control={form.control}
                       name="scheduledTime"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Time</FormLabel>
-                          <FormControl>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                              disabled={form.formState.isSubmitting}
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select a time" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {TIME_SLOTS.map((time) => {
-                                  const [hour, minute] = time.split(":").map(Number);
-                                  const d = new Date();
-                                  d.setHours(hour!, minute!, 0, 0);
-                                  return (
-                                    <SelectItem key={time} value={time}>
-                                      {d.toLocaleTimeString("en-US", {
-                                        hour: "numeric",
-                                        minute: "2-digit",
-                                        hour12: true,
-                                      })}
-                                    </SelectItem>
-                                  );
-                                })}
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
+                      render={({ field }) => {
+                        const selectedDate = form.watch("scheduledDate");
+                        const isToday = selectedDate === TODAY_DATE;
+                        const timeSlots = isToday ? getTodayTimeSlots() : TIME_SLOTS;
+
+                        return (
+                          <FormItem>
+                            <FormLabel>Time</FormLabel>
+                            <FormControl>
+                              <Select
+                                onValueChange={field.onChange}
+                                value={field.value}
+                                disabled={form.formState.isSubmitting}
+                              >
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select a time" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {timeSlots.map((time) => {
+                                    const [hour, minute] = time.split(":").map(Number);
+                                    const d = new Date();
+                                    d.setHours(hour!, minute!, 0, 0);
+                                    return (
+                                      <SelectItem key={time} value={time}>
+                                        {d.toLocaleTimeString("en-US", {
+                                          hour: "numeric",
+                                          minute: "2-digit",
+                                          hour12: true,
+                                        })}
+                                      </SelectItem>
+                                    );
+                                  })}
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
                     />
                   )}
                 </div>
