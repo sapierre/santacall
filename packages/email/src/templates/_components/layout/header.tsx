@@ -1,16 +1,13 @@
-import { Img } from "@react-email/components";
+import { Text } from "@react-email/components";
 
 interface HeaderProps {
   readonly origin: string;
 }
 
-export const Header = ({ origin }: HeaderProps) => {
+export const Header = ({ origin: _origin }: HeaderProps) => {
   return (
-    <Img
-      src={`${origin}/images/logo-text.png`}
-      alt="Turbostarter Logo"
-      className="mb-10"
-      height={45}
-    />
+    <Text className="mb-10 text-3xl font-bold">
+      🎅 SantaCall
+    </Text>
   );
 };
