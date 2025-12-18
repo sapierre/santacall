@@ -251,6 +251,17 @@ function CallSection({
             onLeave={handleEndCall}
           />
 
+          {/* Call tip - shows at the start about not interrupting */}
+          {!isLowTime && remainingSeconds > 120 && (
+            <div className="absolute bottom-28 left-1/2 z-20 -translate-x-1/2 sm:bottom-32">
+              <div className="max-w-xs rounded-2xl bg-black/60 px-4 py-3 text-center backdrop-blur-md">
+                <p className="text-sm font-medium text-white">
+                  🎅 Tip: Let Santa finish speaking before responding — the North Pole connection works best this way!
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Screenshot prompt - shows above the controls when time is low */}
           {isLowTime && !isCriticalTime && (
             <div className="absolute bottom-28 left-1/2 z-20 -translate-x-1/2 sm:bottom-32">
