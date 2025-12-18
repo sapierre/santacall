@@ -34,7 +34,7 @@ const socials = [
 
 const links = [
   {
-    label: "common:product",
+    label: "common:product.name",
     items: [
       {
         title: "marketing:product.mobile.ios.title",
