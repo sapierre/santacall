@@ -13,7 +13,7 @@ import { Navigation } from "./navigation/navigation";
 
 const links = [
   {
-    label: "product",
+    label: "common:product.name",
     items: [
       {
         title: "marketing:product.mobile.ios.title",
