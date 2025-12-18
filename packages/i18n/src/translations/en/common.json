@@ -5,7 +5,10 @@
     "terms": "Terms and Conditions",
     "copyright": "All rights reserved"
   },
-  "product": "Product",
+  "product": {
+    "name": "SantaCall",
+    "description": "Give your child the magic of Christmas with a personalized live video call from Santa Claus. Book a magical moment they'll never forget!"
+  },
   "success": "Success!",
   "auth": "Auth",
   "menu": "Menu",
