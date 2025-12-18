@@ -33,7 +33,7 @@ const faqs = [
   {
     question: "What's the difference between video and call?",
     answer:
-      "A Video ($7.99) is a pre-recorded personalized message delivered within 24 hours. A Call ($12.99) is a live, interactive 3-minute conversation where your child talks to Santa in real-time.",
+      "A Video ($4.99) is a pre-recorded personalized message delivered within 24 hours. A Call ($6.99) is a live, interactive 3-minute conversation where your child talks to Santa in real-time.",
   },
   {
     question: "Is it safe for my child?",

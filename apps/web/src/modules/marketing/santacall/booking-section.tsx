@@ -320,7 +320,7 @@ export function SantaBookingSection() {
                   >
                     <Icons.Phone className="size-4" />
                     <span>Live Call</span>
-                    <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs">$12.99</span>
+                    <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs">$6.99</span>
                   </button>
                   <button
                     type="button"
@@ -334,7 +334,7 @@ export function SantaBookingSection() {
                   >
                     <Icons.Video className="size-4" />
                     <span>Video Message</span>
-                    <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs">$7.99</span>
+                    <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs">$4.99</span>
                   </button>
                 </div>
               </div>
@@ -676,7 +676,7 @@ export function SantaBookingSection() {
                         </>
                       ) : (
                         <>
-                          🎅 {orderType === "call" ? "Book Santa Call" : "Order Santa Video"} — {orderType === "call" ? "$12.99" : "$7.99"}
+                          🎅 {orderType === "call" ? "Book Santa Call" : "Order Santa Video"} — {orderType === "call" ? "$6.99" : "$4.99"}
                           <Icons.ArrowRight className="ml-2 size-5" />
                         </>
                       )}

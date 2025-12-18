@@ -22,7 +22,7 @@ interface BookingPageContentProps {
 
 const PRICING = {
   video: {
-    price: "$7.99",
+    price: "$4.99",
     features: [
       "Personalized video from Santa",
       "Uses your child's name",
@@ -32,7 +32,7 @@ const PRICING = {
     ],
   },
   call: {
-    price: "$12.99",
+    price: "$6.99",
     features: [
       "Live 3-minute video call",
       "Real-time conversation with Santa",

@@ -88,7 +88,7 @@ export const SantaHero = () => {
               </div>
               <div>
                 <p className="font-semibold text-gray-900">Live Call</p>
-                <p className="text-sm text-gray-500">3 min · $12.99</p>
+                <p className="text-sm text-gray-500">3 min · $6.99</p>
               </div>
             </div>
           </div>
@@ -99,7 +99,7 @@ export const SantaHero = () => {
               </div>
               <div>
                 <p className="font-semibold text-gray-900">Video Message</p>
-                <p className="text-sm text-gray-500">Personalized · $7.99</p>
+                <p className="text-sm text-gray-500">Personalized · $4.99</p>
               </div>
             </div>
           </div>
