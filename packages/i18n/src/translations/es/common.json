@@ -5,7 +5,10 @@
     "terms": "Términos y condiciones",
     "copyright": "Todos los derechos reservados"
   },
-  "product": "Producto",
+  "product": {
+    "name": "SantaCall",
+    "description": "Dale a tu hijo la magia de la Navidad con una videollamada en vivo personalizada de Santa Claus. ¡Reserva un momento mágico que nunca olvidarán!"
+  },
   "success": "¡Éxito!",
   "auth": "Autenticación",
   "menu": "Menú",
