@@ -192,7 +192,7 @@ export const SantaHero = () => {
                   onPlay={() => setIsPlaying(true)}
                   onPause={() => setIsPlaying(false)}
                 >
-                  <source src="/videos/santa-call-demo.mp4" type="video/mp4" />
+                  <source src="/videos/santa-call-demo2.mp4" type="video/mp4" />
                 </video>
 
                 {/* Play button overlay */}
