@@ -2,6 +2,7 @@ export { SantaHero } from "./hero";
 export { SantaFeatures } from "./features";
 export { SantaSteps } from "./steps";
 export { SantaDemo } from "./demo";
+export { SantaFacetimeDemo } from "./facetime-demo";
 export { SantaPricing } from "./pricing";
 export { SantaGiving } from "./giving";
 export { SantaFaq } from "./faq";

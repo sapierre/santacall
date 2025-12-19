@@ -1,12 +1,68 @@
-import Link from "next/link";
+"use client";
+
+import { useState, useRef, useEffect } from "react";
 
 import { cn } from "@turbostarter/ui";
 import { buttonVariants } from "@turbostarter/ui-web/button";
 import { Icons } from "@turbostarter/ui-web/icons";
 
 export const SantaHero = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState("0:00");
+  const [duration, setDuration] = useState("0:00");
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const [clockTime, setClockTime] = useState("");
+  useEffect(() => {
+    const updateClock = () => {
+      const now = new Date();
+      setClockTime(
+        now.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        })
+      );
+    };
+    updateClock();
+    const interval = setInterval(updateClock, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      setCurrentTime(formatTime(videoRef.current.currentTime));
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (videoRef.current) {
+      setDuration(formatTime(videoRef.current.duration));
+    }
+  };
+
+  const handlePlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const handleEnded = () => {
+    setIsPlaying(false);
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+    }
+  };
+
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-red-50 via-white to-green-50 pb-12 pt-24">
+    <section className="relative overflow-hidden bg-gradient-to-b from-red-50 via-white to-green-50 pb-16 pt-24">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Snowflakes pattern */}
@@ -114,8 +170,76 @@ export const SantaHero = () => {
           <Icons.Gift className="size-4 text-green-600" />
         </div>
 
+        {/* iPhone Demo - Compact */}
+        <div className="mt-8">
+          <div className="mx-auto w-44 sm:w-52">
+            <div
+              className="relative mx-auto overflow-hidden rounded-xl border-4 border-slate-800 bg-black shadow-lg"
+              style={{ aspectRatio: "9/19.5" }}
+            >
+              {/* Dynamic Island */}
+              <div className="absolute left-1/2 top-1 z-20 h-2 w-8 -translate-x-1/2 rounded-full bg-black" />
+
+              {/* Video container */}
+              <div className="relative h-full w-full overflow-hidden bg-slate-900">
+                <video
+                  ref={videoRef}
+                  className="h-full w-full object-cover"
+                  playsInline
+                  onTimeUpdate={handleTimeUpdate}
+                  onLoadedMetadata={handleLoadedMetadata}
+                  onEnded={handleEnded}
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                >
+                  <source src="/videos/santa-call-demo.mp4" type="video/mp4" />
+                </video>
+
+                {/* Play button overlay */}
+                {!isPlaying && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                    <button
+                      onClick={handlePlay}
+                      className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 shadow-md transition-transform hover:scale-110"
+                    >
+                      <Icons.Play className="ml-0.5 h-3 w-3 text-red-600" />
+                    </button>
+                  </div>
+                )}
+
+                {/* Minimal overlay when playing */}
+                {isPlaying && (
+                  <>
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/60 to-transparent" />
+                    <button
+                      onClick={() => {
+                        if (videoRef.current) {
+                          videoRef.current.pause();
+                          videoRef.current.currentTime = 0;
+                        }
+                        setIsPlaying(false);
+                      }}
+                      className="absolute bottom-2 left-1/2 z-10 flex h-5 w-5 -translate-x-1/2 items-center justify-center rounded-full bg-red-500"
+                    >
+                      <Icons.Phone className="h-2.5 w-2.5 rotate-[135deg] text-white" />
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Home indicator */}
+              <div className="absolute inset-x-0 bottom-0.5 flex justify-center">
+                <div className="h-0.5 w-6 rounded-full bg-white/50" />
+              </div>
+            </div>
+          </div>
+          <p className="mt-2 text-center text-xs text-gray-400">
+            Watch demo ☝️
+          </p>
+        </div>
+
         {/* Scroll indicator */}
-        <div className="mt-12">
+        <div className="mt-10">
           <a href="#book" className="flex flex-col items-center gap-2 text-gray-400 transition-colors hover:text-gray-600">
             <span className="text-sm">Book below</span>
             <div className="animate-bounce">

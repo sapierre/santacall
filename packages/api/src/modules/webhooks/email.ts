@@ -1,7 +1,8 @@
+import { Webhook } from "svix";
+
 import { eq, desc } from "@turbostarter/db";
 import { santacallContact } from "@turbostarter/db/schema";
 import { db } from "@turbostarter/db/server";
-import { env } from "@turbostarter/email/providers/resend/env";
 
 import type { Context } from "hono";
 
@@ -41,7 +42,7 @@ interface ResendReceivedEmail {
  */
 function extractEmail(fromString: string): string {
   const match = fromString.match(/<([^>]+)>/);
-  return match ? match[1] : fromString;
+  return match?.[1] ?? fromString;
 }
 
 /**
@@ -50,12 +51,19 @@ function extractEmail(fromString: string): string {
 async function fetchEmailContent(
   emailId: string,
 ): Promise<ResendReceivedEmail | null> {
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    console.error("RESEND_API_KEY not configured");
+    return null;
+  }
+
   try {
     const response = await fetch(
       `https://api.resend.com/emails/receiving/${emailId}`,
       {
         headers: {
-          Authorization: `Bearer ${env.RESEND_API_KEY}`,
+          Authorization: `Bearer ${apiKey}`,
         },
       },
     );
@@ -65,7 +73,7 @@ async function fetchEmailContent(
       return null;
     }
 
-    return response.json();
+    return (await response.json()) as ResendReceivedEmail;
   } catch (error) {
     console.error("Error fetching email content:", error);
     return null;
@@ -75,18 +83,20 @@ async function fetchEmailContent(
 /**
  * Verify Resend webhook signature using svix
  */
-async function verifyWebhookSignature(
+function verifyWebhookSignature(
   payload: string,
   headers: {
     id: string | null;
     timestamp: string | null;
     signature: string | null;
   },
-): Promise<boolean> {
-  const secret = env.RESEND_WEBHOOK_SECRET;
+): boolean {
+  const secret = process.env.RESEND_WEBHOOK_SECRET;
 
   if (!secret) {
-    console.warn("RESEND_WEBHOOK_SECRET not configured, skipping verification");
+    console.warn(
+      "RESEND_WEBHOOK_SECRET not configured, skipping verification",
+    );
     return true; // Allow in development without secret
   }
 
@@ -96,8 +106,6 @@ async function verifyWebhookSignature(
   }
 
   try {
-    // Dynamic import svix
-    const { Webhook } = await import("svix");
     const wh = new Webhook(secret);
 
     wh.verify(payload, {
@@ -121,7 +129,7 @@ export async function handleEmailWebhook(c: Context): Promise<Response> {
     const payload = await c.req.text();
 
     // Verify signature
-    const isValid = await verifyWebhookSignature(payload, {
+    const isValid = verifyWebhookSignature(payload, {
       id: c.req.header("svix-id") ?? null,
       timestamp: c.req.header("svix-timestamp") ?? null,
       signature: c.req.header("svix-signature") ?? null,

@@ -99,6 +99,10 @@ import {
   Share2,
   Heart,
   Award,
+  Signal,
+  Wifi,
+  BatteryFull,
+  SwitchCamera,
 } from "lucide-react";
 
 import { Icons as GlobalIcons } from "@turbostarter/ui/assets";
@@ -205,6 +209,10 @@ export const Icons = {
   Share2,
   Heart,
   Award,
+  Signal,
+  Wifi,
+  BatteryFull,
+  SwitchCamera,
 };
 
 export type Icon = (typeof Icons)[keyof typeof Icons];
