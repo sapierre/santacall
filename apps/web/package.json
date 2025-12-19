@@ -28,6 +28,7 @@
     "@turbostarter/auth": "workspace:*",
     "@turbostarter/billing": "workspace:*",
     "@turbostarter/cms": "workspace:*",
+    "@turbostarter/db": "workspace:*",
     "@turbostarter/email": "workspace:*",
     "@turbostarter/i18n": "workspace:*",
     "@turbostarter/shared": "workspace:*",

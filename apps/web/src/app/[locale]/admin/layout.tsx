@@ -53,6 +53,11 @@ const menu = [
         href: pathsConfig.admin.santacall.calls,
         icon: Icons.Phone,
       },
+      {
+        title: "contacts",
+        href: pathsConfig.admin.santacall.contacts,
+        icon: Icons.Mail,
+      },
     ],
   },
 ];

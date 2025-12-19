@@ -9,6 +9,7 @@ import { MagicLink } from "./auth/magic-link";
 import { OrganizationInvitation } from "./auth/organization-invitation";
 import { ResetPassword } from "./auth/reset-password";
 import ContactForm from "./contact-form";
+import ContactReply from "./contact-reply";
 import { SantaCallCallCompleted } from "./santacall/call-completed";
 import { SantaCallCallLink } from "./santacall/call-link";
 import { SantaCallOrderConfirmation } from "./santacall/order-confirmation";
@@ -33,6 +34,7 @@ export const templates: {
   [EmailTemplate.CHANGE_EMAIL]: ChangeEmail,
   [EmailTemplate.ORGANIZATION_INVITATION]: OrganizationInvitation,
   [EmailTemplate.CONTACT_FORM]: ContactForm,
+  [EmailTemplate.CONTACT_REPLY]: ContactReply,
   [EmailTemplate.SANTACALL_ORDER_CONFIRMATION]: SantaCallOrderConfirmation,
   [EmailTemplate.SANTACALL_VIDEO_READY]: SantaCallVideoReady,
   [EmailTemplate.SANTACALL_CALL_LINK]: SantaCallCallLink,

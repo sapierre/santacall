@@ -1,5 +1,6 @@
 import {
   AlertTriangle,
+  Archive,
   ArrowRight,
   LogIn,
   UserRound,
@@ -47,6 +48,7 @@ import {
   Webhook,
   Download,
   ChevronRight,
+  Send,
   SendHorizontal,
   Copy,
   ChevronsUpDown,
@@ -104,6 +106,7 @@ import { Icons as GlobalIcons } from "@turbostarter/ui/assets";
 export const Icons = {
   ...GlobalIcons,
   AlertTriangle,
+  Archive,
   Minus,
   PanelLeft,
   Eye,
@@ -163,6 +166,7 @@ export const Icons = {
   PaintBucket,
   Play,
   RotateCcw,
+  Send,
   SendHorizontal,
   ChevronsUpDown,
   ArrowDown,

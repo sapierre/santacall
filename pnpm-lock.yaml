@@ -501,6 +501,9 @@ importers:
       '@turbostarter/cms':
         specifier: workspace:*
         version: link:../../packages/cms
+      '@turbostarter/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@turbostarter/email':
         specifier: workspace:*
         version: link:../../packages/email

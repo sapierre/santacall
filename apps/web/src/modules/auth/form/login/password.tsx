@@ -46,8 +46,9 @@ export const PasswordLoginForm = memo<PasswordLoginFormProps>(
     const form = useForm({
       resolver: standardSchemaResolver(passwordLoginSchema),
       defaultValues: {
+        email: email ?? "",
+        password: "",
         rememberMe: true,
-        email,
       },
     });
 

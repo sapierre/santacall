@@ -24,6 +24,7 @@ type AuthEmailVariables = Record<
 export const EmailTemplate = {
   ...AuthEmailTemplate,
   CONTACT_FORM: "contact-form",
+  CONTACT_REPLY: "contact-reply",
   SANTACALL_ORDER_CONFIRMATION: "santacall-order-confirmation",
   SANTACALL_VIDEO_READY: "santacall-video-ready",
   SANTACALL_CALL_LINK: "santacall-call-link",
@@ -46,6 +47,11 @@ export type EmailVariables = AuthEmailVariables & {
     name: string;
     email: string;
     message: string;
+  };
+  [EmailTemplate.CONTACT_REPLY]: {
+    name: string;
+    originalMessage: string;
+    reply: string;
   };
   [EmailTemplate.SANTACALL_ORDER_CONFIRMATION]: {
     customerName: string;

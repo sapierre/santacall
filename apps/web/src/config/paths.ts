@@ -30,6 +30,7 @@ const pathsConfig = {
       },
       videos: `${ADMIN_PREFIX}/santacall/videos`,
       calls: `${ADMIN_PREFIX}/santacall/calls`,
+      contacts: `${ADMIN_PREFIX}/santacall/contacts`,
     },
   },
   marketing: {
