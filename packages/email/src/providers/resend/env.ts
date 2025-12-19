@@ -11,6 +11,7 @@ export const preset = {
   id: "resend",
   server: {
     RESEND_API_KEY: z.string(),
+    RESEND_WEBHOOK_SECRET: z.string().optional(),
   },
   extends: [sharedPreset],
 } as const satisfies Preset;

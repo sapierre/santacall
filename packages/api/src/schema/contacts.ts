@@ -42,6 +42,8 @@ export const getContactsResponseSchema = z.object({
       adminReply: z.string().nullable(),
       repliedAt: z.coerce.date().nullable(),
       repliedBy: z.string().nullable(),
+      userReply: z.string().nullable(),
+      userRepliedAt: z.coerce.date().nullable(),
       createdAt: z.coerce.date(),
       updatedAt: z.coerce.date(),
     }),

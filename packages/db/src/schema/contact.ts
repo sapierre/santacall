@@ -41,6 +41,10 @@ export const santacallContact = pgTable(
     repliedAt: timestamp({ withTimezone: true }),
     repliedBy: text(), // Admin user ID who replied
 
+    // User reply (when user replies to admin email)
+    userReply: text(),
+    userRepliedAt: timestamp({ withTimezone: true }),
+
     // Timestamps
     createdAt: timestamp().notNull().defaultNow(),
     updatedAt: timestamp()

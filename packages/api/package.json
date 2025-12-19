@@ -30,6 +30,7 @@
     "ai": "5.0.86",
     "envin": "catalog:",
     "hono": "4.10.4",
+    "svix": "1.82.0",
     "zod": "catalog:"
   },
   "devDependencies": {
