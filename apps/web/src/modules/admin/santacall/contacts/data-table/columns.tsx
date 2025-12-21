@@ -15,7 +15,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@turbostarter/ui-web/dialog";
 import {
   DropdownMenu,

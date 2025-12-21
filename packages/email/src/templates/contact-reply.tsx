@@ -7,7 +7,7 @@ import type { EmailTemplate, EmailVariables } from "../types";
 
 type Props = EmailVariables[typeof EmailTemplate.CONTACT_REPLY];
 
-export const ContactReply = async (props: Props) => {
+export const ContactReply = (props: Props) => {
   const { name, originalMessage, reply } = props;
 
   return (

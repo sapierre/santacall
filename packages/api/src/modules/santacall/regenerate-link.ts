@@ -4,9 +4,8 @@ import { HttpStatusCode } from "@turbostarter/shared/constants";
 import { HttpException } from "@turbostarter/shared/utils";
 
 import { env } from "./env";
-
-import { getOrderById } from "./queries";
 import { updateOrder, generateDeliveryToken } from "./mutations";
+import { getOrderById } from "./queries";
 
 /**
  * Regenerate delivery link for an order

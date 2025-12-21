@@ -1,12 +1,12 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
 import {
   useDaily,
   useDevices,
   useLocalSessionId,
   useVideoTrack,
 } from "@daily-co/daily-react";
+import { useCallback, useMemo } from "react";
 
 export const useLocalCamera = (): {
   isCamReady: boolean;

@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect, useCallback } from "react";
 import {
   DailyAudioTrack,
   DailyVideo,
@@ -10,15 +9,17 @@ import {
   useScreenVideoTrack,
   useVideoTrack,
 } from "@daily-co/daily-react";
+import React, { useEffect, useCallback } from "react";
+
+import { useCVICall } from "../../hooks/use-cvi-call";
+import { useLocalScreenshare } from "../../hooks/use-local-screenshare";
+import { useReplicaIDs } from "../../hooks/use-replica-ids";
+import { AudioWave } from "../audio-wave";
 import {
   MicSelectBtn,
   CameraSelectBtn,
   ScreenShareButton,
 } from "../device-select";
-import { useLocalScreenshare } from "../../hooks/use-local-screenshare";
-import { useReplicaIDs } from "../../hooks/use-replica-ids";
-import { useCVICall } from "../../hooks/use-cvi-call";
-import { AudioWave } from "../audio-wave";
 
 import styles from "./conversation.module.css";
 
@@ -113,6 +114,7 @@ export const Conversation = React.memo(
     // Initialize call when conversation is available
     useEffect(() => {
       joinCall({ url: conversationUrl });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleLeave = useCallback(() => {

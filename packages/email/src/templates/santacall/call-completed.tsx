@@ -1,8 +1,6 @@
 import { Heading, Preview, Text } from "@react-email/components";
 import * as React from "react";
 
-import { getOrigin } from "@turbostarter/shared/utils";
-
 import { Layout } from "../_components/layout/layout";
 
 import type { CommonEmailProps } from "../../types";

@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 
-import { cn } from "@turbostarter/ui";
 import { Icons } from "@turbostarter/ui-web/icons";
 
 export const SantaFacetimeDemo = () => {

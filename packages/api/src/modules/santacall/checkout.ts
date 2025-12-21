@@ -161,7 +161,7 @@ export const handleStripeWebhook = async (req: Request) => {
   console.log(`Received Stripe webhook: ${event.type}`);
 
   if (event.type === "checkout.session.completed") {
-    const session = event.data.object as Stripe.Checkout.Session;
+    const session = event.data.object;
     await handleCheckoutCompleted(session);
   }
 
@@ -298,7 +298,7 @@ const triggerVideoGeneration = async (orderId: string) => {
 
   // Parse children array, fallback to legacy fields if not present
   const children = order.children
-    ? (JSON.parse(order.children) as Array<{ name: string; age: number }>)
+    ? (JSON.parse(order.children) as { name: string; age: number }[])
     : [{ name: order.childName, age: order.childAge }];
 
   const childrenNames = children.map((c) => c.name).join(", ");
@@ -369,7 +369,7 @@ const scheduleConversation = async (orderId: string) => {
   const { getOrderById } = await import("./queries");
 
   const order = await getOrderById(orderId);
-  if (!order || !order.scheduledAt) {
+  if (!order?.scheduledAt) {
     console.error(`Order ${orderId} not found or missing scheduledAt`);
     return;
   }
@@ -397,7 +397,7 @@ const scheduleConversation = async (orderId: string) => {
 
   // Parse children array, fallback to legacy fields if not present
   const children = order.children
-    ? (JSON.parse(order.children) as Array<{ name: string; age: number }>)
+    ? (JSON.parse(order.children) as { name: string; age: number }[])
     : [{ name: order.childName, age: order.childAge }];
 
   const childrenNames = children.map((c) => c.name).join(", ");
@@ -455,7 +455,7 @@ const scheduleConversation = async (orderId: string) => {
     // Send call link email to customer
     try {
       const joinUrl = `${env.NEXT_PUBLIC_APP_URL}/order/${order.orderNumber}?token=${order.deliveryToken}`;
-      const scheduledAtFormatted = order.scheduledAt!.toLocaleDateString(
+      const scheduledAtFormatted = order.scheduledAt.toLocaleDateString(
         "en-US",
         {
           weekday: "long",
@@ -532,7 +532,7 @@ const rephrase = (text: string | null): string | null => {
  * Supports multiple children (up to 4)
  */
 const generateSantaScript = (data: {
-  children: Array<{ name: string; age: number }>;
+  children: { name: string; age: number }[];
   interests: string[];
   excitedGift: string | null;
   specialMessage: string | null;
@@ -599,7 +599,7 @@ Ho ho ho! Merry Christmas and Happy Holidays!
  * Supports multiple children (up to 4)
  */
 const generateSantaContext = (data: {
-  children: Array<{ name: string; age: number }>;
+  children: { name: string; age: number }[];
   interests: string[];
   excitedGift: string | null;
   specialMessage: string | null;

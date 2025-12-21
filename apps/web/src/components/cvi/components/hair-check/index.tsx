@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import {
   useDaily,
   useDevices,
   DailyVideo,
   useLocalSessionId,
 } from "@daily-co/daily-react";
+import { useState, useEffect } from "react";
 
 import { Button } from "@turbostarter/ui-web/button";
 import { Icons } from "@turbostarter/ui-web/icons";

@@ -9,7 +9,9 @@ import {
 } from "@turbostarter/ui-web/dropdown-menu";
 import { Icons } from "@turbostarter/ui-web/icons";
 
-import { getCalendarLinks, type CalendarEvent } from "../lib/calendar-links";
+import { getCalendarLinks  } from "../lib/calendar-links";
+
+import type {CalendarEvent} from "../lib/calendar-links";
 
 interface AddToCalendarProps {
   event: CalendarEvent;

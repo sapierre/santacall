@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useCallback, useRef, memo } from "react";
 import { useActiveSpeakerId } from "@daily-co/daily-react";
 import { useAudioLevelObserver } from "@daily-co/daily-react";
+import React, { useCallback, useRef, memo } from "react";
+
 import styles from "./audio-wave.module.css";
 
 export const AudioWave = memo(({ id }: { id: string }) => {

@@ -2,8 +2,8 @@ import { Hono } from "hono";
 
 import { enforceAdmin, enforceAuth } from "../../middleware";
 
-import { contactsRouter } from "./contacts/router";
 import { getContactsCount, getNewContactsCount } from "./contacts/queries";
+import { contactsRouter } from "./contacts/router";
 import { getCustomersCount } from "./customers/queries";
 import { customersRouter } from "./customers/router";
 import { getOrganizationsCount } from "./organizations/queries";

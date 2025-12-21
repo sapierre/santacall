@@ -18,11 +18,11 @@ interface ResendEmailReceivedEvent {
     bcc: string[];
     subject: string;
     message_id: string;
-    attachments: Array<{
+    attachments: {
       id: string;
       filename: string;
       content_type: string;
-    }>;
+    }[];
   };
 }
 
@@ -41,7 +41,7 @@ interface ResendReceivedEmail {
  * Extract email address from "Name <email@example.com>" format
  */
 function extractEmail(fromString: string): string {
-  const match = fromString.match(/<([^>]+)>/);
+  const match = /<([^>]+)>/.exec(fromString);
   return match?.[1] ?? fromString;
 }
 

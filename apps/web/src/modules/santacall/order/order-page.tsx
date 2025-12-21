@@ -31,14 +31,14 @@ interface OrderPageContentProps {
   status?: string;
 }
 
-type StatusConfigType = {
+interface StatusConfigType {
   icon: typeof Icons.Clock;
   label: string;
   description: string;
   color: string;
   bgColor: string;
   animate?: boolean;
-};
+}
 
 // Separate component to manage call state
 function CallSection({

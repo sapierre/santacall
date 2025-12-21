@@ -1,7 +1,7 @@
 "use client";
 
-import { use } from "react";
 import { useRouter } from "next/navigation";
+import { use } from "react";
 
 import { DataTable } from "@turbostarter/ui-web/data-table/data-table";
 import { DataTableToolbar } from "@turbostarter/ui-web/data-table/data-table-toolbar";

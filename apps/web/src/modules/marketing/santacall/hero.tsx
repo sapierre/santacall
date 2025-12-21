@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 import { cn } from "@turbostarter/ui";
 import { buttonVariants } from "@turbostarter/ui-web/button";
@@ -8,44 +8,7 @@ import { Icons } from "@turbostarter/ui-web/icons";
 
 export const SantaHero = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState("0:00");
-  const [duration, setDuration] = useState("0:00");
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  const [clockTime, setClockTime] = useState("");
-  useEffect(() => {
-    const updateClock = () => {
-      const now = new Date();
-      setClockTime(
-        now.toLocaleTimeString("en-US", {
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true,
-        }),
-      );
-    };
-    updateClock();
-    const interval = setInterval(updateClock, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
-  };
-
-  const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      setCurrentTime(formatTime(videoRef.current.currentTime));
-    }
-  };
-
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(formatTime(videoRef.current.duration));
-    }
-  };
 
   const handlePlay = () => {
     if (videoRef.current) {
@@ -190,8 +153,6 @@ export const SantaHero = () => {
                   ref={videoRef}
                   className="h-full w-full object-cover"
                   playsInline
-                  onTimeUpdate={handleTimeUpdate}
-                  onLoadedMetadata={handleLoadedMetadata}
                   onEnded={handleEnded}
                   onPlay={() => setIsPlaying(true)}
                   onPause={() => setIsPlaying(false)}

@@ -220,8 +220,8 @@ export function SantaBookingSection() {
           today.getFullYear(),
           today.getMonth(),
           today.getDate(),
-          timeParts[0]!,
-          timeParts[1]!,
+          timeParts[0],
+          timeParts[1],
         );
       } else {
         if (!data.scheduledTime) {
@@ -234,9 +234,9 @@ export function SantaBookingSection() {
         scheduledAt = new Date(
           dateParts[0]!,
           dateParts[1]! - 1,
-          dateParts[2]!,
-          timeParts[0]!,
-          timeParts[1]!,
+          dateParts[2],
+          timeParts[0],
+          timeParts[1],
         );
       }
 
@@ -753,7 +753,7 @@ export function SantaBookingSection() {
                                               .split(":")
                                               .map(Number);
                                             const d = new Date();
-                                            d.setHours(hour!, minute!, 0, 0);
+                                            d.setHours(hour!, minute, 0, 0);
                                             return (
                                               <SelectItem
                                                 key={time}

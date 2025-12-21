@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { useMeetingState } from "@daily-co/daily-react";
+import { useState } from "react";
 
 import { Icons } from "@turbostarter/ui-web/icons";
 

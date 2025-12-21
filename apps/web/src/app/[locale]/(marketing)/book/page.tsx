@@ -1,13 +1,13 @@
 import { Suspense } from "react";
 
 import { getMetadata } from "~/lib/metadata";
-import { BookingPageContent } from "~/modules/santacall/booking/booking-page";
 import {
   Section,
   SectionDescription,
   SectionHeader,
   SectionTitle,
 } from "~/modules/marketing/layout/section";
+import { BookingPageContent } from "~/modules/santacall/booking/booking-page";
 
 export const generateMetadata = getMetadata({
   title: "Book Your Santa Experience",

@@ -3,12 +3,10 @@ import { Suspense } from "react";
 import { Icons } from "@turbostarter/ui-web/icons";
 
 import { getMetadata } from "~/lib/metadata";
-import { OrderPageContent } from "~/modules/santacall/order/order-page";
 import {
   Section,
-  SectionHeader,
-  SectionTitle,
 } from "~/modules/marketing/layout/section";
+import { OrderPageContent } from "~/modules/santacall/order/order-page";
 
 export const generateMetadata = getMetadata({
   title: "Your Santa Order",

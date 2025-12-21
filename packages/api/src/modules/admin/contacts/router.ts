@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 
-import type { User } from "@turbostarter/auth";
 
 import { validate } from "../../../middleware";
 import {
@@ -15,6 +14,8 @@ import {
   replyToContact,
 } from "./mutations";
 import { getContacts, getContactById } from "./queries";
+
+import type { User } from "@turbostarter/auth";
 
 export const contactsRouter = new Hono<{ Variables: { user: User } }>()
   .get("/", validate("query", getContactsInputSchema), async (c) =>

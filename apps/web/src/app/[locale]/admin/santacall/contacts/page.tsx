@@ -7,11 +7,11 @@ import {
 import { createSearchParamsCache } from "nuqs/server";
 import { Suspense } from "react";
 
-import { handle } from "@turbostarter/api/utils";
 import {
   CONTACT_STATUSES,
   getContactsResponseSchema,
 } from "@turbostarter/api/schema";
+import { handle } from "@turbostarter/api/utils";
 import { pickBy } from "@turbostarter/shared/utils";
 import { DataTableSkeleton } from "@turbostarter/ui-web/data-table/data-table-skeleton";
 

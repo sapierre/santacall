@@ -1,12 +1,12 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
 import {
   useAudioTrack,
   useDaily,
   useDevices,
   useLocalSessionId,
 } from "@daily-co/daily-react";
+import { useCallback, useMemo } from "react";
 
 export const useLocalMicrophone = (): {
   isMicReady: boolean;

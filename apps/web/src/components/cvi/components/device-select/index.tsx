@@ -1,10 +1,12 @@
 "use client";
 
-import React, { memo } from "react";
 import { useDevices } from "@daily-co/daily-react";
+import React, { memo } from "react";
+
 import { useLocalCamera } from "../../hooks/use-local-camera";
 import { useLocalMicrophone } from "../../hooks/use-local-microphone";
 import { useLocalScreenshare } from "../../hooks/use-local-screenshare";
+
 import styles from "./device-select.module.css";
 
 export const SelectDevice = ({
