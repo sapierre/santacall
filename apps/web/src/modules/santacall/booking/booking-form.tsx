@@ -78,7 +78,11 @@ const TODAY_DATE = "today";
  * Validate scheduled call time (mirrors backend validation)
  * Returns error message or null if valid
  */
-const validateSchedule = (scheduledAt: Date, timezone: string, isNowMode: boolean): string | null => {
+const validateSchedule = (
+  scheduledAt: Date,
+  timezone: string,
+  isNowMode: boolean,
+): string | null => {
   // Skip validation for "now" mode
   if (isNowMode) return null;
 
@@ -145,9 +149,12 @@ const bookingSchema = z.object({
   childAge: z
     .string()
     .min(1, "Age is required")
-    .refine((val) => !isNaN(Number(val)) && Number(val) >= 1 && Number(val) <= 17, {
-      message: "Age must be between 1-17",
-    }),
+    .refine(
+      (val) => !isNaN(Number(val)) && Number(val) >= 1 && Number(val) <= 17,
+      {
+        message: "Age must be between 1-17",
+      },
+    ),
   interests: z.array(z.string()).min(1, "Select at least one interest").max(5),
   excitedGift: z.string().max(80).optional(),
   specialMessage: z.string().max(500).optional(),
@@ -221,7 +228,7 @@ export function BookingForm({ orderType }: BookingFormProps) {
           today.getMonth(),
           today.getDate(),
           timeParts[0]!,
-          timeParts[1]!
+          timeParts[1]!,
         );
       } else {
         // Future date with specific time
@@ -238,7 +245,7 @@ export function BookingForm({ orderType }: BookingFormProps) {
           dateParts[1]! - 1,
           dateParts[2]!,
           timeParts[0]!,
-          timeParts[1]!
+          timeParts[1]!,
         );
       }
 
@@ -337,7 +344,8 @@ export function BookingForm({ orderType }: BookingFormProps) {
                         />
                       </FormControl>
                       <FormDescription>
-                        We&apos;ll send the {orderType === "video" ? "video" : "call link"} here
+                        We&apos;ll send the{" "}
+                        {orderType === "video" ? "video" : "call link"} here
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -348,7 +356,9 @@ export function BookingForm({ orderType }: BookingFormProps) {
 
             {/* Child Info */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Child&apos;s Information</h3>
+              <h3 className="text-lg font-semibold">
+                Child&apos;s Information
+              </h3>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <FormField
                   control={form.control}
@@ -402,7 +412,9 @@ export function BookingForm({ orderType }: BookingFormProps) {
                     <FormLabel>Interests (select up to 5)</FormLabel>
                     <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                       {INTERESTS.map((interest) => {
-                        const isSelected = selectedInterests.includes(interest.value);
+                        const isSelected = selectedInterests.includes(
+                          interest.value,
+                        );
                         const isDisabled =
                           !isSelected && selectedInterests.length >= 5;
 
@@ -446,7 +458,8 @@ export function BookingForm({ orderType }: BookingFormProps) {
                       />
                     </FormControl>
                     <FormDescription>
-                      What gift is your child hoping for most? Santa will mention it naturally.
+                      What gift is your child hoping for most? Santa will
+                      mention it naturally.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -470,7 +483,7 @@ export function BookingForm({ orderType }: BookingFormProps) {
                       />
                     </FormControl>
                     <FormDescription>
-                      {(field.value?.length || 0)}/500 characters
+                      {field.value?.length || 0}/500 characters
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -483,8 +496,9 @@ export function BookingForm({ orderType }: BookingFormProps) {
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold">Schedule Your Call</h3>
                 <p className="text-muted-foreground text-sm">
-                  Call Now or schedule for 4:00 PM - 8:00 PM in your local timezone, up to 7 days in advance.
-                  Each call lasts approximately 3 minutes.
+                  Call Now or schedule for 4:00 PM - 8:00 PM in your local
+                  timezone, up to 7 days in advance. Each call lasts
+                  approximately 3 minutes.
                 </p>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <FormField
@@ -541,51 +555,56 @@ export function BookingForm({ orderType }: BookingFormProps) {
                   />
 
                   {/* Hide time selector when "Today: Now" is selected */}
-                  {form.watch("scheduledDate") !== TODAY_NOW && form.watch("scheduledDate") && (
-                    <FormField
-                      control={form.control}
-                      name="scheduledTime"
-                      render={({ field }) => {
-                        const selectedDate = form.watch("scheduledDate");
-                        const isToday = selectedDate === TODAY_DATE;
-                        const timeSlots = isToday ? getTodayTimeSlots() : TIME_SLOTS;
+                  {form.watch("scheduledDate") !== TODAY_NOW &&
+                    form.watch("scheduledDate") && (
+                      <FormField
+                        control={form.control}
+                        name="scheduledTime"
+                        render={({ field }) => {
+                          const selectedDate = form.watch("scheduledDate");
+                          const isToday = selectedDate === TODAY_DATE;
+                          const timeSlots = isToday
+                            ? getTodayTimeSlots()
+                            : TIME_SLOTS;
 
-                        return (
-                          <FormItem>
-                            <FormLabel>Time</FormLabel>
-                            <FormControl>
-                              <Select
-                                onValueChange={field.onChange}
-                                value={field.value}
-                                disabled={form.formState.isSubmitting}
-                              >
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select a time" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {timeSlots.map((time) => {
-                                    const [hour, minute] = time.split(":").map(Number);
-                                    const d = new Date();
-                                    d.setHours(hour!, minute!, 0, 0);
-                                    return (
-                                      <SelectItem key={time} value={time}>
-                                        {d.toLocaleTimeString("en-US", {
-                                          hour: "numeric",
-                                          minute: "2-digit",
-                                          hour12: true,
-                                        })}
-                                      </SelectItem>
-                                    );
-                                  })}
-                                </SelectContent>
-                              </Select>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        );
-                      }}
-                    />
-                  )}
+                          return (
+                            <FormItem>
+                              <FormLabel>Time</FormLabel>
+                              <FormControl>
+                                <Select
+                                  onValueChange={field.onChange}
+                                  value={field.value}
+                                  disabled={form.formState.isSubmitting}
+                                >
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select a time" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {timeSlots.map((time) => {
+                                      const [hour, minute] = time
+                                        .split(":")
+                                        .map(Number);
+                                      const d = new Date();
+                                      d.setHours(hour!, minute!, 0, 0);
+                                      return (
+                                        <SelectItem key={time} value={time}>
+                                          {d.toLocaleTimeString("en-US", {
+                                            hour: "numeric",
+                                            minute: "2-digit",
+                                            hour12: true,
+                                          })}
+                                        </SelectItem>
+                                      );
+                                    })}
+                                  </SelectContent>
+                                </Select>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          );
+                        }}
+                      />
+                    )}
                 </div>
               </div>
             )}
@@ -601,7 +620,9 @@ export function BookingForm({ orderType }: BookingFormProps) {
                 {form.formState.isSubmitting || checkout.isPending ? (
                   <>
                     <Icons.Loader2 className="mr-2 size-5 animate-spin" />
-                    {checkout.isPending ? "Redirecting to payment..." : "Processing..."}
+                    {checkout.isPending
+                      ? "Redirecting to payment..."
+                      : "Processing..."}
                   </>
                 ) : (
                   <>

@@ -21,7 +21,7 @@ export const SantaHero = () => {
           hour: "numeric",
           minute: "2-digit",
           hour12: true,
-        })
+        }),
       );
     };
     updateClock();
@@ -62,20 +62,23 @@ export const SantaHero = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-red-50 via-white to-green-50 pb-16 pt-24">
+    <section className="relative overflow-hidden bg-gradient-to-b from-red-50 via-white to-green-50 pt-24 pb-16">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Snowflakes pattern */}
-        <div className="absolute inset-0 opacity-30" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dc2626' fill-opacity='0.1'%3E%3Cpath d='M30 30l-4-4 4-4 4 4-4 4zm0 0l4 4-4 4-4-4 4-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dc2626' fill-opacity='0.1'%3E%3Cpath d='M30 30l-4-4 4-4 4 4-4 4zm0 0l4 4-4 4-4-4 4-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
 
         {/* Decorative circles */}
-        <div className="absolute -left-20 top-20 size-96 rounded-full bg-red-100/50 blur-3xl" />
-        <div className="absolute -right-20 top-40 size-96 rounded-full bg-green-100/50 blur-3xl" />
+        <div className="absolute top-20 -left-20 size-96 rounded-full bg-red-100/50 blur-3xl" />
+        <div className="absolute top-40 -right-20 size-96 rounded-full bg-green-100/50 blur-3xl" />
       </div>
 
-      <div className="container relative mx-auto flex flex-col items-center justify-center px-6">
+      <div className="relative container mx-auto flex flex-col items-center justify-center px-6">
         {/* Badge */}
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-white px-5 py-2.5 shadow-sm">
@@ -90,7 +93,7 @@ export const SantaHero = () => {
         </div>
 
         {/* Main headline */}
-        <h1 className="max-w-4xl text-center text-5xl font-bold leading-[1.1] tracking-tight text-gray-900 sm:text-6xl md:text-7xl">
+        <h1 className="max-w-4xl text-center text-5xl leading-[1.1] font-bold tracking-tight text-gray-900 sm:text-6xl md:text-7xl">
           Talk to{" "}
           <span className="bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">
             Santa
@@ -100,7 +103,8 @@ export const SantaHero = () => {
 
         {/* Subheadline */}
         <p className="mt-6 max-w-2xl text-center text-lg text-gray-600 sm:text-xl">
-          Book a magical live video call or get a personalized video message from AI Santa.
+          Book a magical live video call or get a personalized video message
+          from AI Santa.
           <br className="hidden sm:block" />
           Create unforgettable Christmas memories for your child!
         </p>
@@ -162,7 +166,7 @@ export const SantaHero = () => {
         </div>
 
         {/* Giving back callout */}
-        <div className="mt-6 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-red-50 to-green-50 border border-red-100 px-5 py-2.5 shadow-sm">
+        <div className="mt-6 flex items-center justify-center gap-2 rounded-full border border-red-100 bg-gradient-to-r from-red-50 to-green-50 px-5 py-2.5 shadow-sm">
           <Icons.Heart className="size-4 text-red-500" />
           <span className="text-sm font-medium text-gray-700">
             Every purchase donates a toy to a child in need
@@ -178,7 +182,7 @@ export const SantaHero = () => {
               style={{ aspectRatio: "9/19.5" }}
             >
               {/* Dynamic Island */}
-              <div className="absolute left-1/2 top-1 z-20 h-2 w-8 -translate-x-1/2 rounded-full bg-black" />
+              <div className="absolute top-1 left-1/2 z-20 h-2 w-8 -translate-x-1/2 rounded-full bg-black" />
 
               {/* Video container */}
               <div className="relative h-full w-full overflow-hidden bg-slate-900">
@@ -240,7 +244,10 @@ export const SantaHero = () => {
 
         {/* Scroll indicator */}
         <div className="mt-10">
-          <a href="#book" className="flex flex-col items-center gap-2 text-gray-400 transition-colors hover:text-gray-600">
+          <a
+            href="#book"
+            className="flex flex-col items-center gap-2 text-gray-400 transition-colors hover:text-gray-600"
+          >
             <span className="text-sm">Book below</span>
             <div className="animate-bounce">
               <Icons.ChevronDown className="size-6" />

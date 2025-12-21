@@ -41,8 +41,7 @@ export const SantaSteps = () => {
             🎄 Simple Process
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
-            How It{" "}
-            <span className="text-green-600">Works</span>
+            How It <span className="text-green-600">Works</span>
           </h2>
           <p className="mt-4 text-lg text-gray-600">
             Four easy steps to Christmas magic!
@@ -56,7 +55,7 @@ export const SantaSteps = () => {
               <div key={step.number} className="relative text-center">
                 {/* Connector line on desktop */}
                 {index < steps.length - 1 && (
-                  <div className="absolute left-full top-12 hidden h-0.5 w-6 bg-red-200 lg:block" />
+                  <div className="absolute top-12 left-full hidden h-0.5 w-6 bg-red-200 lg:block" />
                 )}
 
                 {/* Step card */}

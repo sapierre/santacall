@@ -36,15 +36,14 @@ export const SantaCallOrderConfirmation = ({
   return (
     <Layout origin={origin} locale={locale}>
       <Preview>
-        Thank you for your order! {isCall ? "Santa call" : "Santa video"} for {childName} is being prepared.
+        Thank you for your order! {isCall ? "Santa call" : "Santa video"} for{" "}
+        {childName} is being prepared.
       </Preview>
       <Heading className="leading-tight tracking-tight">
         Order Confirmed!
       </Heading>
 
-      <Text>
-        Ho ho ho, {customerName}!
-      </Text>
+      <Text>Ho ho ho, {customerName}!</Text>
 
       <Text>
         Thank you for your order! We&apos;ve received your payment and the elves
@@ -56,7 +55,9 @@ export const SantaCallOrderConfirmation = ({
         <br />
         Order Number: {orderNumber}
         <br />
-        Product: {isCall ? "Live Santa Call" : "Personalized Santa Video"} for {childName}
+        Product: {isCall
+          ? "Live Santa Call"
+          : "Personalized Santa Video"} for {childName}
         <br />
         Amount Paid: {amountPaid}
         {isCall && scheduledAt && (
@@ -73,9 +74,7 @@ export const SantaCallOrderConfirmation = ({
           : "We'll send you another email as soon as your personalized Santa video is ready. This usually takes 10-30 minutes."}
       </Text>
 
-      <Text>
-        You can check your order status anytime:
-      </Text>
+      <Text>You can check your order status anytime:</Text>
 
       <Button href={orderUrl}>View Order Status</Button>
 
@@ -91,8 +90,7 @@ export const SantaCallOrderConfirmation = ({
 
       <Text className="text-muted-foreground text-sm">
         Merry Christmas!
-        <br />
-        - The SantaCall Team
+        <br />- The SantaCall Team
       </Text>
     </Layout>
   );

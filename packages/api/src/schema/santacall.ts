@@ -58,7 +58,10 @@ const baseBookingSchema = z.object({
   customerName: z.string().min(1).max(100),
 
   // Child personalization (supports 1-4 children)
-  children: z.array(childSchema).min(1, "At least one child is required").max(4, "Maximum 4 children allowed"),
+  children: z
+    .array(childSchema)
+    .min(1, "At least one child is required")
+    .max(4, "Maximum 4 children allowed"),
 
   // Backwards compatibility - kept for legacy support
   childName: z.string().min(1).max(50).optional(),

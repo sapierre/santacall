@@ -40,7 +40,7 @@ export default async function BookPage({ searchParams }: BookPageProps) {
       </SectionHeader>
 
       {wasCanceled && (
-        <div className="bg-destructive/10 text-destructive w-full max-w-2xl rounded-lg border border-destructive/20 p-4 text-center">
+        <div className="bg-destructive/10 text-destructive border-destructive/20 w-full max-w-2xl rounded-lg border p-4 text-center">
           Your payment was canceled. You can try again below.
         </div>
       )}

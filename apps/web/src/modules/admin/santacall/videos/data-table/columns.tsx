@@ -43,13 +43,19 @@ export const VideoJobActions = ({ videoJob }: { videoJob: VideoJob }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40">
         <DropdownMenuItem asChild>
-          <TurboLink href={pathsConfig.admin.santacall.orders.order(videoJob.orderId)}>
+          <TurboLink
+            href={pathsConfig.admin.santacall.orders.order(videoJob.orderId)}
+          >
             View Order
           </TurboLink>
         </DropdownMenuItem>
         {videoJob.videoUrl && (
           <DropdownMenuItem asChild>
-            <a href={videoJob.videoUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              href={videoJob.videoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Watch Video
             </a>
           </DropdownMenuItem>
@@ -108,9 +114,7 @@ export const useColumns = (): ColumnDef<VideoJob>[] => {
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Child" />
       ),
-      cell: ({ row }) => (
-        <span>{row.original.order?.childName ?? "-"}</span>
-      ),
+      cell: ({ row }) => <span>{row.original.order?.childName ?? "-"}</span>,
     },
     {
       id: "order.customerEmail",
@@ -131,7 +135,7 @@ export const useColumns = (): ColumnDef<VideoJob>[] => {
         <DataTableColumnHeader column={column} title="Tavus ID" />
       ),
       cell: ({ row }) => (
-        <span className="font-mono text-sm text-muted-foreground">
+        <span className="text-muted-foreground font-mono text-sm">
           {row.original.tavusVideoId?.slice(0, 12) ?? "-"}...
         </span>
       ),
@@ -142,9 +146,7 @@ export const useColumns = (): ColumnDef<VideoJob>[] => {
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Retries" />
       ),
-      cell: ({ row }) => (
-        <span>{row.original.retryCount}</span>
-      ),
+      cell: ({ row }) => <span>{row.original.retryCount}</span>,
     },
     {
       id: "createdAt",

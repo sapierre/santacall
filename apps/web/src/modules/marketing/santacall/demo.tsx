@@ -16,8 +16,7 @@ export const SantaDemo = () => {
             ⭐ See It In Action
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
-            Experience the{" "}
-            <span className="text-red-600">Magic</span>
+            Experience the <span className="text-red-600">Magic</span>
           </h2>
           <p className="mt-4 text-lg text-gray-600">
             Watch how a Santa call looks. Real-time, interactive, magical!
@@ -75,7 +74,9 @@ export const SantaDemo = () => {
                     <span className="text-xl">🎅</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">SantaCall Demo</p>
+                    <p className="font-semibold text-gray-900">
+                      SantaCall Demo
+                    </p>
                     <p className="text-sm text-gray-500">
                       Live video call preview
                     </p>

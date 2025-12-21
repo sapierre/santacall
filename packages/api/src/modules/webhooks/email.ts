@@ -94,9 +94,7 @@ function verifyWebhookSignature(
   const secret = process.env.RESEND_WEBHOOK_SECRET;
 
   if (!secret) {
-    console.warn(
-      "RESEND_WEBHOOK_SECRET not configured, skipping verification",
-    );
+    console.warn("RESEND_WEBHOOK_SECRET not configured, skipping verification");
     return true; // Allow in development without secret
   }
 

@@ -13,15 +13,14 @@ export const ContactReply = async (props: Props) => {
   return (
     <Layout>
       <Preview>Reply from SantaCall Support</Preview>
-      <Heading className="leading-tight tracking-tight">
-        Hi {name},
-      </Heading>
+      <Heading className="leading-tight tracking-tight">Hi {name},</Heading>
 
       <Text className="text-base leading-relaxed">
-        Thank you for reaching out to SantaCall! Here's our response to your message:
+        Thank you for reaching out to SantaCall! Here's our response to your
+        message:
       </Text>
 
-      <div className="rounded-lg bg-green-50 p-4 my-4">
+      <div className="my-4 rounded-lg bg-green-50 p-4">
         <Text className="text-base leading-relaxed whitespace-pre-wrap">
           {reply}
         </Text>
@@ -32,9 +31,7 @@ export const ContactReply = async (props: Props) => {
       <Text className="text-sm text-gray-500">
         <strong>Your original message:</strong>
       </Text>
-      <Text className="text-sm text-gray-500 italic">
-        {originalMessage}
-      </Text>
+      <Text className="text-sm text-gray-500 italic">{originalMessage}</Text>
 
       <Hr className="my-6" />
 
@@ -56,7 +53,8 @@ ContactReply.subject = "Reply from SantaCall Support";
 ContactReply.PreviewProps = {
   name: "John",
   originalMessage: "I have a question about scheduling a Santa call.",
-  reply: "Thank you for your question! You can schedule a Santa call up to 7 days in advance between 4-8pm in your timezone. Just visit our website and click 'Book Now' to get started!",
+  reply:
+    "Thank you for your question! You can schedule a Santa call up to 7 days in advance between 4-8pm in your timezone. Just visit our website and click 'Book Now' to get started!",
 };
 
 export default ContactReply;

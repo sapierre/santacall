@@ -1,8 +1,4 @@
-import {
-  parseAsArrayOf,
-  parseAsInteger,
-  parseAsStringEnum,
-} from "nuqs/server";
+import { parseAsArrayOf, parseAsInteger, parseAsStringEnum } from "nuqs/server";
 import { createSearchParamsCache } from "nuqs/server";
 import { Suspense } from "react";
 
@@ -22,7 +18,12 @@ import {
 } from "~/modules/common/layout/dashboard/header";
 
 // Video job statuses (mirrored from db/schema)
-const VIDEO_JOB_STATUSES = ["queued", "processing", "completed", "failed"] as const;
+const VIDEO_JOB_STATUSES = [
+  "queued",
+  "processing",
+  "completed",
+  "failed",
+] as const;
 
 export const generateMetadata = getMetadata({
   title: "SantaCall Video Jobs",
@@ -34,7 +35,9 @@ const searchParamsCache = createSearchParamsCache({
   perPage: parseAsInteger.withDefault(10),
   sort: getSortingStateParser().withDefault([{ id: "createdAt", desc: true }]),
   status: parseAsArrayOf(
-    parseAsStringEnum<(typeof VIDEO_JOB_STATUSES)[number]>([...VIDEO_JOB_STATUSES]),
+    parseAsStringEnum<(typeof VIDEO_JOB_STATUSES)[number]>([
+      ...VIDEO_JOB_STATUSES,
+    ]),
   ),
   createdAt: parseAsArrayOf(parseAsInteger),
 });
@@ -75,7 +78,16 @@ export default async function SantaCallVideosPage(props: {
           <DataTableSkeleton
             columnCount={8}
             filterCount={2}
-            cellWidths={["8rem", "6rem", "8rem", "12rem", "8rem", "4rem", "8rem", "8rem"]}
+            cellWidths={[
+              "8rem",
+              "6rem",
+              "8rem",
+              "12rem",
+              "8rem",
+              "4rem",
+              "8rem",
+              "8rem",
+            ]}
             shrinkZero
           />
         }

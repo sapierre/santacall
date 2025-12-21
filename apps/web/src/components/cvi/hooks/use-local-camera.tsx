@@ -1,28 +1,33 @@
-'use client';
+"use client";
 
-import { useCallback, useMemo } from 'react';
-import { useDaily, useDevices, useLocalSessionId, useVideoTrack } from '@daily-co/daily-react';
+import { useCallback, useMemo } from "react";
+import {
+  useDaily,
+  useDevices,
+  useLocalSessionId,
+  useVideoTrack,
+} from "@daily-co/daily-react";
 
 export const useLocalCamera = (): {
-	isCamReady: boolean;
-	isCamMuted: boolean;
-	localSessionId: string;
-	onToggleCamera: () => void;
+  isCamReady: boolean;
+  isCamMuted: boolean;
+  localSessionId: string;
+  onToggleCamera: () => void;
 } => {
-	const daily = useDaily();
-	const localSessionId = useLocalSessionId();
-	const { isOff: isCamMuted } = useVideoTrack(localSessionId);
-	const { camState } = useDevices();
-	const isCamReady = useMemo(() => camState === 'granted', [camState]);
+  const daily = useDaily();
+  const localSessionId = useLocalSessionId();
+  const { isOff: isCamMuted } = useVideoTrack(localSessionId);
+  const { camState } = useDevices();
+  const isCamReady = useMemo(() => camState === "granted", [camState]);
 
-	const onToggleCamera = useCallback(() => {
-		daily?.setLocalVideo(isCamMuted);
-	}, [daily, isCamMuted]);
+  const onToggleCamera = useCallback(() => {
+    daily?.setLocalVideo(isCamMuted);
+  }, [daily, isCamMuted]);
 
-	return {
-		isCamReady,
-		isCamMuted,
-		localSessionId,
-		onToggleCamera,
-	};
+  return {
+    isCamReady,
+    isCamMuted,
+    localSessionId,
+    onToggleCamera,
+  };
 };

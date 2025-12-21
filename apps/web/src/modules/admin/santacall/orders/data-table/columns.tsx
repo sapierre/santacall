@@ -90,7 +90,11 @@ export const OrderActions = ({ order }: { order: Order }) => {
         </DropdownMenuItem>
         {order.deliveryUrl && (
           <DropdownMenuItem asChild>
-            <a href={order.deliveryUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              href={order.deliveryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {order.orderType === "video" ? "View Video" : "View Call"}
             </a>
           </DropdownMenuItem>
@@ -238,7 +242,11 @@ export const useColumns = (): ColumnDef<Order>[] => {
         if (!row.original.amountPaid) return <span>-</span>;
         const amount = (row.original.amountPaid / 100).toFixed(2);
         const currency = row.original.currency?.toUpperCase() ?? "USD";
-        return <span>${amount} {currency}</span>;
+        return (
+          <span>
+            ${amount} {currency}
+          </span>
+        );
       },
     },
     {

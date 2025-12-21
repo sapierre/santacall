@@ -212,9 +212,7 @@ export const getVideoJobs = async (input: GetVideoJobsInput) => {
   const offset = (input.page - 1) * input.perPage;
 
   const where = and(
-    input.status
-      ? inArray(santacallVideoJob.status, input.status)
-      : undefined,
+    input.status ? inArray(santacallVideoJob.status, input.status) : undefined,
     input.createdAt
       ? between(
           santacallVideoJob.createdAt,
@@ -249,7 +247,10 @@ export const getVideoJobs = async (input: GetVideoJobsInput) => {
         },
       })
       .from(santacallVideoJob)
-      .leftJoin(santacallOrder, eq(santacallVideoJob.orderId, santacallOrder.id))
+      .leftJoin(
+        santacallOrder,
+        eq(santacallVideoJob.orderId, santacallOrder.id),
+      )
       .where(where)
       .limit(input.perPage)
       .offset(offset)

@@ -31,21 +31,21 @@ export const SantaCallLinkRegenerated = ({
         regenerated!
       </Preview>
       <Heading className="leading-tight tracking-tight">
-        New Access Link for Your SantaCall {orderType === "video" ? "Video" : "Call"}
+        New Access Link for Your SantaCall{" "}
+        {orderType === "video" ? "Video" : "Call"}
       </Heading>
 
-      <Text>
-        Ho ho ho, {customerName}!
-      </Text>
+      <Text>Ho ho ho, {customerName}!</Text>
 
       <Text>
         We&apos;ve generated a new access link for {childName}&apos;s special
-        Santa {orderType === "video" ? "video" : "call"}. Your previous link has been
-        deactivated for security.
+        Santa {orderType === "video" ? "video" : "call"}. Your previous link has
+        been deactivated for security.
       </Text>
 
       <Text>
-        Click the button below to access your {orderType === "video" ? "video" : "call"}:
+        Click the button below to access your{" "}
+        {orderType === "video" ? "video" : "call"}:
       </Text>
 
       <Button href={viewUrl}>
@@ -76,8 +76,7 @@ export const SantaCallLinkRegenerated = ({
 
       <Text className="text-muted-foreground text-sm">
         Merry Christmas!
-        <br />
-        - The SantaCall Team
+        <br />- The SantaCall Team
       </Text>
     </Layout>
   );

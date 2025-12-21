@@ -26,19 +26,19 @@ export const SantaCallCallCompleted = ({
   return (
     <Layout origin={origin} locale={locale}>
       <Preview>
-        {childName}&apos;s Santa call was magical! Thank you for using SantaCall.
+        {childName}&apos;s Santa call was magical! Thank you for using
+        SantaCall.
       </Preview>
       <Heading className="leading-tight tracking-tight">
         What a Magical Call!
       </Heading>
 
-      <Text>
-        Ho ho ho, {customerName}!
-      </Text>
+      <Text>Ho ho ho, {customerName}!</Text>
 
       <Text>
         We hope {childName} had an absolutely magical time talking with Santa!
-        The call lasted {durationMinutes} {durationMinutes === 1 ? "minute" : "minutes"} of pure Christmas magic.
+        The call lasted {durationMinutes}{" "}
+        {durationMinutes === 1 ? "minute" : "minutes"} of pure Christmas magic.
       </Text>
 
       <Text className="bg-muted rounded-lg p-4">
@@ -48,13 +48,14 @@ export const SantaCallCallCompleted = ({
         <br />
         Child: {childName}
         <br />
-        Duration: {durationMinutes} {durationMinutes === 1 ? "minute" : "minutes"}
+        Duration: {durationMinutes}{" "}
+        {durationMinutes === 1 ? "minute" : "minutes"}
       </Text>
 
       <Text>
-        We&apos;d love to hear how it went! If you have a moment, consider sharing
-        your experience with friends and family who might also want to bring
-        some Christmas magic to their little ones.
+        We&apos;d love to hear how it went! If you have a moment, consider
+        sharing your experience with friends and family who might also want to
+        bring some Christmas magic to their little ones.
       </Text>
 
       <Text className="text-muted-foreground text-sm">
@@ -64,8 +65,7 @@ export const SantaCallCallCompleted = ({
 
       <Text className="text-muted-foreground text-sm">
         Merry Christmas and Happy Holidays!
-        <br />
-        - The SantaCall Team
+        <br />- The SantaCall Team
       </Text>
     </Layout>
   );

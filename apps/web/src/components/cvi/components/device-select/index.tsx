@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { memo } from "react";
 import { useDevices } from "@daily-co/daily-react";
@@ -33,8 +33,20 @@ export const SelectDevice = ({
         ))}
       </select>
       <span className={styles.selectArrow}>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 6L8 10L12 6" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 6L8 10L12 6"
+            stroke="#fff"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </span>
     </div>
@@ -136,7 +148,6 @@ MicSelectBtn.displayName = "MicSelectBtn";
 export const CameraSelectBtn = memo(() => {
   const { onToggleCamera, isCamReady, isCamMuted } = useLocalCamera();
   const { currentCam, cameras, setCamera } = useDevices();
-
 
   return (
     <div className={styles.deviceButtonContainer}>

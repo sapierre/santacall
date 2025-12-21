@@ -20,7 +20,8 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #1a472a 0%, #0f2d1a 50%, #1a472a 100%)",
+          background:
+            "linear-gradient(135deg, #1a472a 0%, #0f2d1a 50%, #1a472a 100%)",
           position: "relative",
         }}
       >
@@ -123,6 +124,6 @@ export default function OpenGraphImage() {
     ),
     {
       ...size,
-    }
+    },
   );
 }

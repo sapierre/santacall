@@ -58,7 +58,9 @@ const mutations = {
    */
   checkout: {
     mutationKey: [KEY, "checkout"],
-    mutationFn: async (input: CreateBookingInput): Promise<CheckoutResponse> => {
+    mutationFn: async (
+      input: CreateBookingInput,
+    ): Promise<CheckoutResponse> => {
       const res = await fetch(`${getBaseUrl()}/api/santacall/checkout`, {
         method: "POST",
         credentials: "include",

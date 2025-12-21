@@ -170,7 +170,7 @@ export const ContactActions = ({
               <p className="text-sm whitespace-pre-wrap">{contact.message}</p>
             </div>
             {contact.adminReply && (
-              <div className="rounded-lg border bg-muted/50 p-3">
+              <div className="bg-muted/50 rounded-lg border p-3">
                 <p className="text-muted-foreground mb-1 text-sm font-medium">
                   Your Reply
                 </p>
@@ -179,7 +179,7 @@ export const ContactActions = ({
                 </p>
               </div>
             )}
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="text-muted-foreground flex items-center gap-2 text-sm">
               <Icons.Calendar className="size-4" />
               Submitted {new Date(contact.createdAt).toLocaleDateString()}
             </div>
@@ -188,7 +188,12 @@ export const ContactActions = ({
             <Button variant="outline" onClick={() => setViewOpen(false)}>
               Close
             </Button>
-            <Button onClick={() => { setViewOpen(false); setReplyOpen(true); }}>
+            <Button
+              onClick={() => {
+                setViewOpen(false);
+                setReplyOpen(true);
+              }}
+            >
               Reply
             </Button>
           </DialogFooter>
@@ -209,7 +214,7 @@ export const ContactActions = ({
               <p className="text-muted-foreground mb-1 text-sm font-medium">
                 Original Message
               </p>
-              <p className="text-sm text-muted-foreground italic">
+              <p className="text-muted-foreground text-sm italic">
                 {contact.message.length > 200
                   ? `${contact.message.slice(0, 200)}...`
                   : contact.message}
@@ -309,7 +314,7 @@ export const useColumns = (onUpdate?: () => void): ColumnDef<Contact>[] => {
         <DataTableColumnHeader column={column} title="Message" />
       ),
       cell: ({ row }) => (
-        <p className="max-w-xs truncate text-sm text-muted-foreground">
+        <p className="text-muted-foreground max-w-xs truncate text-sm">
           {row.original.message}
         </p>
       ),

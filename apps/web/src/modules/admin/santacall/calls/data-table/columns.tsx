@@ -31,7 +31,11 @@ const CONVERSATION_STATUS_VARIANTS: Record<
   cancelled: "outline",
 };
 
-export const ConversationActions = ({ conversation }: { conversation: Conversation }) => {
+export const ConversationActions = ({
+  conversation,
+}: {
+  conversation: Conversation;
+}) => {
   const { t } = useTranslation(["common"]);
 
   return (
@@ -44,13 +48,21 @@ export const ConversationActions = ({ conversation }: { conversation: Conversati
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40">
         <DropdownMenuItem asChild>
-          <TurboLink href={pathsConfig.admin.santacall.orders.order(conversation.orderId)}>
+          <TurboLink
+            href={pathsConfig.admin.santacall.orders.order(
+              conversation.orderId,
+            )}
+          >
             View Order
           </TurboLink>
         </DropdownMenuItem>
         {conversation.roomUrl && (
           <DropdownMenuItem asChild>
-            <a href={conversation.roomUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              href={conversation.roomUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Join Room
             </a>
           </DropdownMenuItem>
@@ -117,9 +129,7 @@ export const useColumns = (): ColumnDef<Conversation>[] => {
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Child" />
       ),
-      cell: ({ row }) => (
-        <span>{row.original.order?.childName ?? "-"}</span>
-      ),
+      cell: ({ row }) => <span>{row.original.order?.childName ?? "-"}</span>,
     },
     {
       id: "order.customerEmail",
@@ -149,7 +159,8 @@ export const useColumns = (): ColumnDef<Conversation>[] => {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
-              {row.original.order?.timezone && ` (${row.original.order.timezone})`}
+              {row.original.order?.timezone &&
+                ` (${row.original.order.timezone})`}
             </span>
           </div>
         );

@@ -31,12 +31,8 @@ export const getContacts = async (input: GetContactsInput) => {
   const offset = (input.page - 1) * input.perPage;
 
   const where = and(
-    input.q
-      ? ilike(santacallContact.email, `%${input.q}%`)
-      : undefined,
-    input.status
-      ? inArray(santacallContact.status, input.status)
-      : undefined,
+    input.q ? ilike(santacallContact.email, `%${input.q}%`) : undefined,
+    input.status ? inArray(santacallContact.status, input.status) : undefined,
     input.createdAt
       ? between(
           santacallContact.createdAt,

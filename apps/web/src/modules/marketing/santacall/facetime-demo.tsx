@@ -21,7 +21,7 @@ export const SantaFacetimeDemo = () => {
           hour: "numeric",
           minute: "2-digit",
           hour12: true,
-        })
+        }),
       );
     };
     updateClock();
@@ -65,8 +65,8 @@ export const SantaFacetimeDemo = () => {
     <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 py-20 sm:py-28">
       {/* Ambient background glow */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-red-500/20 blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-green-500/20 blur-[120px]" />
+        <div className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-red-500/20 blur-[120px]" />
+        <div className="absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full bg-green-500/20 blur-[120px]" />
       </div>
 
       {/* Snow particles */}
@@ -74,7 +74,7 @@ export const SantaFacetimeDemo = () => {
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute animate-snow-fall rounded-full bg-white/60"
+            className="animate-snow-fall absolute rounded-full bg-white/60"
             style={{
               width: `${Math.random() * 4 + 2}px`,
               height: `${Math.random() * 4 + 2}px`,
@@ -86,7 +86,7 @@ export const SantaFacetimeDemo = () => {
         ))}
       </div>
 
-      <div className="container relative mx-auto px-4 sm:px-6">
+      <div className="relative container mx-auto px-4 sm:px-6">
         {/* Section header */}
         <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-14">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-4 py-1.5 text-sm font-medium text-green-400">
@@ -115,10 +115,10 @@ export const SantaFacetimeDemo = () => {
             }}
           >
             {/* Dynamic Island */}
-            <div className="absolute left-1/2 top-2 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-black sm:top-3 sm:h-8 sm:w-28" />
+            <div className="absolute top-2 left-1/2 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-black sm:top-3 sm:h-8 sm:w-28" />
 
             {/* Status bar */}
-            <div className="absolute left-0 right-0 top-0 z-10 flex items-center justify-between px-6 pt-1 sm:px-8 sm:pt-2">
+            <div className="absolute top-0 right-0 left-0 z-10 flex items-center justify-between px-6 pt-1 sm:px-8 sm:pt-2">
               <span className="text-xs font-semibold text-white sm:text-sm">
                 {clockTime}
               </span>
@@ -168,7 +168,7 @@ export const SantaFacetimeDemo = () => {
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/50 to-transparent sm:h-32" />
 
                   {/* Caller info - top */}
-                  <div className="absolute left-0 right-0 top-12 z-10 text-center sm:top-14">
+                  <div className="absolute top-12 right-0 left-0 z-10 text-center sm:top-14">
                     <p className="text-lg font-semibold text-white drop-shadow-lg sm:text-xl">
                       Santa Claus
                     </p>
@@ -208,7 +208,7 @@ export const SantaFacetimeDemo = () => {
                   </div>
 
                   {/* Live indicator */}
-                  <div className="absolute right-3 top-12 z-10 flex items-center gap-1.5 rounded-full bg-red-500/90 px-2 py-1 sm:right-4 sm:top-14 sm:px-3">
+                  <div className="absolute top-12 right-3 z-10 flex items-center gap-1.5 rounded-full bg-red-500/90 px-2 py-1 sm:top-14 sm:right-4 sm:px-3">
                     <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
                       <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white sm:h-2 sm:w-2" />

@@ -90,7 +90,16 @@ export default async function SantaCallOrdersPage(props: {
           <DataTableSkeleton
             columnCount={8}
             filterCount={4}
-            cellWidths={["8rem", "5rem", "6rem", "12rem", "8rem", "6rem", "8rem", "8rem"]}
+            cellWidths={[
+              "8rem",
+              "5rem",
+              "6rem",
+              "12rem",
+              "8rem",
+              "6rem",
+              "8rem",
+              "8rem",
+            ]}
             shrinkZero
           />
         }

@@ -12,8 +12,7 @@ const features = [
   {
     icon: Icons.Video,
     title: "Real-Time Interactive",
-    description:
-      "Santa sees, hears, and responds naturally in real-time.",
+    description: "Santa sees, hears, and responds naturally in real-time.",
     color: "text-green-600",
     bgColor: "bg-green-100",
   },
@@ -48,8 +47,7 @@ export const SantaFeatures = () => {
             ✨ Why Choose SantaCall?
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
-            Magic Made{" "}
-            <span className="text-red-600">Simple</span>
+            Magic Made <span className="text-red-600">Simple</span>
           </h2>
           <p className="mt-4 text-lg text-gray-600">
             Everything you need for the perfect Santa experience.
@@ -63,7 +61,9 @@ export const SantaFeatures = () => {
               key={feature.title}
               className="group rounded-2xl border border-gray-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
-              <div className={`mb-4 inline-flex size-14 items-center justify-center rounded-xl ${feature.bgColor}`}>
+              <div
+                className={`mb-4 inline-flex size-14 items-center justify-center rounded-xl ${feature.bgColor}`}
+              >
                 <feature.icon className={`size-7 ${feature.color}`} />
               </div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900">

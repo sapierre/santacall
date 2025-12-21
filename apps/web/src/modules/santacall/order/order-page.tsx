@@ -110,7 +110,8 @@ function CallSection({
   const windowEndMs = 30 * 60 * 1000; // 30 minutes after
 
   // Check if this is a test/immediate call (scheduled within 5 minutes)
-  const isTestCall = scheduled && Math.abs(scheduled.getTime() - now.getTime()) < 5 * 60 * 1000;
+  const isTestCall =
+    scheduled && Math.abs(scheduled.getTime() - now.getTime()) < 5 * 60 * 1000;
 
   const isWithinCallWindow =
     isTestCall ||
@@ -140,7 +141,8 @@ function CallSection({
               {timeUntilCall > 0 ? (
                 <>
                   Come back in{" "}
-                  {hoursUntil > 0 && `${hoursUntil} hour${hoursUntil > 1 ? "s" : ""} and `}
+                  {hoursUntil > 0 &&
+                    `${hoursUntil} hour${hoursUntil > 1 ? "s" : ""} and `}
                   {minutesUntil} minute{minutesUntil !== 1 ? "s" : ""} to start
                   your call with Santa
                 </>
@@ -216,7 +218,7 @@ function CallSection({
         {/* Fullscreen call container */}
         <div className="relative h-full w-full">
           {/* Header bar - minimal top info */}
-          <div className="absolute left-0 right-0 top-0 z-30 flex items-center justify-between px-4 pb-2 pt-[max(1rem,env(safe-area-inset-top))]">
+          <div className="absolute top-0 right-0 left-0 z-30 flex items-center justify-between px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-2">
             <div className="flex items-center gap-2 text-white/70">
               <Icons.Lock className="size-3" />
               <span className="text-xs font-medium">SantaCall</span>
@@ -230,7 +232,12 @@ function CallSection({
           </div>
 
           {/* Timer chip - positioned just below header */}
-          <div className="absolute left-1/2 z-30 -translate-x-1/2" style={{ top: 'calc(max(3.5rem, calc(2.5rem + env(safe-area-inset-top))))' }}>
+          <div
+            className="absolute left-1/2 z-30 -translate-x-1/2"
+            style={{
+              top: "calc(max(3.5rem, calc(2.5rem + env(safe-area-inset-top))))",
+            }}
+          >
             <span
               className={`rounded-full px-4 py-1.5 text-sm font-medium backdrop-blur-md transition-colors ${
                 isCriticalTime
@@ -256,7 +263,8 @@ function CallSection({
             <div className="absolute bottom-28 left-1/2 z-20 -translate-x-1/2 sm:bottom-32">
               <div className="max-w-xs rounded-2xl bg-black/60 px-4 py-3 text-center backdrop-blur-md">
                 <p className="text-sm font-medium text-white">
-                  🎅 Tip: Let Santa finish speaking before responding — the North Pole connection works best this way!
+                  🎅 Tip: Let Santa finish speaking before responding — the
+                  North Pole connection works best this way!
                 </p>
               </div>
             </div>
@@ -318,8 +326,7 @@ const STATUS_CONFIG: Record<string, StatusConfigType> = {
   failed: {
     icon: Icons.AlertTriangle,
     label: "Something Went Wrong",
-    description:
-      "There was an issue with your order. Please contact support.",
+    description: "There was an issue with your order. Please contact support.",
     color: "text-red-600",
     bgColor: "bg-red-50",
   },
@@ -351,10 +358,7 @@ export function OrderPageContent({
     refetchInterval: (query) => {
       // Refetch every 5 seconds if order is processing
       const data = query.state.data;
-      if (
-        data &&
-        ["pending", "paid", "processing"].includes(data.status)
-      ) {
+      if (data && ["pending", "paid", "processing"].includes(data.status)) {
         return 5000;
       }
       return false;
@@ -539,7 +543,6 @@ export function OrderPageContent({
               </p>
             </div>
           )}
-
         </CardContent>
       </Card>
 

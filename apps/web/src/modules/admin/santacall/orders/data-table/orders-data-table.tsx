@@ -16,10 +16,7 @@ interface OrdersDataTableProps {
   readonly perPage: number;
 }
 
-export const OrdersDataTable = ({
-  promise,
-  perPage,
-}: OrdersDataTableProps) => {
+export const OrdersDataTable = ({ promise, perPage }: OrdersDataTableProps) => {
   const columns = useColumns();
   const { data, total } = use(promise);
 

@@ -58,8 +58,7 @@ export const SantaFaq = () => {
               ❓ Got Questions?
             </span>
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
-              Frequently Asked{" "}
-              <span className="text-green-600">Questions</span>
+              Frequently Asked <span className="text-green-600">Questions</span>
             </h2>
             <p className="mt-4 text-lg text-gray-600">
               Everything you need to know about SantaCall.

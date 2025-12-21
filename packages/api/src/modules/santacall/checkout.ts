@@ -7,7 +7,10 @@ import { HttpException } from "@turbostarter/shared/utils";
 
 import { env } from "./env";
 import { createOrder, generateDeliveryToken } from "./mutations";
-import { getOrderByStripeSessionId, getOrderByPaymentIntentId } from "./queries";
+import {
+  getOrderByStripeSessionId,
+  getOrderByPaymentIntentId,
+} from "./queries";
 
 import type { CreateBookingInput } from "../../schema";
 
@@ -61,7 +64,7 @@ export const createCheckoutSession = async (input: CreateBookingInput) => {
   }
 
   // Format children names for display
-  const childrenNames = input.children.map(c => c.name).join(", ");
+  const childrenNames = input.children.map((c) => c.name).join(", ");
 
   // Create Stripe Checkout session
   const session = await stripe().checkout.sessions.create({
@@ -298,7 +301,7 @@ const triggerVideoGeneration = async (orderId: string) => {
     ? (JSON.parse(order.children) as Array<{ name: string; age: number }>)
     : [{ name: order.childName, age: order.childAge }];
 
-  const childrenNames = children.map(c => c.name).join(", ");
+  const childrenNames = children.map((c) => c.name).join(", ");
 
   // Call Tavus API to generate video
   try {
@@ -323,7 +326,9 @@ const triggerVideoGeneration = async (orderId: string) => {
 
     if (!tavusResponse.ok) {
       const errorText = await tavusResponse.text();
-      throw new Error(`Tavus API error: ${tavusResponse.status} - ${errorText}`);
+      throw new Error(
+        `Tavus API error: ${tavusResponse.status} - ${errorText}`,
+      );
     }
 
     const tavusData = (await tavusResponse.json()) as { video_id: string };
@@ -339,7 +344,10 @@ const triggerVideoGeneration = async (orderId: string) => {
       `Video generation started for order ${order.orderNumber}, Tavus video ID: ${tavusData.video_id}`,
     );
   } catch (error) {
-    console.error(`Failed to trigger video generation for order ${orderId}:`, error);
+    console.error(
+      `Failed to trigger video generation for order ${orderId}:`,
+      error,
+    );
 
     const { updateVideoJob, updateOrder } = await import("./mutations");
     await updateVideoJob(videoJob.id, {
@@ -392,35 +400,34 @@ const scheduleConversation = async (orderId: string) => {
     ? (JSON.parse(order.children) as Array<{ name: string; age: number }>)
     : [{ name: order.childName, age: order.childAge }];
 
-  const childrenNames = children.map(c => c.name).join(", ");
+  const childrenNames = children.map((c) => c.name).join(", ");
 
   // Create Tavus conversation
   try {
-    const tavusResponse = await fetch(
-      "https://tavusapi.com/v2/conversations",
-      {
-        method: "POST",
-        headers: {
-          "x-api-key": env.TAVUS_API_KEY,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          persona_id: env.TAVUS_PERSONA_ID,
-          conversation_name: `Santa Call for ${childrenNames} - ${order.orderNumber}`,
-          conversational_context: generateSantaContext({
-            children,
-            interests,
-            excitedGift: order.excitedGift,
-            specialMessage: order.specialMessage,
-          }),
-          callback_url: `${env.NEXT_PUBLIC_APP_URL}/api/santacall/webhook/tavus?secret=${env.TAVUS_WEBHOOK_SECRET}`,
-        }),
+    const tavusResponse = await fetch("https://tavusapi.com/v2/conversations", {
+      method: "POST",
+      headers: {
+        "x-api-key": env.TAVUS_API_KEY,
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        persona_id: env.TAVUS_PERSONA_ID,
+        conversation_name: `Santa Call for ${childrenNames} - ${order.orderNumber}`,
+        conversational_context: generateSantaContext({
+          children,
+          interests,
+          excitedGift: order.excitedGift,
+          specialMessage: order.specialMessage,
+        }),
+        callback_url: `${env.NEXT_PUBLIC_APP_URL}/api/santacall/webhook/tavus?secret=${env.TAVUS_WEBHOOK_SECRET}`,
+      }),
+    });
 
     if (!tavusResponse.ok) {
       const errorText = await tavusResponse.text();
-      throw new Error(`Tavus API error: ${tavusResponse.status} - ${errorText}`);
+      throw new Error(
+        `Tavus API error: ${tavusResponse.status} - ${errorText}`,
+      );
     }
 
     const tavusData = (await tavusResponse.json()) as {
@@ -448,16 +455,19 @@ const scheduleConversation = async (orderId: string) => {
     // Send call link email to customer
     try {
       const joinUrl = `${env.NEXT_PUBLIC_APP_URL}/order/${order.orderNumber}?token=${order.deliveryToken}`;
-      const scheduledAtFormatted = order.scheduledAt!.toLocaleDateString("en-US", {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-        timeZone: order.timezone ?? "UTC",
-      });
+      const scheduledAtFormatted = order.scheduledAt!.toLocaleDateString(
+        "en-US",
+        {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+          timeZone: order.timezone ?? "UTC",
+        },
+      );
 
       await sendEmail({
         to: order.customerEmail,
@@ -476,7 +486,10 @@ const scheduleConversation = async (orderId: string) => {
       // Don't fail - email is non-critical
     }
   } catch (error) {
-    console.error(`Failed to schedule conversation for order ${orderId}:`, error);
+    console.error(
+      `Failed to schedule conversation for order ${orderId}:`,
+      error,
+    );
 
     const { updateConversation, updateOrder } = await import("./mutations");
     await updateConversation(conversation.id, {
@@ -525,21 +538,28 @@ const generateSantaScript = (data: {
   specialMessage: string | null;
 }): string => {
   // Format children names and ages
-  const childrenIntro = data.children.length === 1
-    ? `${data.children[0]!.name}`
-    : data.children.length === 2
-    ? `${data.children[0]!.name} and ${data.children[1]!.name}`
-    : data.children.slice(0, -1).map(c => c.name).join(", ") + `, and ${data.children[data.children.length - 1]!.name}`;
+  const childrenIntro =
+    data.children.length === 1
+      ? `${data.children[0]!.name}`
+      : data.children.length === 2
+        ? `${data.children[0]!.name} and ${data.children[1]!.name}`
+        : data.children
+            .slice(0, -1)
+            .map((c) => c.name)
+            .join(", ") +
+          `, and ${data.children[data.children.length - 1]!.name}`;
 
   // Greeting for multiple children
-  const greeting = data.children.length === 1
-    ? `Ho ho ho! Merry Christmas, ${data.children[0]!.name}.`
-    : `Ho ho ho! Merry Christmas, ${childrenIntro}!`;
+  const greeting =
+    data.children.length === 1
+      ? `Ho ho ho! Merry Christmas, ${data.children[0]!.name}.`
+      : `Ho ho ho! Merry Christmas, ${childrenIntro}!`;
 
   // Age description
-  const ageDescription = data.children.length === 1
-    ? `My elves tell me you're a wonderful ${data.children[0]!.age}-year-old.`
-    : `My elves tell me you're all wonderful children!`;
+  const ageDescription =
+    data.children.length === 1
+      ? `My elves tell me you're a wonderful ${data.children[0]!.age}-year-old.`
+      : `My elves tell me you're all wonderful children!`;
 
   // Conversational interests sentence
   const interestsSentence = `I hear about ${describeInterests(data.interests)}. That sounds exciting!`;
@@ -551,9 +571,10 @@ const generateSantaScript = (data: {
     : "Remember, the best gifts come from being kind and sharing joy with others.";
 
   // Closing for multiple children
-  const closing = data.children.length === 1
-    ? `Keep being kind and helpful, ${data.children[0]!.name}.\nI'm so proud of you.`
-    : `Keep being kind and helpful, all of you.\nI'm so proud of each and every one of you.`;
+  const closing =
+    data.children.length === 1
+      ? `Keep being kind and helpful, ${data.children[0]!.name}.\nI'm so proud of you.`
+      : `Keep being kind and helpful, all of you.\nI'm so proud of each and every one of you.`;
 
   return `
 ${greeting}
@@ -591,25 +612,29 @@ const generateSantaContext = (data: {
   const wishDescription = wish ?? "not provided";
 
   // Format children info for context
-  const childrenInfo = data.children.length === 1
-    ? `Child: ${data.children[0]!.name}, age ${data.children[0]!.age}.`
-    : `Children: ${data.children.map(c => `${c.name} (age ${c.age})`).join(", ")}.`;
+  const childrenInfo =
+    data.children.length === 1
+      ? `Child: ${data.children[0]!.name}, age ${data.children[0]!.age}.`
+      : `Children: ${data.children.map((c) => `${c.name} (age ${c.age})`).join(", ")}.`;
 
   // Greeting examples for multiple children
-  const greetingExample = data.children.length === 1
-    ? `"Ho ho ho! Well hello there, ${data.children[0]!.name}!"`
-    : data.children.length === 2
-    ? `"Ho ho ho! Hello ${data.children[0]!.name} and ${data.children[1]!.name}!"`
-    : `"Ho ho ho! Hello everyone!"`;
+  const greetingExample =
+    data.children.length === 1
+      ? `"Ho ho ho! Well hello there, ${data.children[0]!.name}!"`
+      : data.children.length === 2
+        ? `"Ho ho ho! Hello ${data.children[0]!.name} and ${data.children[1]!.name}!"`
+        : `"Ho ho ho! Hello everyone!"`;
 
-  const shyGreeting = data.children.length === 1
-    ? `"Ho ho ho! Is that ${data.children[0]!.name} I see?"`
-    : `"Ho ho ho! Are those wonderful children I see?"`;
+  const shyGreeting =
+    data.children.length === 1
+      ? `"Ho ho ho! Is that ${data.children[0]!.name} I see?"`
+      : `"Ho ho ho! Are those wonderful children I see?"`;
 
   // Closing example
-  const closingExample = data.children.length === 1
-    ? `"Well ${data.children[0]!.name}, Santa has to get back to the workshop soon..."`
-    : `"Well children, Santa has to get back to the workshop soon..."`;
+  const closingExample =
+    data.children.length === 1
+      ? `"Well ${data.children[0]!.name}, Santa has to get back to the workshop soon..."`
+      : `"Well children, Santa has to get back to the workshop soon..."`;
 
   return `
 ${childrenInfo}

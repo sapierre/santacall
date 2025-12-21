@@ -29,15 +29,14 @@ export const SantaCallCallLink = ({
   return (
     <Layout origin={origin} locale={locale}>
       <Preview>
-        Your Santa call for {childName} is scheduled! Here&apos;s your join link.
+        Your Santa call for {childName} is scheduled! Here&apos;s your join
+        link.
       </Preview>
       <Heading className="leading-tight tracking-tight">
         Your Santa Call is Scheduled!
       </Heading>
 
-      <Text>
-        Ho ho ho, {customerName}!
-      </Text>
+      <Text>Ho ho ho, {customerName}!</Text>
 
       <Text>
         Great news from the North Pole! Santa has cleared his busy schedule and
@@ -63,8 +62,7 @@ export const SantaCallCallLink = ({
         - Test your camera and microphone beforehand
         <br />
         - Find a quiet spot with good lighting
-        <br />
-        - Have fun and enjoy the magic!
+        <br />- Have fun and enjoy the magic!
       </Text>
 
       <Text className="text-muted-foreground text-sm">
@@ -79,8 +77,7 @@ export const SantaCallCallLink = ({
 
       <Text className="text-muted-foreground text-sm">
         Merry Christmas!
-        <br />
-        - The SantaCall Team
+        <br />- The SantaCall Team
       </Text>
     </Layout>
   );

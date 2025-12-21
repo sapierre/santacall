@@ -1,8 +1,4 @@
-import {
-  parseAsArrayOf,
-  parseAsInteger,
-  parseAsStringEnum,
-} from "nuqs/server";
+import { parseAsArrayOf, parseAsInteger, parseAsStringEnum } from "nuqs/server";
 import { createSearchParamsCache } from "nuqs/server";
 import { Suspense } from "react";
 
@@ -38,9 +34,13 @@ export const generateMetadata = getMetadata({
 const searchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
   perPage: parseAsInteger.withDefault(10),
-  sort: getSortingStateParser().withDefault([{ id: "scheduledAt", desc: false }]),
+  sort: getSortingStateParser().withDefault([
+    { id: "scheduledAt", desc: false },
+  ]),
   status: parseAsArrayOf(
-    parseAsStringEnum<(typeof CONVERSATION_STATUSES)[number]>([...CONVERSATION_STATUSES]),
+    parseAsStringEnum<(typeof CONVERSATION_STATUSES)[number]>([
+      ...CONVERSATION_STATUSES,
+    ]),
   ),
   scheduledAt: parseAsArrayOf(parseAsInteger),
 });
@@ -81,7 +81,17 @@ export default async function SantaCallCallsPage(props: {
           <DataTableSkeleton
             columnCount={9}
             filterCount={2}
-            cellWidths={["8rem", "6rem", "8rem", "12rem", "10rem", "5rem", "5rem", "5rem", "3rem"]}
+            cellWidths={[
+              "8rem",
+              "6rem",
+              "8rem",
+              "12rem",
+              "10rem",
+              "5rem",
+              "5rem",
+              "5rem",
+              "3rem",
+            ]}
             shrinkZero
           />
         }

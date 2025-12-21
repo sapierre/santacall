@@ -24,25 +24,19 @@ export const SantaCallVideoReady = ({
 
   return (
     <Layout origin={origin} locale={locale}>
-      <Preview>
-        Ho ho ho! Your Santa video for {childName} is ready!
-      </Preview>
+      <Preview>Ho ho ho! Your Santa video for {childName} is ready!</Preview>
       <Heading className="leading-tight tracking-tight">
         Your Santa Video is Ready!
       </Heading>
 
-      <Text>
-        Ho ho ho, {customerName}!
-      </Text>
+      <Text>Ho ho ho, {customerName}!</Text>
 
       <Text>
         Great news from the North Pole! Santa has finished recording a special
         personalized video message just for {childName}!
       </Text>
 
-      <Text>
-        Click the button below to watch the magical video:
-      </Text>
+      <Text>Click the button below to watch the magical video:</Text>
 
       <Button href={viewUrl}>Watch Santa&apos;s Video</Button>
 
@@ -58,8 +52,7 @@ export const SantaCallVideoReady = ({
 
       <Text className="text-muted-foreground text-sm">
         Merry Christmas!
-        <br />
-        - The SantaCall Team
+        <br />- The SantaCall Team
       </Text>
     </Layout>
   );

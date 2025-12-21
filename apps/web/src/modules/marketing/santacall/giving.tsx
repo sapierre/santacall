@@ -11,7 +11,7 @@ export const SantaGiving = () => {
           {/* Main content card */}
           <div className="relative overflow-hidden rounded-3xl bg-white p-8 shadow-xl ring-1 ring-green-100 md:p-12">
             {/* Decorative background */}
-            <div className="absolute -right-10 -top-10 size-40 rounded-full bg-red-50 blur-3xl" />
+            <div className="absolute -top-10 -right-10 size-40 rounded-full bg-red-50 blur-3xl" />
             <div className="absolute -bottom-10 -left-10 size-40 rounded-full bg-green-50 blur-3xl" />
 
             <div className="relative">
@@ -25,15 +25,15 @@ export const SantaGiving = () => {
 
               {/* Headline */}
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                Your Purchase Gives{" "}
-                <span className="text-red-600">Twice</span>
+                Your Purchase Gives <span className="text-red-600">Twice</span>
               </h2>
 
               {/* Main message */}
               <p className="mt-4 text-lg text-gray-600">
-                For every SantaCall video or live call purchased, we donate a toy to a child
-                in need through our partner toy banks and nonprofit organizations. Your magical
-                moment creates another one for a family who needs it most.
+                For every SantaCall video or live call purchased, we donate a
+                toy to a child in need through our partner toy banks and
+                nonprofit organizations. Your magical moment creates another one
+                for a family who needs it most.
               </p>
 
               {/* Stats/Impact */}
@@ -71,11 +71,12 @@ export const SantaGiving = () => {
                       Why Trust Us?
                     </h3>
                     <p className="mt-1 text-sm text-gray-600">
-                      Our founder has over 15 years of experience in the nonprofit sector,
-                      working with established toy banks, children&apos;s charities, and community
-                      organizations. We&apos;ve built trusted relationships with partners who ensure
-                      every donated toy reaches a child who needs it. This isn&apos;t marketing -
-                      it&apos;s our mission.
+                      Our founder has over 15 years of experience in the
+                      nonprofit sector, working with established toy banks,
+                      children&apos;s charities, and community organizations.
+                      We&apos;ve built trusted relationships with partners who
+                      ensure every donated toy reaches a child who needs it.
+                      This isn&apos;t marketing - it&apos;s our mission.
                     </p>
                   </div>
                 </div>
@@ -83,8 +84,9 @@ export const SantaGiving = () => {
 
               {/* Call to action text */}
               <p className="mt-6 text-center text-sm text-gray-500">
-                By choosing SantaCall, you&apos;re not just creating magic for your child -
-                you&apos;re spreading Christmas joy to children everywhere.
+                By choosing SantaCall, you&apos;re not just creating magic for
+                your child - you&apos;re spreading Christmas joy to children
+                everywhere.
               </p>
             </div>
           </div>

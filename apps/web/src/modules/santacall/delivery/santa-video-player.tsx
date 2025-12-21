@@ -14,7 +14,7 @@ export const SantaVideoPlayer = ({
       {/* Phone frame container */}
       <div className="relative aspect-[9/16] overflow-hidden rounded-[2.5rem] bg-black shadow-2xl ring-4 ring-gray-800">
         {/* Notch/speaker (aesthetic) */}
-        <div className="absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-black" />
+        <div className="absolute top-2 left-1/2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-black" />
 
         {/* Video element */}
         <video

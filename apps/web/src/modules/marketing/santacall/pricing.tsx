@@ -53,8 +53,7 @@ export const SantaPricing = () => {
             💰 Simple Pricing
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
-            Choose Your{" "}
-            <span className="text-red-600">Experience</span>
+            Choose Your <span className="text-red-600">Experience</span>
           </h2>
           <p className="mt-4 text-lg text-gray-600">
             No subscriptions. No hidden fees. Just Christmas magic!
@@ -75,7 +74,7 @@ export const SantaPricing = () => {
             >
               {/* Popular badge */}
               {plan.popular && (
-                <div className="absolute -right-12 top-6 rotate-45 bg-red-600 px-12 py-1 text-xs font-semibold text-white shadow-lg">
+                <div className="absolute top-6 -right-12 rotate-45 bg-red-600 px-12 py-1 text-xs font-semibold text-white shadow-lg">
                   POPULAR
                 </div>
               )}
@@ -132,9 +131,11 @@ export const SantaPricing = () => {
         </div>
 
         {/* Guarantee */}
-        <div className="mt-12 flex items-center justify-center gap-2 rounded-full bg-green-50 px-6 py-3 text-sm text-green-700 mx-auto w-fit">
+        <div className="mx-auto mt-12 flex w-fit items-center justify-center gap-2 rounded-full bg-green-50 px-6 py-3 text-sm text-green-700">
           <Icons.ShieldCheck className="size-5" />
-          <span className="font-medium">100% satisfaction guaranteed or your money back</span>
+          <span className="font-medium">
+            100% satisfaction guaranteed or your money back
+          </span>
         </div>
       </div>
     </section>

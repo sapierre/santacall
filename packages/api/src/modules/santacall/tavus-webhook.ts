@@ -63,7 +63,8 @@ export const handleTavusWebhook = async (req: Request) => {
  * Handle video generation status updates
  */
 const handleVideoWebhook = async (payload: TavusVideoWebhookPayload) => {
-  const { video_id, status, download_url, video_url, thumbnail_url, error } = payload;
+  const { video_id, status, download_url, video_url, thumbnail_url, error } =
+    payload;
 
   // Prefer download_url (actual MP4 file) over video_url
   const videoFileUrl = download_url ?? video_url;
@@ -78,7 +79,10 @@ const handleVideoWebhook = async (payload: TavusVideoWebhookPayload) => {
   }
 
   // Map Tavus status to our status
-  const statusMap: Record<string, "queued" | "processing" | "completed" | "failed"> = {
+  const statusMap: Record<
+    string,
+    "queued" | "processing" | "completed" | "failed"
+  > = {
     queued: "queued",
     generating: "processing",
     ready: "completed",
@@ -139,13 +143,8 @@ const handleVideoWebhook = async (payload: TavusVideoWebhookPayload) => {
 const handleConversationWebhook = async (
   payload: TavusConversationWebhookPayload,
 ) => {
-  const {
-    conversation_id,
-    status,
-    started_at,
-    ended_at,
-    duration_seconds,
-  } = payload;
+  const { conversation_id, status, started_at, ended_at, duration_seconds } =
+    payload;
 
   console.log(`Conversation webhook: ${conversation_id} - ${status}`);
 
@@ -159,7 +158,10 @@ const handleConversationWebhook = async (
   }
 
   // Map Tavus status to our status
-  const statusMap: Record<string, "scheduled" | "active" | "completed" | "missed" | "cancelled"> = {
+  const statusMap: Record<
+    string,
+    "scheduled" | "active" | "completed" | "missed" | "cancelled"
+  > = {
     active: "active",
     ended: "completed",
   };

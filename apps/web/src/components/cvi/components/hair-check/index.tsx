@@ -28,7 +28,10 @@ export const HairCheck = ({ onJoin }: HairCheckProps) => {
   // Start camera for preview (without joining the call)
   useEffect(() => {
     if (daily) {
-      daily.startCamera().then(() => setIsReady(true)).catch(() => setIsReady(true));
+      daily
+        .startCamera()
+        .then(() => setIsReady(true))
+        .catch(() => setIsReady(true));
     }
   }, [daily]);
 

@@ -80,7 +80,7 @@ export function BookingPageContent({ orderType }: BookingPageContentProps) {
               ))}
             </ul>
 
-            <div className="border-t pt-4 mt-6">
+            <div className="mt-6 border-t pt-4">
               <p className="text-muted-foreground text-xs">
                 Looking for a{" "}
                 {otherType === "video" ? "video message" : "live call"} instead?
