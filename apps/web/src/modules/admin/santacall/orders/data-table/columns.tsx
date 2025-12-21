@@ -1,5 +1,9 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
 import { useTranslation } from "@turbostarter/i18n";
 import { Badge } from "@turbostarter/ui-web/badge";
 import { Button } from "@turbostarter/ui-web/button";
@@ -9,10 +13,12 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
 } from "@turbostarter/ui-web/dropdown-menu";
 import { Icons } from "@turbostarter/ui-web/icons";
 
 import { pathsConfig } from "~/config/paths";
+import { api } from "~/lib/api/client";
 import { TurboLink } from "~/modules/common/turbo-link";
 
 import type { ColumnDef } from "@tanstack/react-table";
@@ -43,6 +49,30 @@ const ORDER_TYPE_VARIANTS: Record<
 
 export const OrderActions = ({ order }: { order: Order }) => {
   const { t } = useTranslation(["common"]);
+  const router = useRouter();
+
+  const regenerateLink = useMutation({
+    mutationFn: async () => {
+      const response = await api.santacall.admin.orders[":id"][
+        "regenerate-link"
+      ].$post({
+        param: { id: order.id },
+      });
+      return response.json();
+    },
+    onSuccess: () => {
+      toast.success("Link regenerated and email sent to customer");
+      router.refresh();
+    },
+    onError: (error) => {
+      console.error("Failed to regenerate link:", error);
+      toast.error("Failed to regenerate link");
+    },
+  });
+
+  const canRegenerateLink =
+    (order.status === "ready" || order.status === "delivered") &&
+    order.deliveryUrl;
 
   return (
     <DropdownMenu>
@@ -52,7 +82,7 @@ export const OrderActions = ({ order }: { order: Order }) => {
           <Icons.Ellipsis className="size-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-40">
+      <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem asChild>
           <TurboLink href={pathsConfig.admin.santacall.orders.order(order.id)}>
             View Details
@@ -64,6 +94,27 @@ export const OrderActions = ({ order }: { order: Order }) => {
               {order.orderType === "video" ? "View Video" : "View Call"}
             </a>
           </DropdownMenuItem>
+        )}
+        {canRegenerateLink && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => regenerateLink.mutate()}
+              disabled={regenerateLink.isPending}
+            >
+              {regenerateLink.isPending ? (
+                <>
+                  <Icons.Loader className="mr-2 size-4 animate-spin" />
+                  Regenerating...
+                </>
+              ) : (
+                <>
+                  <Icons.RefreshCw className="mr-2 size-4" />
+                  Regenerate Link
+                </>
+              )}
+            </DropdownMenuItem>
+          </>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

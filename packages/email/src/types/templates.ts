@@ -29,6 +29,7 @@ export const EmailTemplate = {
   SANTACALL_VIDEO_READY: "santacall-video-ready",
   SANTACALL_CALL_LINK: "santacall-call-link",
   SANTACALL_CALL_COMPLETED: "santacall-call-completed",
+  SANTACALL_LINK_REGENERATED: "santacall-link-regenerated",
 } as const;
 
 export type EmailTemplate = (typeof EmailTemplate)[keyof typeof EmailTemplate];
@@ -80,5 +81,11 @@ export type EmailVariables = AuthEmailVariables & {
     childName: string;
     orderNumber: string;
     durationMinutes: number;
+  };
+  [EmailTemplate.SANTACALL_LINK_REGENERATED]: {
+    customerName: string;
+    childName: string;
+    viewUrl: string;
+    orderType: "video" | "call";
   };
 };

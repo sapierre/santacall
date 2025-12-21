@@ -17,6 +17,7 @@ import {
   getVideoJobs,
   getConversations,
 } from "./queries";
+import { regenerateOrderLink } from "./regenerate-link";
 import { handleTavusWebhook } from "./tavus-webhook";
 
 // =============================================================================
@@ -63,6 +64,12 @@ const adminRouter = new Hono()
     const id = c.req.param("id");
     const order = await getOrderById(id);
     return c.json(order);
+  })
+  // Regenerate delivery link for an order
+  .post("/orders/:id/regenerate-link", async (c) => {
+    const id = c.req.param("id");
+    const result = await regenerateOrderLink(id);
+    return c.json(result);
   })
   // List all video jobs
   .get("/video-jobs", validate("query", getVideoJobsInputSchema), async (c) => {

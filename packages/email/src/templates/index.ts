@@ -12,6 +12,7 @@ import ContactForm from "./contact-form";
 import ContactReply from "./contact-reply";
 import { SantaCallCallCompleted } from "./santacall/call-completed";
 import { SantaCallCallLink } from "./santacall/call-link";
+import { SantaCallLinkRegenerated } from "./santacall/link-regenerated";
 import { SantaCallOrderConfirmation } from "./santacall/order-confirmation";
 import { SantaCallVideoReady } from "./santacall/video-ready";
 
@@ -39,6 +40,7 @@ export const templates: {
   [EmailTemplate.SANTACALL_VIDEO_READY]: SantaCallVideoReady,
   [EmailTemplate.SANTACALL_CALL_LINK]: SantaCallCallLink,
   [EmailTemplate.SANTACALL_CALL_COMPLETED]: SantaCallCallCompleted,
+  [EmailTemplate.SANTACALL_LINK_REGENERATED]: SantaCallLinkRegenerated,
 } as const;
 
 export const getTemplate = async <T extends EmailTemplate>({
