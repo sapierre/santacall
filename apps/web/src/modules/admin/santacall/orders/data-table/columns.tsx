@@ -109,7 +109,7 @@ export const OrderActions = ({ order }: { order: Order }) => {
                 </>
               ) : (
                 <>
-                  <Icons.RefreshCw className="mr-2 size-4" />
+                  <Icons.RotateCcw className="mr-2 size-4" />
                   Regenerate Link
                 </>
               )}
