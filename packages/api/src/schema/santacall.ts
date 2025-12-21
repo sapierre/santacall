@@ -42,6 +42,14 @@ export const MAX_ADVANCE_DAYS = 7;
 // =============================================================================
 
 /**
+ * Child schema - used for multiple children support
+ */
+const childSchema = z.object({
+  name: z.string().min(1).max(50),
+  age: z.number().int().min(1).max(17),
+});
+
+/**
  * Base booking input - shared fields for video and call orders
  */
 const baseBookingSchema = z.object({
@@ -49,9 +57,13 @@ const baseBookingSchema = z.object({
   customerEmail: z.string().email(),
   customerName: z.string().min(1).max(100),
 
-  // Child personalization
-  childName: z.string().min(1).max(50),
-  childAge: z.number().int().min(1).max(17),
+  // Child personalization (supports 1-4 children)
+  children: z.array(childSchema).min(1, "At least one child is required").max(4, "Maximum 4 children allowed"),
+
+  // Backwards compatibility - kept for legacy support
+  childName: z.string().min(1).max(50).optional(),
+  childAge: z.number().int().min(1).max(17).optional(),
+
   interests: z.array(z.enum(SANTA_INTERESTS)).min(1).max(5).optional(),
   excitedGift: z.string().max(80).optional(), // Main gift/wish (short, conversational)
   specialMessage: z.string().max(500).optional(),

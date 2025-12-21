@@ -3,7 +3,7 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 
@@ -124,16 +124,20 @@ const getTodayTimeSlots = () => {
   });
 };
 
-const bookingSchema = z.object({
-  customerEmail: z.string().email("Please enter a valid email"),
-  customerName: z.string().min(1, "Your name is required"),
-  childName: z.string().min(1, "Child's name is required"),
-  childAge: z
+const childSchema = z.object({
+  name: z.string().min(1, "Name is required").max(50),
+  age: z
     .string()
     .min(1, "Age is required")
     .refine((val) => !isNaN(Number(val)) && Number(val) >= 1 && Number(val) <= 17, {
       message: "Age must be between 1-17",
     }),
+});
+
+const bookingSchema = z.object({
+  customerEmail: z.string().email("Please enter a valid email"),
+  customerName: z.string().min(1, "Your name is required"),
+  children: z.array(childSchema).min(1, "At least one child is required").max(4, "Maximum 4 children allowed"),
   interests: z.array(z.string()).min(1, "Select at least one interest").max(5),
   excitedGift: z.string().max(80).optional(),
   specialMessage: z.string().max(500).optional(),
@@ -152,14 +156,18 @@ export function SantaBookingSection() {
     defaultValues: {
       customerEmail: "",
       customerName: "",
-      childName: "",
-      childAge: "",
+      children: [{ name: "", age: "" }],
       interests: [] as string[],
       excitedGift: "",
       specialMessage: "",
       scheduledDate: "",
       scheduledTime: "",
     },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "children",
   });
 
   const checkout = useMutation({
@@ -174,7 +182,11 @@ export function SantaBookingSection() {
   });
 
   const onSubmit = async (data: BookingFormData) => {
-    const childAge = Number(data.childAge);
+    // Convert children ages from strings to numbers
+    const children = data.children.map((child) => ({
+      name: child.name,
+      age: Number(child.age),
+    }));
 
     if (orderType === "call") {
       if (!data.scheduledDate) {
@@ -230,8 +242,7 @@ export function SantaBookingSection() {
         orderType: "call",
         customerEmail: data.customerEmail,
         customerName: data.customerName,
-        childName: data.childName,
-        childAge,
+        children,
         interests: data.interests as (typeof INTERESTS)[number]["value"][],
         excitedGift: data.excitedGift || undefined,
         specialMessage: data.specialMessage || undefined,
@@ -244,8 +255,7 @@ export function SantaBookingSection() {
         orderType: "video",
         customerEmail: data.customerEmail,
         customerName: data.customerName,
-        childName: data.childName,
-        childAge,
+        children,
         interests: data.interests as (typeof INTERESTS)[number]["value"][],
         excitedGift: data.excitedGift || undefined,
         specialMessage: data.specialMessage || undefined,
@@ -407,55 +417,96 @@ export function SantaBookingSection() {
                     </div>
                   </div>
 
-                  {/* Child Info */}
+                  {/* Children Info */}
                   <div className="space-y-4">
-                    <h3 className="flex items-center gap-2 text-base font-semibold text-foreground sm:text-lg">
-                      <span className="flex size-6 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-700 dark:bg-green-900/50 dark:text-green-300 sm:size-7 sm:text-sm">2</span>
-                      Child&apos;s Information
-                    </h3>
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <FormField
-                        control={form.control}
-                        name="childName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-foreground">Child&apos;s Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Tommy"
-                                className="h-11 rounded-xl border-input bg-background text-foreground placeholder:text-muted-foreground sm:h-12"
-                                {...field}
+                    <div className="flex items-center justify-between">
+                      <h3 className="flex items-center gap-2 text-base font-semibold text-foreground sm:text-lg">
+                        <span className="flex size-6 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-700 dark:bg-green-900/50 dark:text-green-300 sm:size-7 sm:text-sm">2</span>
+                        Children&apos;s Information
+                      </h3>
+                      {fields.length < 4 && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => append({ name: "", age: "" })}
+                          disabled={form.formState.isSubmitting}
+                          className="rounded-full"
+                        >
+                          <Icons.Plus className="mr-1 size-4" />
+                          Add Child
+                        </Button>
+                      )}
+                    </div>
+
+                    <div className="space-y-4">
+                      {fields.map((field, index) => (
+                        <div key={field.id} className="rounded-xl border border-border bg-muted/30 p-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <span className="text-sm font-medium text-foreground">
+                              Child {index + 1}
+                            </span>
+                            {fields.length > 1 && (
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => remove(index)}
                                 disabled={form.formState.isSubmitting}
-                              />
-                            </FormControl>
-                            <FormDescription className="text-xs text-muted-foreground sm:text-sm">
-                              Santa will use this name! 🎅
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="childAge"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-foreground">Child&apos;s Age</FormLabel>
-                            <FormControl>
-                              <Input
-                                type="text"
-                                inputMode="numeric"
-                                pattern="[0-9]*"
-                                placeholder="7"
-                                className="h-11 rounded-xl border-input bg-background text-foreground placeholder:text-muted-foreground sm:h-12"
-                                {...field}
-                                disabled={form.formState.isSubmitting}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                                className="h-8 rounded-full text-muted-foreground hover:text-destructive"
+                              >
+                                <Icons.X className="size-4" />
+                              </Button>
+                            )}
+                          </div>
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <FormField
+                              control={form.control}
+                              name={`children.${index}.name`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel className="text-foreground">Name</FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      placeholder="Tommy"
+                                      className="h-11 rounded-xl border-input bg-background text-foreground placeholder:text-muted-foreground sm:h-12"
+                                      {...field}
+                                      disabled={form.formState.isSubmitting}
+                                    />
+                                  </FormControl>
+                                  {index === 0 && (
+                                    <FormDescription className="text-xs text-muted-foreground sm:text-sm">
+                                      Santa will use this name! 🎅
+                                    </FormDescription>
+                                  )}
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name={`children.${index}.age`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel className="text-foreground">Age</FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      type="text"
+                                      inputMode="numeric"
+                                      pattern="[0-9]*"
+                                      placeholder="7"
+                                      className="h-11 rounded-xl border-input bg-background text-foreground placeholder:text-muted-foreground sm:h-12"
+                                      {...field}
+                                      disabled={form.formState.isSubmitting}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </div>
 
                     {/* Interests */}
@@ -464,7 +515,7 @@ export function SantaBookingSection() {
                       name="interests"
                       render={() => (
                         <FormItem>
-                          <FormLabel className="text-foreground">What does your child love? (pick up to 5)</FormLabel>
+                          <FormLabel className="text-foreground">What do your {fields.length > 1 ? "children" : "child"} love? (pick up to 5)</FormLabel>
                           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
                             {INTERESTS.map((interest) => {
                               const isSelected = selectedInterests.includes(interest.value);
@@ -528,7 +579,7 @@ export function SantaBookingSection() {
                           <FormLabel className="text-foreground">Wishlist or special notes for Santa (optional)</FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder="What does your child want for Christmas? Any achievements to celebrate? Let Santa know..."
+                              placeholder="What do your children want for Christmas? Any achievements to celebrate? Let Santa know..."
                               className="min-h-[100px] rounded-xl border-input bg-background text-foreground placeholder:text-muted-foreground"
                               maxLength={500}
                               {...field}

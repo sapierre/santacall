@@ -34,14 +34,18 @@ export const createCheckoutSession = async (input: CreateBookingInput) => {
   const priceInCents = getPrice(input.orderType);
   const deliveryToken = generateDeliveryToken();
 
+  // For backwards compatibility, use first child for childName/childAge
+  const firstChild = input.children[0]!;
+
   // Create pending order in database
   const order = await createOrder({
     orderType: input.orderType,
     status: "pending",
     customerEmail: input.customerEmail,
     customerName: input.customerName,
-    childName: input.childName,
-    childAge: input.childAge,
+    childName: firstChild.name, // First child for backwards compat
+    childAge: firstChild.age, // First child for backwards compat
+    children: JSON.stringify(input.children), // Store all children as JSON
     interests: input.interests ? JSON.stringify(input.interests) : null,
     excitedGift: input.excitedGift ?? null,
     specialMessage: input.specialMessage ?? null,
@@ -56,6 +60,9 @@ export const createCheckoutSession = async (input: CreateBookingInput) => {
     });
   }
 
+  // Format children names for display
+  const childrenNames = input.children.map(c => c.name).join(", ");
+
   // Create Stripe Checkout session
   const session = await stripe().checkout.sessions.create({
     mode: "payment",
@@ -68,8 +75,8 @@ export const createCheckoutSession = async (input: CreateBookingInput) => {
           product_data: {
             name:
               input.orderType === "video"
-                ? `Personalized Santa Video for ${input.childName}`
-                : `Live Santa Call for ${input.childName}`,
+                ? `Personalized Santa Video for ${childrenNames}`
+                : `Live Santa Call for ${childrenNames}`,
             description:
               input.orderType === "video"
                 ? "A magical personalized video message from Santa Claus"
@@ -281,10 +288,17 @@ const triggerVideoGeneration = async (orderId: string) => {
   // Update order status to processing
   await updateOrder(orderId, { status: "processing" });
 
-  // Parse interests
+  // Parse interests and children
   const interests = order.interests
     ? (JSON.parse(order.interests) as string[])
     : [];
+
+  // Parse children array, fallback to legacy fields if not present
+  const children = order.children
+    ? (JSON.parse(order.children) as Array<{ name: string; age: number }>)
+    : [{ name: order.childName, age: order.childAge }];
+
+  const childrenNames = children.map(c => c.name).join(", ");
 
   // Call Tavus API to generate video
   try {
@@ -297,13 +311,12 @@ const triggerVideoGeneration = async (orderId: string) => {
       body: JSON.stringify({
         replica_id: env.TAVUS_REPLICA_ID,
         script: generateSantaScript({
-          childName: order.childName,
-          childAge: order.childAge,
+          children,
           interests,
           excitedGift: order.excitedGift,
           specialMessage: order.specialMessage,
         }),
-        video_name: `Santa Video for ${order.childName} - ${order.orderNumber}`,
+        video_name: `Santa Video for ${childrenNames} - ${order.orderNumber}`,
         callback_url: `${env.NEXT_PUBLIC_APP_URL}/api/santacall/webhook/tavus?secret=${env.TAVUS_WEBHOOK_SECRET}`,
       }),
     });
@@ -369,10 +382,17 @@ const scheduleConversation = async (orderId: string) => {
     return;
   }
 
-  // Parse interests
+  // Parse interests and children
   const interests = order.interests
     ? (JSON.parse(order.interests) as string[])
     : [];
+
+  // Parse children array, fallback to legacy fields if not present
+  const children = order.children
+    ? (JSON.parse(order.children) as Array<{ name: string; age: number }>)
+    : [{ name: order.childName, age: order.childAge }];
+
+  const childrenNames = children.map(c => c.name).join(", ");
 
   // Create Tavus conversation
   try {
@@ -386,10 +406,9 @@ const scheduleConversation = async (orderId: string) => {
         },
         body: JSON.stringify({
           persona_id: env.TAVUS_PERSONA_ID,
-          conversation_name: `Santa Call for ${order.childName} - ${order.orderNumber}`,
+          conversation_name: `Santa Call for ${childrenNames} - ${order.orderNumber}`,
           conversational_context: generateSantaContext({
-            childName: order.childName,
-            childAge: order.childAge,
+            children,
             interests,
             excitedGift: order.excitedGift,
             specialMessage: order.specialMessage,
@@ -497,14 +516,31 @@ const rephrase = (text: string | null): string | null => {
  * Generate Santa video script based on child info
  * Slow, warm cadence with short sentences for gentle pacing
  * Wishlist woven naturally into conversation - no verbatim repetition
+ * Supports multiple children (up to 4)
  */
 const generateSantaScript = (data: {
-  childName: string;
-  childAge: number;
+  children: Array<{ name: string; age: number }>;
   interests: string[];
   excitedGift: string | null;
   specialMessage: string | null;
 }): string => {
+  // Format children names and ages
+  const childrenIntro = data.children.length === 1
+    ? `${data.children[0]!.name}`
+    : data.children.length === 2
+    ? `${data.children[0]!.name} and ${data.children[1]!.name}`
+    : data.children.slice(0, -1).map(c => c.name).join(", ") + `, and ${data.children[data.children.length - 1]!.name}`;
+
+  // Greeting for multiple children
+  const greeting = data.children.length === 1
+    ? `Ho ho ho! Merry Christmas, ${data.children[0]!.name}.`
+    : `Ho ho ho! Merry Christmas, ${childrenIntro}!`;
+
+  // Age description
+  const ageDescription = data.children.length === 1
+    ? `My elves tell me you're a wonderful ${data.children[0]!.age}-year-old.`
+    : `My elves tell me you're all wonderful children!`;
+
   // Conversational interests sentence
   const interestsSentence = `I hear about ${describeInterests(data.interests)}. That sounds exciting!`;
 
@@ -514,18 +550,22 @@ const generateSantaScript = (data: {
     ? `I hear you're excited about ${wish}. That sounds lovely. I can't promise anything, but I love hearing what makes you happy.`
     : "Remember, the best gifts come from being kind and sharing joy with others.";
 
+  // Closing for multiple children
+  const closing = data.children.length === 1
+    ? `Keep being kind and helpful, ${data.children[0]!.name}.\nI'm so proud of you.`
+    : `Keep being kind and helpful, all of you.\nI'm so proud of each and every one of you.`;
+
   return `
-Ho ho ho! Merry Christmas, ${data.childName}.
+${greeting}
 
 This is Santa Claus, calling from the North Pole.
-My elves tell me you're a wonderful ${data.childAge}-year-old.
+${ageDescription}
 
 ${interestsSentence}
 
 ${wishlistSentence}
 
-Keep being kind and helpful, ${data.childName}.
-I'm so proud of you.
+${closing}
 
 Ho ho ho! Merry Christmas and Happy Holidays!
   `.trim();
@@ -535,10 +575,10 @@ Ho ho ho! Merry Christmas and Happy Holidays!
  * Generate Santa conversation context for live calls
  * Includes structured child info and explicit guardrails
  * Uses conversational phrasing - no verbatim repetition of parent input
+ * Supports multiple children (up to 4)
  */
 const generateSantaContext = (data: {
-  childName: string;
-  childAge: number;
+  children: Array<{ name: string; age: number }>;
   interests: string[];
   excitedGift: string | null;
   specialMessage: string | null;
@@ -550,16 +590,38 @@ const generateSantaContext = (data: {
   const wish = rephrase(data.excitedGift ?? data.specialMessage);
   const wishDescription = wish ?? "not provided";
 
+  // Format children info for context
+  const childrenInfo = data.children.length === 1
+    ? `Child: ${data.children[0]!.name}, age ${data.children[0]!.age}.`
+    : `Children: ${data.children.map(c => `${c.name} (age ${c.age})`).join(", ")}.`;
+
+  // Greeting examples for multiple children
+  const greetingExample = data.children.length === 1
+    ? `"Ho ho ho! Well hello there, ${data.children[0]!.name}!"`
+    : data.children.length === 2
+    ? `"Ho ho ho! Hello ${data.children[0]!.name} and ${data.children[1]!.name}!"`
+    : `"Ho ho ho! Hello everyone!"`;
+
+  const shyGreeting = data.children.length === 1
+    ? `"Ho ho ho! Is that ${data.children[0]!.name} I see?"`
+    : `"Ho ho ho! Are those wonderful children I see?"`;
+
+  // Closing example
+  const closingExample = data.children.length === 1
+    ? `"Well ${data.children[0]!.name}, Santa has to get back to the workshop soon..."`
+    : `"Well children, Santa has to get back to the workshop soon..."`;
+
   return `
-Child: ${data.childName}, age ${data.childAge}.
+${childrenInfo}
 Interests (rephrase naturally): ${interestsDescription}.
 Wishlist hint (rephrase, do NOT repeat verbatim): ${wishDescription}.
 
 IMPORTANT - WAIT FOR GREETING:
-- When the call starts, WAIT for the child to greet you first (e.g., "Hi Santa", "Hello", etc.)
+- When the call starts, WAIT for the ${data.children.length > 1 ? "children" : "child"} to greet you first (e.g., "Hi Santa", "Hello", etc.)
 - Do NOT start speaking immediately - pause for 1-2 seconds to let them settle in
-- Once they greet you, respond warmly with "Ho ho ho! Well hello there, ${data.childName}!"
-- If they seem shy or don't speak after ~5 seconds, gently say "Ho ho ho! Is that ${data.childName} I see?"
+- Once they greet you, respond warmly with ${greetingExample}
+- If they seem shy or don't speak after ~5 seconds, gently say ${shyGreeting}
+${data.children.length > 1 ? `- Address each child by name during the conversation to make it personal for everyone` : ""}
 
 GUIDELINES:
 - Be warm, jolly Santa - use "Ho ho ho!" naturally
@@ -567,15 +629,17 @@ GUIDELINES:
 - Ask about their interests and Christmas wishes conversationally
 - Rephrase interests and wishes naturally - do NOT repeat them verbatim
 - Encourage kindness and good behavior
+${data.children.length > 1 ? `- Make sure to engage with all ${data.children.length} children, not just one` : ""}
+${data.children.length > 1 ? `- If one child dominates, gently bring others in: "And what about you, [name]?"` : ""}
 - Call duration: ~3 minutes total
 
 CALL PACING - VERY IMPORTANT:
 - The call is approximately 3 minutes long
 - After about 2 minutes, start wrapping up naturally - do NOT start new questions or topics
-- When wrapping up, say something like: "Well ${data.childName}, Santa has to get back to the workshop soon..."
+- When wrapping up, say something like: ${closingExample}
 - End with warm holiday wishes: "Remember to be good, and have a very Merry Christmas! Ho ho ho!"
 - Do NOT end the call abruptly mid-conversation - always give a proper goodbye
-- If the child asks a new question late in the call, give a brief answer then transition to goodbye
+- If ${data.children.length > 1 ? "a child asks" : "the child asks"} a new question late in the call, give a brief answer then transition to goodbye
 
 CRITICAL GUARDRAILS:
 - Do NOT promise specific gifts or visits

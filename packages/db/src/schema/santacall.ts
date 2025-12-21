@@ -88,8 +88,9 @@ export const santacallOrder = pgTable(
     customerName: text().notNull(),
 
     // Child personalization
-    childName: text().notNull(),
-    childAge: integer().notNull(),
+    childName: text().notNull(), // Kept for backwards compat (first child's name)
+    childAge: integer().notNull(), // Kept for backwards compat (first child's age)
+    children: text(), // JSON array of {name: string, age: number}[] (up to 4 children)
     interests: text(), // JSON string array of interests
     excitedGift: text(), // Main gift/wish the child is most excited about (optional, short)
     specialMessage: text(), // Additional context for Santa
