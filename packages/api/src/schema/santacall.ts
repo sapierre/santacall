@@ -261,6 +261,7 @@ export const getOrdersResponseSchema = z.object({
       errorMessage: z.string().nullable(),
       createdAt: z.coerce.date(),
       updatedAt: z.coerce.date(),
+      regenerationCount: z.number(),
     }),
   ),
   total: z.number(),

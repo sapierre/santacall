@@ -4,7 +4,11 @@ import { HttpStatusCode } from "@turbostarter/shared/constants";
 import { HttpException } from "@turbostarter/shared/utils";
 
 import { env } from "./env";
-import { updateOrder, generateDeliveryToken } from "./mutations";
+import {
+  updateOrder,
+  generateDeliveryToken,
+  createLinkRegeneration,
+} from "./mutations";
 import { getOrderById } from "./queries";
 
 /**
@@ -36,6 +40,9 @@ export const regenerateOrderLink = async (orderId: string) => {
     });
   }
 
+  // Save the previous token before generating new one
+  const previousToken = order.deliveryToken ?? "";
+
   // Generate new delivery token
   const newDeliveryToken = generateDeliveryToken();
 
@@ -54,6 +61,7 @@ export const regenerateOrderLink = async (orderId: string) => {
   const viewUrl = `${env.NEXT_PUBLIC_APP_URL}/order/${order.orderNumber}?token=${newDeliveryToken}`;
 
   // Send email notification with new link
+  let emailSent = false;
   try {
     await sendEmail({
       to: order.customerEmail,
@@ -65,6 +73,7 @@ export const regenerateOrderLink = async (orderId: string) => {
         orderType: order.orderType,
       },
     });
+    emailSent = true;
     console.log(
       `Link regenerated and email sent to ${order.customerEmail} for order ${order.orderNumber}`,
     );
@@ -73,10 +82,21 @@ export const regenerateOrderLink = async (orderId: string) => {
     // Don't fail the operation - link was regenerated successfully
   }
 
+  // Log the regeneration to history table
+  await createLinkRegeneration({
+    orderId,
+    previousToken,
+    newToken: newDeliveryToken,
+    newViewUrl: viewUrl,
+    emailSent,
+  });
+
   return {
     success: true,
     orderNumber: order.orderNumber,
+    customerEmail: order.customerEmail,
     newToken: newDeliveryToken,
     viewUrl,
+    emailSent,
   };
 };

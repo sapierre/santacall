@@ -5,6 +5,7 @@ import {
   text,
   timestamp,
   integer,
+  boolean,
   index,
 } from "drizzle-orm/pg-core";
 
@@ -168,6 +169,25 @@ export const santacallVideoJob = pgTable(
 );
 
 /**
+ * Link regeneration history - tracks when delivery links are regenerated
+ */
+export const santacallLinkRegeneration = pgTable(
+  "santacall_link_regeneration",
+  {
+    id: text().primaryKey().$defaultFn(generateId),
+    orderId: text()
+      .notNull()
+      .references(() => santacallOrder.id, { onDelete: "cascade" }),
+    previousToken: text().notNull(),
+    newToken: text().notNull(),
+    newViewUrl: text().notNull(),
+    emailSent: boolean().notNull().default(false),
+    regeneratedAt: timestamp().notNull().defaultNow(),
+  },
+  (table) => [index("santacall_regeneration_order_idx").on(table.orderId)],
+);
+
+/**
  * Conversations table - tracks Tavus live conversations (Santa calls)
  */
 export const santacallConversation = pgTable(
@@ -208,16 +228,20 @@ export const santacallConversation = pgTable(
 );
 
 // Relations
-export const santacallOrderRelations = relations(santacallOrder, ({ one }) => ({
-  videoJob: one(santacallVideoJob, {
-    fields: [santacallOrder.id],
-    references: [santacallVideoJob.orderId],
+export const santacallOrderRelations = relations(
+  santacallOrder,
+  ({ one, many }) => ({
+    videoJob: one(santacallVideoJob, {
+      fields: [santacallOrder.id],
+      references: [santacallVideoJob.orderId],
+    }),
+    conversation: one(santacallConversation, {
+      fields: [santacallOrder.id],
+      references: [santacallConversation.orderId],
+    }),
+    linkRegenerations: many(santacallLinkRegeneration),
   }),
-  conversation: one(santacallConversation, {
-    fields: [santacallOrder.id],
-    references: [santacallConversation.orderId],
-  }),
-}));
+);
 
 export const santacallVideoJobRelations = relations(
   santacallVideoJob,
@@ -234,6 +258,16 @@ export const santacallConversationRelations = relations(
   ({ one }) => ({
     order: one(santacallOrder, {
       fields: [santacallConversation.orderId],
+      references: [santacallOrder.id],
+    }),
+  }),
+);
+
+export const santacallLinkRegenerationRelations = relations(
+  santacallLinkRegeneration,
+  ({ one }) => ({
+    order: one(santacallOrder, {
+      fields: [santacallLinkRegeneration.orderId],
       references: [santacallOrder.id],
     }),
   }),
@@ -261,6 +295,13 @@ export const updateSantacallConversationSchema = createUpdateSchema(
   santacallConversation,
 );
 
+export const insertSantacallLinkRegenerationSchema = createInsertSchema(
+  santacallLinkRegeneration,
+);
+export const selectSantacallLinkRegenerationSchema = createSelectSchema(
+  santacallLinkRegeneration,
+);
+
 // TypeScript types
 export type InsertSantacallOrder = z.infer<typeof insertSantacallOrderSchema>;
 export type SelectSantacallOrder = z.infer<typeof selectSantacallOrderSchema>;
@@ -284,4 +325,11 @@ export type SelectSantacallConversation = z.infer<
 >;
 export type UpdateSantacallConversation = z.infer<
   typeof updateSantacallConversationSchema
+>;
+
+export type InsertSantacallLinkRegeneration = z.infer<
+  typeof insertSantacallLinkRegenerationSchema
+>;
+export type SelectSantacallLinkRegeneration = z.infer<
+  typeof selectSantacallLinkRegenerationSchema
 >;

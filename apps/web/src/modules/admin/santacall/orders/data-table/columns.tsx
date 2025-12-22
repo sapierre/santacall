@@ -2,12 +2,20 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import { useTranslation } from "@turbostarter/i18n";
 import { Badge } from "@turbostarter/ui-web/badge";
 import { Button } from "@turbostarter/ui-web/button";
 import { DataTableColumnHeader } from "@turbostarter/ui-web/data-table/data-table-column-header";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@turbostarter/ui-web/dialog";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -16,6 +24,7 @@ import {
   DropdownMenuSeparator,
 } from "@turbostarter/ui-web/dropdown-menu";
 import { Icons } from "@turbostarter/ui-web/icons";
+import { Input } from "@turbostarter/ui-web/input";
 
 import { pathsConfig } from "~/config/paths";
 import { api } from "~/lib/api/client";
@@ -47,9 +56,21 @@ const ORDER_TYPE_VARIANTS: Record<
   call: "default",
 };
 
+interface RegenerateResult {
+  success: boolean;
+  orderNumber: string;
+  customerEmail: string;
+  viewUrl: string;
+  emailSent: boolean;
+}
+
 export const OrderActions = ({ order }: { order: Order }) => {
   const { t } = useTranslation(["common"]);
   const router = useRouter();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [regenerateResult, setRegenerateResult] =
+    useState<RegenerateResult | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const regenerateLink = useMutation({
     mutationFn: async () => {
@@ -58,10 +79,11 @@ export const OrderActions = ({ order }: { order: Order }) => {
       ].$post({
         param: { id: order.id },
       });
-      return response.json();
+      return response.json() as Promise<RegenerateResult>;
     },
-    onSuccess: () => {
-      toast.success("Link regenerated and email sent to customer");
+    onSuccess: (data) => {
+      setRegenerateResult(data);
+      setDialogOpen(true);
       router.refresh();
     },
     onError: (error) => {
@@ -70,58 +92,125 @@ export const OrderActions = ({ order }: { order: Order }) => {
     },
   });
 
+  const copyToClipboard = async () => {
+    if (regenerateResult?.viewUrl) {
+      await navigator.clipboard.writeText(regenerateResult.viewUrl);
+      setCopied(true);
+      toast.success("Link copied to clipboard");
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
   const canRegenerateLink =
     (order.status === "ready" || order.status === "delivered") &&
     order.deliveryUrl;
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <span className="sr-only">{t("actions")}</span>
-          <Icons.Ellipsis className="size-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuItem asChild>
-          <TurboLink href={pathsConfig.admin.santacall.orders.order(order.id)}>
-            View Details
-          </TurboLink>
-        </DropdownMenuItem>
-        {order.deliveryUrl && (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon">
+            <span className="sr-only">{t("actions")}</span>
+            <Icons.Ellipsis className="size-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-48">
           <DropdownMenuItem asChild>
-            <a
-              href={order.deliveryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <TurboLink
+              href={pathsConfig.admin.santacall.orders.order(order.id)}
             >
-              {order.orderType === "video" ? "View Video" : "View Call"}
-            </a>
+              View Details
+            </TurboLink>
           </DropdownMenuItem>
-        )}
-        {canRegenerateLink && (
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => regenerateLink.mutate()}
-              disabled={regenerateLink.isPending}
-            >
-              {regenerateLink.isPending ? (
-                <>
-                  <Icons.Loader className="mr-2 size-4 animate-spin" />
-                  Regenerating...
-                </>
-              ) : (
-                <>
-                  <Icons.RotateCcw className="mr-2 size-4" />
-                  Regenerate Link
-                </>
-              )}
+          {order.deliveryUrl && (
+            <DropdownMenuItem asChild>
+              <a
+                href={order.deliveryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {order.orderType === "video" ? "View Video" : "View Call"}
+              </a>
             </DropdownMenuItem>
-          </>
-        )}
-      </DropdownMenuContent>
-    </DropdownMenu>
+          )}
+          {canRegenerateLink && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => regenerateLink.mutate()}
+                disabled={regenerateLink.isPending}
+              >
+                {regenerateLink.isPending ? (
+                  <>
+                    <Icons.Loader className="mr-2 size-4 animate-spin" />
+                    Regenerating...
+                  </>
+                ) : (
+                  <>
+                    <Icons.RotateCcw className="mr-2 size-4" />
+                    Regenerate Link
+                  </>
+                )}
+              </DropdownMenuItem>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Icons.CheckCircle2 className="size-5 text-green-500" />
+              Link Regenerated Successfully
+            </DialogTitle>
+            <DialogDescription>
+              A new link has been generated for order {regenerateResult?.orderNumber}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium">New Link</label>
+              <div className="mt-1 flex gap-2">
+                <Input
+                  readOnly
+                  value={regenerateResult?.viewUrl ?? ""}
+                  className="font-mono text-sm"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={copyToClipboard}
+                >
+                  {copied ? (
+                    <Icons.Check className="size-4 text-green-500" />
+                  ) : (
+                    <Icons.Copy className="size-4" />
+                  )}
+                </Button>
+              </div>
+            </div>
+            <div className="bg-muted rounded-lg p-3 text-sm">
+              {regenerateResult?.emailSent ? (
+                <p className="flex items-center gap-2 text-green-600">
+                  <Icons.Mail className="size-4" />
+                  Email sent to {regenerateResult.customerEmail}
+                </p>
+              ) : (
+                <p className="flex items-center gap-2 text-amber-600">
+                  <Icons.AlertTriangle className="size-4" />
+                  Email could not be sent. Please send the link manually.
+                </p>
+              )}
+            </div>
+            <div className="flex justify-end">
+              <Button onClick={() => setDialogOpen(false)}>Close</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
@@ -183,9 +272,17 @@ export const useColumns = (): ColumnDef<Order>[] => {
         <DataTableColumnHeader column={column} title={t("status")} />
       ),
       cell: ({ row }) => (
-        <Badge variant={ORDER_STATUS_VARIANTS[row.original.status]}>
-          {row.original.status}
-        </Badge>
+        <div className="flex items-center gap-2">
+          <Badge variant={ORDER_STATUS_VARIANTS[row.original.status]}>
+            {row.original.status}
+          </Badge>
+          {row.original.regenerationCount > 0 && (
+            <Badge variant="outline" className="text-xs">
+              <Icons.RotateCcw className="mr-1 size-3" />
+              x{row.original.regenerationCount}
+            </Badge>
+          )}
+        </div>
       ),
       meta: {
         label: t("status"),

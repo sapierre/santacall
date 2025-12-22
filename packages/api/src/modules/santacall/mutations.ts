@@ -3,6 +3,7 @@ import {
   santacallOrder,
   santacallVideoJob,
   santacallConversation,
+  santacallLinkRegeneration,
 } from "@turbostarter/db/schema";
 import { db } from "@turbostarter/db/server";
 import { generateId } from "@turbostarter/shared/utils";
@@ -14,6 +15,7 @@ import type {
   UpdateSantacallVideoJob,
   InsertSantacallConversation,
   UpdateSantacallConversation,
+  InsertSantacallLinkRegeneration,
 } from "@turbostarter/db/schema";
 
 // =============================================================================
@@ -194,3 +196,21 @@ export const updateConversationByTavusId = async (
  * Generate a unique delivery token
  */
 export const generateDeliveryToken = () => generateId();
+
+// =============================================================================
+// LINK REGENERATION MUTATIONS
+// =============================================================================
+
+/**
+ * Create a link regeneration record
+ */
+export const createLinkRegeneration = async (
+  data: Omit<InsertSantacallLinkRegeneration, "id" | "regeneratedAt">,
+) => {
+  const result = await db
+    .insert(santacallLinkRegeneration)
+    .values(data)
+    .returning();
+
+  return result[0];
+};

@@ -16,6 +16,7 @@ import {
   santacallOrder,
   santacallVideoJob,
   santacallConversation,
+  santacallLinkRegeneration,
 } from "@turbostarter/db/schema";
 import { db } from "@turbostarter/db/server";
 
@@ -168,7 +169,31 @@ export const getOrders = async (input: GetOrdersInput) => {
       .execute()
       .then((res) => res[0]?.count ?? 0);
 
-    return { data, total };
+    // Get regeneration counts for all orders in this page
+    const orderIds = data.map((o) => o.id);
+    const regenerationCounts =
+      orderIds.length > 0
+        ? await tx
+            .select({
+              orderId: santacallLinkRegeneration.orderId,
+              count: count(),
+            })
+            .from(santacallLinkRegeneration)
+            .where(inArray(santacallLinkRegeneration.orderId, orderIds))
+            .groupBy(santacallLinkRegeneration.orderId)
+        : [];
+
+    const regenCountMap = new Map(
+      regenerationCounts.map((r) => [r.orderId, r.count]),
+    );
+
+    // Add regeneration count to each order
+    const dataWithRegenCount = data.map((order) => ({
+      ...order,
+      regenerationCount: regenCountMap.get(order.id) ?? 0,
+    }));
+
+    return { data: dataWithRegenCount, total };
   });
 };
 
@@ -360,4 +385,38 @@ export const getConversationByTavusId = async (tavusConversationId: string) => {
     .limit(1);
 
   return conversation[0] ?? null;
+};
+
+// =============================================================================
+// LINK REGENERATION QUERIES
+// =============================================================================
+
+/**
+ * Get regeneration count for an order
+ */
+export const getRegenerationCountByOrderId = async (orderId: string) => {
+  const result = await db
+    .select({ count: count() })
+    .from(santacallLinkRegeneration)
+    .where(eq(santacallLinkRegeneration.orderId, orderId));
+
+  return result[0]?.count ?? 0;
+};
+
+/**
+ * Get regeneration counts for multiple orders (for list view)
+ */
+export const getRegenerationCountsForOrders = async (orderIds: string[]) => {
+  if (orderIds.length === 0) return new Map<string, number>();
+
+  const results = await db
+    .select({
+      orderId: santacallLinkRegeneration.orderId,
+      count: count(),
+    })
+    .from(santacallLinkRegeneration)
+    .where(inArray(santacallLinkRegeneration.orderId, orderIds))
+    .groupBy(santacallLinkRegeneration.orderId);
+
+  return new Map(results.map((r) => [r.orderId, r.count]));
 };
