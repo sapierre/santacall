@@ -236,10 +236,12 @@ export const regenerateOrderLink = async (orderId: string) => {
   }
 
   // Update the order with new token and delivery URL (if changed)
+  // For call orders, also update scheduledAt to now so the call window check passes
   const updatedOrder = await updateOrder(orderId, {
     deliveryToken: newDeliveryToken,
     deliveryUrl: newDeliveryUrl,
     status: "ready", // Reset to ready so they can use the new link
+    ...(order.orderType === "call" && { scheduledAt: new Date() }),
   });
 
   if (!updatedOrder) {
