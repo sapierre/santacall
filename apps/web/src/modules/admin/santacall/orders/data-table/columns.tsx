@@ -101,6 +101,14 @@ export const OrderActions = ({ order }: { order: Order }) => {
     }
   };
 
+  const copyCurrentLink = async () => {
+    if (order.deliveryToken) {
+      const currentUrl = `https://santacall.co/order/${order.orderNumber}?token=${order.deliveryToken}`;
+      await navigator.clipboard.writeText(currentUrl);
+      toast.success("Current link copied to clipboard");
+    }
+  };
+
   const canRegenerateLink =
     (order.status === "ready" || order.status === "delivered") &&
     order.deliveryUrl;
@@ -131,6 +139,12 @@ export const OrderActions = ({ order }: { order: Order }) => {
               >
                 {order.orderType === "video" ? "View Video" : "View Call"}
               </a>
+            </DropdownMenuItem>
+          )}
+          {order.deliveryToken && (
+            <DropdownMenuItem onClick={copyCurrentLink}>
+              <Icons.Copy className="mr-2 size-4" />
+              Copy Customer Link
             </DropdownMenuItem>
           )}
           {canRegenerateLink && (
